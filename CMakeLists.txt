@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(Sinistar)
+project(Low-Level)
 
 include(FetchContent)
 FetchContent_Declare(SFML
@@ -11,14 +11,14 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(Sinistar src/main.cpp)
+add_executable(Low-Level src/main.cpp "src/main.h" "src/Engine/Public/Transform.h" "src/Engine/MathLib/Maths.h" "src/Engine/MathLib/Maths.cpp")
 
 file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
-target_sources(Sinistar PRIVATE ${MY_SOURCES})
-target_include_directories(Sinistar PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
+target_sources(Low-Level PRIVATE ${MY_SOURCES})
+target_include_directories(Low-Level PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
-target_link_libraries(Sinistar PRIVATE SFML::Graphics)
+target_link_libraries(Low-Level PRIVATE SFML::Graphics)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET Sinistar PROPERTY CXX_STANDARD 20)
+  set_property(TARGET Low-Level PROPERTY CXX_STANDARD 20)
 endif()
