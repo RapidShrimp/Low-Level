@@ -1,3 +1,4 @@
+#include <ostream>
 using namespace std;
 
 //Vector Maths
@@ -9,7 +10,7 @@ public:
 	float y = 0.0f;
 
 	//Default Constructors
-	Vector2(int XValue, int YValue) 
+	Vector2(float XValue, float YValue) 
 	{ 
 		x = XValue;
 		y = YValue;
@@ -20,13 +21,14 @@ public:
 	Vector2 operator+(const Vector2& Vector);
 	Vector2 operator-(const Vector2& Vector);
 	Vector2 operator*(const Vector2& Vector);
-	bool operator==(const Vector2& Vector);
+	Vector2 operator/(const Vector2& Vector);
 
-	Vector2 Abs();
+	bool operator==(const Vector2& Vector);
+	void Abs();
 	float Normalise();
 	Vector2 GetForwardVector();
 	Vector2 GetRightVector();
-	
+	friend ostream& operator<<(ostream&, const Vector2& Vector);
 	float DotProduct(Vector2& VectorB);
 	static float DotProduct(Vector2& VecA,Vector2& VecB);
 

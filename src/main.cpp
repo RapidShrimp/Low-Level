@@ -14,6 +14,6 @@ int main()
 void InitialiseEngine() 
 {
 	cout << "Initialise Sinistar" << endl;
-	Vector2 TestA = Vector2(1,5);
-	Vector2 TestB = Vector2(3, 4);
+	
+	
 }

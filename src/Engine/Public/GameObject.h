@@ -2,8 +2,7 @@
 
 class GameObject 
 {
-	//Some basic functionality that all game objects should have
-
+	//Some basic functionality that all game objects should hav
 	GameObject(){}
 	~GameObject(){};
 	void Init();
