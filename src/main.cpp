@@ -1,6 +1,5 @@
 #include <iostream>
-#include "corecrt_math.h"
-#include "Engine/MathLib/Maths.h"
+#include "Engine/Core/GameInstance.h"
 #include "main.h"
 
 using namespace std;
@@ -15,5 +14,14 @@ void InitialiseEngine()
 {
 	cout << "Initialise Sinistar" << endl;
 	
-	
+	//Create Game Instance;
+	GameInstance GI = GameInstance();
+
+	//Lock Engine 
+	/*while (GI != NULL) {
+
+	}*/
+
 }
+
+

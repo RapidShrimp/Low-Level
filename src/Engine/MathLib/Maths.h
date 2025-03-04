@@ -1,9 +1,10 @@
+#pragma once
+
 #include <ostream>
 using namespace std;
-
 //Vector Maths
-
-class Vector2 {
+class Vector2
+{
 
 public:
 	float x = 0.0f;
@@ -22,14 +23,19 @@ public:
 	Vector2 operator-(const Vector2& Vector);
 	Vector2 operator*(const Vector2& Vector);
 	Vector2 operator/(const Vector2& Vector);
+	Vector2 operator/(const float fValue);
 
 	bool operator==(const Vector2& Vector);
+
+	//Vector Functions 
 	void Abs();
-	float Normalise();
+	static void Normalise(Vector2& InVector);
+	float Length();
 	Vector2 GetForwardVector();
 	Vector2 GetRightVector();
-	friend ostream& operator<<(ostream&, const Vector2& Vector);
 	float DotProduct(Vector2& VectorB);
 	static float DotProduct(Vector2& VecA,Vector2& VecB);
 
+	//Screen Log Statement
+	friend ostream& operator<<(ostream&, const Vector2& Vector);
 };
