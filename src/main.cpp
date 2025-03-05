@@ -1,26 +1,34 @@
+#pragma once
 #include <iostream>
 #include "Engine/Core/GameInstance.h"
 #include "main.h"
 
-using namespace std;
 
 int main()
 {
 	InitialiseEngine();
+	UpdateLoop();
+	Shutdown();
 	return 0;
 }
 
 void InitialiseEngine() 
 {
 	cout << "Initialise Sinistar" << endl;
-	
-	//Create Game Instance;
-	GameInstance GI = GameInstance();
+	m_Instance = new GameInstance();
+	m_Instance->Init();
+}
 
-	//Lock Engine 
-	/*while (GI != NULL) {
+void UpdateLoop()
+{
+	m_Instance->Update();
+}
 
-	}*/
+void Shutdown()
+{
+	delete m_Instance;
+	m_Instance = nullptr;
+	cout << "Sinistar Shut Down..." << endl;
 
 }
 

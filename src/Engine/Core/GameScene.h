@@ -1,8 +1,9 @@
 #pragma once
-#include "Object.h"
-using namespace std;
+#include "SFML/Graphics.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
+using namespace sf;
 
-class RendererWindow;
+class Object;
 
 class GameScene {
 
@@ -11,11 +12,14 @@ public:
 	~GameScene();
 
 protected:
-	Object* SceneObjects;
+	std::vector<Object*> SceneObjects;
 
 private:
 
 
 public:
-	void RenderScene(const RendererWindow& Renderer);
+	void RegisterSpawnedObject(Object* RegisterObject);
+	void RenderScene(RenderWindow& Renderer);
+	virtual void LoadScene();
+	virtual void UnloadScene();
 };

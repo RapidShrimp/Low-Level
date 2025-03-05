@@ -1,4 +1,6 @@
 #pragma once
+#include "SFML/Graphics.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
 #include "Object.h"
 
 
@@ -18,6 +20,12 @@ void Object::OnActivate() {};
 void Object::OnDeactivate() {};
 void Object::BeginPlay() {};
 void Object::Update() {};
-void Object::FixedUpdate() {}
-void Object::Render() {};
-void Object::OnDestroy() {};
+void Object::FixedUpdate() {};
+void Object::Render(sf::RenderWindow& Renderer) {};
+void Object::OnDestroy() {}
+
+const Object* Object::GetOwner()
+{
+	return OwningObject;
+}
+;

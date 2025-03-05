@@ -1,10 +1,22 @@
 #pragma once
-#include <Engine/MathLib/Maths.h>
+#include "Libs/Maths.h"
+#include <Engine/Core/Component.h>
 
-class Transform
+namespace SinStr {
+
+struct Transform
 {
-public:
-	Vector2 Location = Vector2(0,0);
-	Vector2 Scale = Vector2(1,1);
-	float Rotation = 0;
+	Transform(Math::Vector2 SetLocation = Math::Vector2(0,0), Math::Vector2 SetScale = Math::Vector2(1, 1), float SetRotation = 0);
+
+	protected:
+		Math::Vector2 Location = Math::Vector2(0,0);
+		Math::Vector2 Scale = Math::Vector2(1,1);
+		float Rotation = 0;
+
+	public:
+		Math::Vector2 GetLocation();
+		Math::Vector2 GetScale();
+		float GetRotation();
 };
+
+}

@@ -9,7 +9,7 @@ enum E_CollisionEvent
 	CollisionExit
 };
 
-class RigidBody : Component
+class RigidBody : public Component
 {
 
 public:

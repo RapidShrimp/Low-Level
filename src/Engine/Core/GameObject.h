@@ -1,31 +1,30 @@
 #pragma once
 #include "Object.h"
+#include "Transform.h"
+#include "Libs/Maths.h"
 
-#include "Engine/MathLib/Maths.h"
 
-class Component;
-class Transform;
-
-class GameObject : Object
+class GameObject : public Object
 {
+	class Component;
+
+
 protected:
-	Component* Component;
-	Transform ObjectTransform;
 	
+	vector<Component*> Components;
+	SinStr::Transform m_Transform;
 	//Texture2D* Sprite
 	//SpriteRenderer
-
 public:
 
-	virtual void Init() override;
-	virtual void OnActivate() override;
-	virtual void OnDeactivate() override;
-	virtual void BeginPlay() override;
+	virtual void Init();
+	virtual void OnActivate();
+	virtual void OnDeactivate();
+	virtual void BeginPlay();
+	virtual void Update();
+	virtual void FixedUpdate();
+	virtual void Render(sf::RenderWindow& Renderer);
 	virtual void OnDestroy();
-	
 
-	Vector2 GetLocation();
-	Vector2 GetScale();
-	float GetRotation();
 
 };

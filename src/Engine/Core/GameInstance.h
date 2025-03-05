@@ -6,14 +6,23 @@
 using namespace std;
 using namespace sf;
 
-class GameInstance : Object {
+class GameInstance {
 
-	shared_ptr<GameScene> CurrentScene;
-	shared_ptr<GameScene> NextScene;
 
-	void Init() override;
-	void Update() override;
-	void Render() override;
-	RenderWindow GameWindow;
+public:
 
+	GameInstance();
+	~GameInstance();
+
+	bool m_GameExit = false;
+protected:
+	shared_ptr<GameScene> m_CurrentScene;
+	shared_ptr<GameScene> m_NextScene;
+	RenderWindow m_GameWindow;
+
+public:
+	void Init();
+	void Update();
+	void Render();
+	void CloseGame();
 };

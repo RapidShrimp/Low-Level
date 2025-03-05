@@ -1,38 +1,47 @@
 #pragma once
 #include "GameInstance.h"
+#include <iostream>
 
+GameInstance::GameInstance()
+{
+}
 
+GameInstance::~GameInstance()
+{
+}
 
 void GameInstance::Init()
 {
-	RenderWindow GameWindow(VideoMode({ 800,800 }), "Sinistar 2025 Remake");
-	CurrentScene = make_shared<GameScene>();
+	m_GameWindow = RenderWindow(VideoMode({ 800,800 }), "Sinistar 2025 Remake");
+	m_CurrentScene = make_shared<GameScene>();
+	m_CurrentScene->LoadScene();
 }
 
 void GameInstance::Update()
 {
-	Render();
-}
-
-
-void GameInstance::Render() {
-	
-	while (GameWindow.isOpen())
+	while (m_GameWindow.isOpen())
 	{
-		while (const optional event = GameWindow.pollEvent()) {
+		//Exit Game
+		while (const optional event = m_GameWindow.pollEvent()) {
 			if (event->is<Event::Closed>())
 			{
-				GameWindow.close();
+				CloseGame();
 			}
 		}
 
-		CircleShape Shape(240.0f);
-		Shape.setFillColor(Color::Green);
-
-		GameWindow.clear();
-		GameWindow.draw(Shape);
-		//CurrentScene->RenderScene(GameWindow);
-		//Draw Game Object Loop
-		GameWindow.display();
+		Render();
 	}
+}
+
+void GameInstance::Render() 
+{
+	m_GameWindow.clear();
+	m_CurrentScene->RenderScene(m_GameWindow);
+	m_GameWindow.display();
+}
+
+void GameInstance::CloseGame()
+{
+	m_CurrentScene->UnloadScene();
+	m_GameWindow.close();
 }
