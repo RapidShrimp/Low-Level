@@ -23,6 +23,7 @@ protected:
 public:
 	void Init();
 	void Update();
+	void FixedUpdate(float deltaTime);
 	void Render();
 	void CloseGame();
 };

@@ -11,7 +11,7 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(Low-Level src/main.cpp "src/main.h")
+add_executable(Low-Level src/main.cpp "src/main.h" )
 
 file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 target_sources(Low-Level PRIVATE ${MY_SOURCES})

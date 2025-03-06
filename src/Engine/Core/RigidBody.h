@@ -1,5 +1,5 @@
 #include "Component.h"
-
+#include "Maths.h"
 
 enum E_CollisionEvent
 {
@@ -11,17 +11,15 @@ enum E_CollisionEvent
 
 class RigidBody : public Component
 {
-
 public:
-	RigidBody();
-	RigidBody(bool IsTrigger, Vector2 DefaultScale, Vector2 Offset);
+	RigidBody(bool IsTrigger, Math::Vector2 DefaultScale, Math::Vector2 Offset = {0,0});
 	~RigidBody();
 
 protected:
 	bool IsTrigger = true;
-	Vector2 Scale = Vector2(1, 1);
-	Vector2 Offset = Vector2(0, 0);
+	Math::Vector2 Scale = {1,1};
+	Math::Vector2 Offset = {0,0};
 
-	void OnCollisionEnter(Collider CollisionGameObject, E_EventType Event);
-	void OnColliderEvent(Collider CollisionGameObjecct, E_EventType Event);
+	void OnCollisionEnter(Collider CollisionGameObject, E_CollisionEvent Event);
+	void OnColliderEvent(Collider CollisionGameObjecct, E_CollisionEvent Event);
 };

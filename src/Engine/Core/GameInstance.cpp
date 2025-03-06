@@ -33,6 +33,10 @@ void GameInstance::Update()
 	}
 }
 
+void GameInstance::FixedUpdate(float deltaTime)
+{
+}
+
 void GameInstance::Render() 
 {
 	m_GameWindow.clear();

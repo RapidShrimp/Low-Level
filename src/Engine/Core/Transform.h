@@ -2,7 +2,13 @@
 #include "Libs/Maths.h"
 
 namespace SinStr {
-
+	/**
+	* ---Transform Data Struct---
+	* Holds Values for;
+	* Location - Vector 2
+	* Scale - Vector 2
+	* Rotation - Float
+	**/
 struct Transform
 {
 public:
