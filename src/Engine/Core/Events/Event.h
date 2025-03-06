@@ -1,5 +1,6 @@
 #pragma once
 #include "vector"
+#include "functional"
 
 namespace SinStr {
 
@@ -25,7 +26,14 @@ namespace SinStr {
 		std::vector<Binding<T...>> listeners;
 
 	public:
-		Event<T...>& Invoke(T... args) { for (Binding<T...> l : listeners) l.Invoke(static_cast<T&&>(args)..); return this; }
+		Event<T...>& Invoke(T... args) 
+		{
+			for (Binding<T...> l : listeners)
+			{
+				l.Invoke(static_cast<T&&>(args)...);
+				return (*this);
+			}
+		}
 
 		void AddListener(const Binding<T...> listener)
 		{
@@ -34,7 +42,9 @@ namespace SinStr {
 				listeners.push_back(listener);
 			}
 		}
-		void RemoveListener(const Binding<T...> listener) { std::erase_if(listener, [listener](Binding<T...> b) {return listener.hash_code() == b.hash_code(); }); }
+		void RemoveListener(const Binding<T...> listener) 
+		{ 
+			std::erase_if(listener, [listener](Binding<T...> b) {return listener.hash_code() == b.hash_code(); }); }
 		void Empty() { listeners.clear(); }
 
 		Event<T...>& operator()(T...args) { Invoke(args...); return (*this); }
@@ -43,9 +53,5 @@ namespace SinStr {
 		Event<T...>& operator-=(const Binding<T...> listener) { RemoveListener(listener); return (*this); }
 		Event<T...>& operator-=(const std::function<void(T...)> func) { Binding<T...> b(func); *this -= b; return (*this); }
 
-
-
-	}
-};
-
+	};
 }
