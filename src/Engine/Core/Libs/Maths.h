@@ -1,5 +1,6 @@
 #pragma once
 #include <ostream>
+#include <SFML/System/Vector2.hpp>
 using namespace std;
 
 namespace Math {
@@ -24,6 +25,9 @@ namespace Math {
 		Vector2 operator-(const Vector2& Vector);
 		Vector2 operator*(const Vector2& Vector);
 		Vector2 operator/(const Vector2& Vector);
+		Vector2 operator+=(const Vector2& Vector);
+		Vector2 operator-=(const Vector2& Vector);
+
 		Vector2 operator/(const float fValue);
 
 		bool operator==(const Vector2& Vector);
@@ -46,7 +50,7 @@ namespace Math {
 		static Vector2 Right() { return Vector2(1, 0); }
 		static Vector2 Left() { return Vector2(-1, 0); }
 		static Vector2 Down() { return Vector2(0, -1); }
-		
+		//sf::Vector2f ToSF() { return sf::Vector2f(x, y); }
 
 	};
 

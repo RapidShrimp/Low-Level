@@ -20,6 +20,7 @@ private:
 public:
 	void RegisterSpawnedObject(Object* RegisterObject);
 	void RenderScene(RenderWindow& Renderer);
+	void Update();
 	virtual void LoadScene();
 	virtual void UnloadScene();
 };

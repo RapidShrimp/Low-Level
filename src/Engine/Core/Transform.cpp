@@ -9,19 +9,5 @@ SinStr::Transform::Transform(Math::Vector2 SetLocation,
 	Rotation = SetRotation;
 }
 
-Math::Vector2 SinStr::Transform::GetLocation()
-{
-	return Location;
-}
-
-Math::Vector2 SinStr::Transform::GetScale()
-{
-	return Scale;
-}
-
-float SinStr::Transform::GetRotation()
-{
-	return Rotation;
-}
 
 

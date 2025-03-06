@@ -28,7 +28,7 @@ void GameInstance::Update()
 				CloseGame();
 			}
 		}
-
+		m_CurrentScene->Update();
 		Render();
 	}
 }

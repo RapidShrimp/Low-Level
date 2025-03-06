@@ -19,6 +19,16 @@ Math::Vector2 Math::Vector2::operator/(const Math::Vector2& Vector)
 	return Math::Vector2(x/Vector.x,y/Vector.y);
 }
 
+Math::Vector2 Math::Vector2::operator+=(const Vector2& Vector)
+{
+	return Vector2(x+= Vector.x,y+=Vector.y);
+}
+
+Math::Vector2 Math::Vector2::operator-=(const Vector2& Vector)
+{
+	return Vector2(x-=Vector.x,y-=Vector.y);
+}
+
 Math::Vector2 Math::Vector2::operator/(const float fValue)
 {
 	return Math::Vector2(x / fValue, y / fValue);

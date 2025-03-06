@@ -29,6 +29,14 @@ void GameScene::RenderScene(RenderWindow& Renderer)
 
 }
 
+void GameScene::Update()
+{
+	for (int Objects = 0; Objects < SceneObjects.size(); Objects++)
+	{
+		SceneObjects[Objects]->Update();
+	}
+}
+
 void GameScene::LoadScene()
 {
 	GameObject* GreenCircle = new GameObject();
