@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 using namespace std;
 	//Some basic functionality that all game objects should have
+
 class Object
 {
 public:
@@ -9,10 +10,10 @@ public:
 	~Object();
 
 protected:
-	Object* OwningObject =nullptr;
+	Object* m_Owner = nullptr;
 
 public:
-	virtual void Init();
+	virtual void Init(Object* OwningObject);
 	virtual void OnActivate();
 	virtual void OnDeactivate();
 	virtual void BeginPlay();

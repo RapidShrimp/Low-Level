@@ -8,24 +8,24 @@ Object::Object() {}
 Object::~Object() 
 {
 
-	if (OwningObject == nullptr) {
+	if (m_Owner == nullptr) {
 		return;
 	}
-	delete OwningObject;
-	OwningObject = nullptr;
+	delete m_Owner;
+	m_Owner = nullptr;
 };
 
-void Object::Init() {};
+void Object::Init(Object* OwningObject) { OwningObject = OwningObject; };
 void Object::OnActivate() {};
 void Object::OnDeactivate() {};
 void Object::BeginPlay() {};
 void Object::Update() {};
 void Object::FixedUpdate() {};
 void Object::Render(sf::RenderWindow& Renderer) {};
-void Object::OnDestroy() {}
+void Object::OnDestroy() {};
 
 const Object* Object::GetOwner()
 {
-	return OwningObject;
+	return m_Owner;
 }
 ;

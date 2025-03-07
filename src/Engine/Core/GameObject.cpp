@@ -4,7 +4,26 @@
 #include "GameObject.h"
 #include <iostream>
 
-void GameObject::Init()
+
+GameObject::GameObject()
+{
+}
+
+GameObject::GameObject(SinStr::Transform SpawnTransform)
+{
+	m_Transform = SpawnTransform;
+}
+
+GameObject::GameObject(Math::Vector2 SpawnLocation)
+{
+	m_Transform.Location = SpawnLocation;
+}
+
+GameObject::~GameObject()
+{
+}
+
+void GameObject::Init(Object* OwningObject)
 {
 	//Create and Register All Components;
 }
@@ -32,18 +51,17 @@ void GameObject::BeginPlay()
 
 void GameObject::Update()
 {
-	//Check for Fixed Update
+	//Override Functionality Here:
 }
 
 void GameObject::FixedUpdate()
 {
-	m_Transform.Location += Math::Vector2(1, 1);
+	//Override Functionality Here:
 }
-
-
 
 void GameObject::Render(sf::RenderWindow& Renderer)
 {
+	//TODO - Set a default sprite to render here
 	sf::CircleShape Shape(240.0f);
 	Shape.setFillColor(sf::Color::Green);
 	Shape.setPosition(sf::Vector2f(m_Transform.Location.x,m_Transform.Location.y));
@@ -52,5 +70,5 @@ void GameObject::Render(sf::RenderWindow& Renderer)
 
 void GameObject::OnDestroy()
 {
-
+	//Loop through components and call destroy
 }

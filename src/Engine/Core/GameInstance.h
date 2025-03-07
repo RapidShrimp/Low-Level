@@ -7,8 +7,6 @@ using namespace std;
 using namespace sf;
 
 class GameInstance {
-
-
 public:
 
 	GameInstance();
