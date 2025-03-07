@@ -5,6 +5,5 @@
 void GameLevel::LoadScene()
 {
 	m_Player = new PlayerCharacter();
-	SpawnObject(m_Player, Math::Vector2(100, 100));
-
+	SpawnObject(m_Player, Math::Vector2(100, 100),true,"Player");
 }

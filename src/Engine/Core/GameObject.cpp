@@ -23,6 +23,20 @@ GameObject::~GameObject()
 {
 }
 
+void GameObject::RegisterComponent(Component* RegisterComponent, bool Activate, std::string DisplayName)
+{
+	if (std::find(m_Components.begin(), m_Components.end(), RegisterComponent) != m_Components.end())
+	{
+		cout << "Warning: Component Already Registered, avoid calling Register Component more than once" << endl;
+		return;
+	}
+	m_Components.push_back(RegisterComponent);
+	RegisterComponent->SetName(DisplayName);
+	RegisterComponent->Init(this);
+	RegisterComponent->BeginPlay();
+	if (Activate) { RegisterComponent->OnActivate(); }
+}
+
 void GameObject::Init(Object* OwningObject)
 {
 	//Create and Register All Components;
@@ -71,4 +85,8 @@ void GameObject::Render(sf::RenderWindow& Renderer)
 void GameObject::OnDestroy()
 {
 	//Loop through components and call destroy
+	for (int i = 0; i < m_Components.size(); i++) {
+		m_Components[i]->OnDestroy();
+	}
+	m_Components.clear();
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "GameObject.h"
+#include "string"
 #include "Engine/Core/Events/Event.h"
 #include <SFML/Graphics/RenderWindow.hpp>
 
@@ -13,17 +14,19 @@ public:
 	GameScene();
 	~GameScene();
 
+
 protected:
 	std::vector<Object*> SceneObjects;
 
 private:
 
-	void RegisterSpawnedObject(Object* RegisterObject);
+	void RegisterSpawnedObject(Object* RegisterObject, bool Activate);
+
 
 
 public:
-	GameObject* SpawnObject(GameObject* Spawnable, SinStr::Transform SpawnTransform);
-	GameObject* SpawnObject(GameObject* Spawnable, Math::Vector2 SpawnLocation);
+	GameObject* SpawnObject(GameObject* Spawnable, SinStr::Transform SpawnTransform, bool StartActive = true, std::string DisplayName = "Unassigned");
+	GameObject* SpawnObject(GameObject* Spawnable, Math::Vector2 SpawnLocation, bool StartActive = true, std::string DisplayName = "Unassigned");
 
 	void RenderScene(sf::RenderWindow& Renderer);
 	void Update();

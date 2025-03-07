@@ -12,7 +12,7 @@ GameScene::~GameScene()
 	
 }
 
-void GameScene::RegisterSpawnedObject(Object* RegisterObject)
+void GameScene::RegisterSpawnedObject(Object* RegisterObject, bool Activate)
 {
 
 	//Find if an instance already exists in the registered scene objects
@@ -22,21 +22,26 @@ void GameScene::RegisterSpawnedObject(Object* RegisterObject)
 		return;
 	}
 	SceneObjects.push_back(RegisterObject);
+
+	//Initialise GameObject
 	RegisterObject->Init(this);
 	RegisterObject->BeginPlay();
+
+	if (Activate) { RegisterObject->OnActivate(); }
 }
 
-GameObject* GameScene::SpawnObject(GameObject* Spawnable, SinStr::Transform SpawnTransform)
+GameObject* GameScene::SpawnObject(GameObject* Spawnable, SinStr::Transform SpawnTransform, bool StartActive, std::string DisplayName)
 {
 	Spawnable->m_Transform = SpawnTransform;
-	RegisterSpawnedObject(Spawnable);
+	Spawnable->SetName(DisplayName);
+	RegisterSpawnedObject(Spawnable,StartActive);
 	return Spawnable;
 }
 
-GameObject* GameScene::SpawnObject(GameObject* Spawnable, Math::Vector2 SpawnLocation)
+GameObject* GameScene::SpawnObject(GameObject* Spawnable, Math::Vector2 SpawnLocation, bool StartActive, std::string DisplayName)
 {
 	Spawnable->m_Transform.Location = SpawnLocation;
-	return SpawnObject(Spawnable, SinStr::Transform(SpawnLocation));
+	return SpawnObject(Spawnable, SinStr::Transform(SpawnLocation), StartActive ,DisplayName);
 }
 
 void GameScene::RenderScene(sf::RenderWindow& Renderer)

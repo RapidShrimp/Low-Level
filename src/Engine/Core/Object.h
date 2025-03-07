@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include "SFML/Graphics.hpp"
 using namespace std;
 	//Some basic functionality that all game objects should have
@@ -12,6 +13,9 @@ public:
 protected:
 	Object* m_Owner = nullptr;
 
+private:
+	std::string m_DisplayName = "Unassigned";
+
 public:
 	virtual void Init(Object* OwningObject);
 	virtual void OnActivate();
@@ -22,5 +26,7 @@ public:
 	virtual void Render(sf::RenderWindow& Renderer);
 	virtual void OnDestroy();
 
-	const Object* GetOwner();
+	void SetName(std::string NewName) { m_DisplayName = NewName; }
+	std::string GetName() { return m_DisplayName; }
+	const Object* GetOwner() { return m_Owner;}
 };

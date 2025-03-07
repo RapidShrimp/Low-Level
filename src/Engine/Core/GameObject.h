@@ -2,18 +2,13 @@
 #include "Object.h"
 #include "Transform.h"
 #include "Libs/Maths.h"
-
+#include "Engine/Core/Events/Event.h"
 class Component;
 
 class GameObject : public Object
 {
-
 public:
-	SinStr::Transform m_Transform;
-
-protected:
-	
-	vector<Component*> m_Components;
+	SinStr::Event<float, GameObject*> OnHealthChange;
 
 public:
 	GameObject();
@@ -21,6 +16,18 @@ public:
 	GameObject(Math::Vector2 SpawnLocation);
 	~GameObject();
 
+
+
+public:
+	SinStr::Transform m_Transform;
+
+protected:
+	
+	vector<Component*> m_Components;
+	
+
+public:
+	void RegisterComponent(Component* RegisterComponent, bool Activate = true , std::string DisplayName = "");
 	virtual void Init(Object* OwningObject) override;
 	virtual void OnActivate() override;
 	virtual void OnDeactivate() override;
@@ -29,6 +36,4 @@ public:
 	virtual void FixedUpdate() override;
 	virtual void Render(sf::RenderWindow& Renderer) override;
 	virtual void OnDestroy() override;
-
-
 };

@@ -1,0 +1,47 @@
+#pragma once
+#include <iostream>
+#include "Engine/Core/Component.h"
+#include "Engine/Core/Object.h"
+#include "GameFunctionLib.h"
+
+void GameFucntionLib::ApplyDamage(GameObject* DamageObject, float Damage, GameObject* Instigator)
+{
+	if (DamageObject == nullptr) { return; }
+	DamageObject->OnHealthChange.Invoke(Damage, Instigator);
+}
+
+void Debug::Log(Object* CallingObject, E_LogType LogType, std::string LogMessage) 
+{
+
+	std::string ObjectName = "[] ";
+	if (CallingObject != nullptr) 
+	{
+		Component* Item = dynamic_cast<Component*>(CallingObject);
+		if (Item != nullptr)
+		{
+			if (CallingObject->GetOwner() != nullptr)
+			{
+				/*const Object* OwnerTest = CallingObject->GetOwner();
+				
+				ObjectName.insert(ObjectName.end()-2, OwnerTest->GetName());*/
+				//Get Owner Name Here
+			}
+		}
+		//ObjectName.insert(ObjectName.end()-2, CallingObject->GetName());
+	}
+
+	std::string LogTypeStr;
+	switch (LogType)
+	{
+	case Display:
+		LogTypeStr = "Display: ";
+		break;
+	case Warning:
+		LogTypeStr = "Warning: ";
+		break;
+	case Error:
+		LogTypeStr = "ERROR: ";
+		break;
+	}
+	cout << ObjectName << LogTypeStr << LogMessage << endl;
+}

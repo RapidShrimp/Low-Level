@@ -26,6 +26,7 @@ void GameInstance::Update()
 			if (event->is<Event::Closed>())
 			{
 				CloseGame();
+				return;
 			}
 		}
 		m_CurrentScene->Update();
