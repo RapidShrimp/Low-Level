@@ -13,21 +13,16 @@ void GameFucntionLib::ApplyDamage(GameObject* DamageObject, float Damage, GameOb
 void Debug::Log(Object* CallingObject, E_LogType LogType, std::string LogMessage) 
 {
 
-	std::string ObjectName = "[] ";
+	std::string ObjectName = "";
 	if (CallingObject != nullptr) 
 	{
-		Component* Item = dynamic_cast<Component*>(CallingObject);
-		if (Item != nullptr)
+		std::string ParentName = "";
+		Object* Owner = CallingObject->GetOwner();
+		if (Owner != nullptr) 
 		{
-			if (CallingObject->GetOwner() != nullptr)
-			{
-				/*const Object* OwnerTest = CallingObject->GetOwner();
-				
-				ObjectName.insert(ObjectName.end()-2, OwnerTest->GetName());*/
-				//Get Owner Name Here
-			}
+			ParentName = Owner->GetName() + ':';
 		}
-		//ObjectName.insert(ObjectName.end()-2, CallingObject->GetName());
+		ObjectName = '[' + ParentName + CallingObject->GetName() + "] ";
 	}
 
 	std::string LogTypeStr;

@@ -1,10 +1,11 @@
 #pragma once
+#include "Engine/Core/Libs/GameFunctionLib.h"
 #include "Component.h"
-
 void Component::Init(Object* Owner)
 {
 	Object::Init(Owner);
-	//Override Functionality Here::
+	//Override Functionality Here:
+	
 }
 
 void Component::OnActivate()

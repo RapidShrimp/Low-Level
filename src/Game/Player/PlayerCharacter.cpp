@@ -12,6 +12,16 @@ PlayerCharacter::~PlayerCharacter()
 {
 }
 
+void PlayerCharacter::MovePlayer(Math::Vector2 MoveDirection)
+{
+	
+}
+
+void PlayerCharacter::FireWeapon()
+{
+	
+}
+
 void PlayerCharacter::Init(Object* OwningObject)
 {
 	Object::Init(OwningObject);

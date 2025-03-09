@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include "SFML/Graphics.hpp"
-using namespace std;
 	//Some basic functionality that all game objects should have
 
 class Object
@@ -28,5 +27,5 @@ public:
 
 	void SetName(std::string NewName) { m_DisplayName = NewName; }
 	std::string GetName() { return m_DisplayName; }
-	const Object* GetOwner() { return m_Owner;}
+	Object* GetOwner() { return m_Owner;}
 };

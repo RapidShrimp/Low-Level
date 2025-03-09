@@ -8,7 +8,7 @@ public:
 
 };
 
-static enum E_LogType {
+enum E_LogType {
 	Display = 0,
 	Warning = 1,
 	Error = 2
