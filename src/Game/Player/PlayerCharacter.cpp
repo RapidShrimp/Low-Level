@@ -1,11 +1,11 @@
 #pragma once
-#include "PlayerCharacter.h"
 #include "Engine/Core/Libs/GameFunctionLib.h"
-#include <iostream>
+#include "PlayerCharacter.h"
 
 PlayerCharacter::PlayerCharacter()
 {
 	m_Health = new HealthComponent();
+	m_SpriteRenderer = new SpriteRenderer();
 }
 
 PlayerCharacter::~PlayerCharacter()
@@ -26,7 +26,7 @@ void PlayerCharacter::Init(Object* OwningObject)
 {
 	Object::Init(OwningObject);
 	RegisterComponent(m_Health,true,"Health Component");
-
+	RegisterComponent(m_SpriteRenderer, true, "PlayerSpriteRenderer");
 }
 
 void PlayerCharacter::BeginPlay()

@@ -9,8 +9,8 @@ protected:
 	PlayerCharacter* m_Player;
 public:
 
-
-	void LoadScene() override;
+	GameLevel();
+	void OnLoadScene() override;
 
 	PlayerCharacter& GetPlayerCharacter() { return *m_Player; }
 };

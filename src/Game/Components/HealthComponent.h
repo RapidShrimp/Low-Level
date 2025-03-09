@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/Core/Component.h"
+#include "Engine/Core/Components/Component.h"
 #include "Engine/Core/Events/Event.h"
 
 class HealthComponent : public Component {

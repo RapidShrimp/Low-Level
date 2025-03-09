@@ -4,6 +4,7 @@
 
 GameScene::GameScene()
 {
+	m_SceneName = "Unassigned";
 
 }
 
@@ -27,7 +28,7 @@ void GameScene::RegisterSpawnedObject(Object* RegisterObject, bool Activate)
 	RegisterObject->Init(this);
 	RegisterObject->BeginPlay();
 
-	if (Activate) { RegisterObject->OnActivate(); }
+	if (Activate) { RegisterObject->Activate(); }
 }
 
 GameObject* GameScene::SpawnObject(GameObject* Spawnable, SinStr::Transform SpawnTransform, bool StartActive, std::string DisplayName)
@@ -61,8 +62,9 @@ void GameScene::Update()
 	}
 }
 
-void GameScene::LoadScene()
+void GameScene::OnLoadScene()
 {
+	cout << "Loading Scene:" + m_SceneName << endl;
 	//Create Game Objects Here
 	//Example:
 	/*
@@ -73,6 +75,7 @@ void GameScene::LoadScene()
 
 void GameScene::UnloadScene()
 {
+	cout << "Unloading Scene: " + m_SceneName << endl;
 	for (int i = 0; i < SceneObjects.size(); i++) 
 	{
 		SceneObjects[i]->OnDestroy();

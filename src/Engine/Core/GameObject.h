@@ -9,6 +9,11 @@ class GameObject : public Object
 {
 public:
 	SinStr::Event<float, GameObject*> OnHealthChange;
+	SinStr::Transform m_Transform;
+
+protected:
+	vector<Component*> m_Components;
+
 
 public:
 	GameObject();
@@ -16,18 +21,8 @@ public:
 	GameObject(Math::Vector2 SpawnLocation);
 	~GameObject();
 
+	void RegisterComponent(Component* RegisterComponent, bool Activate = true , std::string DisplayName = "", SinStr::Transform StartTransform = SinStr::Transform());
 
-
-public:
-	SinStr::Transform m_Transform;
-
-protected:
-	
-	vector<Component*> m_Components;
-	
-
-public:
-	void RegisterComponent(Component* RegisterComponent, bool Activate = true , std::string DisplayName = "");
 	virtual void Init(Object* OwningObject) override;
 	virtual void OnActivate() override;
 	virtual void OnDeactivate() override;

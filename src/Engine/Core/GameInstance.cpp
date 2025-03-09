@@ -14,7 +14,7 @@ void GameInstance::Init(/*TODO - Game Scene ClassType To Load Into*/)
 {
 	m_GameWindow = RenderWindow(VideoMode({ 800,800 }), "Sinistar 2025 Remake");
 	m_CurrentScene = make_shared<GameLevel>();
-	m_CurrentScene->LoadScene();
+	m_CurrentScene->OnLoadScene();
 }
 
 void GameInstance::Update()

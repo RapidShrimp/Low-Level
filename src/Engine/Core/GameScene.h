@@ -16,13 +16,12 @@ public:
 
 
 protected:
+	std::string m_SceneName = "Unassigned";
 	std::vector<Object*> SceneObjects;
 
 private:
 
 	void RegisterSpawnedObject(Object* RegisterObject, bool Activate);
-
-
 
 public:
 	GameObject* SpawnObject(GameObject* Spawnable, SinStr::Transform SpawnTransform, bool StartActive = true, std::string DisplayName = "Unassigned");
@@ -30,6 +29,6 @@ public:
 
 	void RenderScene(sf::RenderWindow& Renderer);
 	void Update();
-	virtual void LoadScene();
+	virtual void OnLoadScene();
 	virtual void UnloadScene();
 };

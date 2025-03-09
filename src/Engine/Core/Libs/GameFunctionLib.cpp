@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include "Engine/Core/Component.h"
 #include "Engine/Core/Object.h"
 #include "GameFunctionLib.h"
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "Engine/Core/Components/Component.h"
 #include "Transform.h"
 #include "GameObject.h"
 #include <iostream>
@@ -7,6 +7,7 @@
 
 GameObject::GameObject()
 {
+	m_Transform = SinStr::Transform();
 }
 
 GameObject::GameObject(SinStr::Transform SpawnTransform)
@@ -23,7 +24,7 @@ GameObject::~GameObject()
 {
 }
 
-void GameObject::RegisterComponent(Component* RegisterComponent, bool Activate, std::string DisplayName)
+void GameObject::RegisterComponent(Component* RegisterComponent, bool Activate, std::string DisplayName, SinStr::Transform StartTransform)
 {
 	if (std::find(m_Components.begin(), m_Components.end(), RegisterComponent) != m_Components.end())
 	{
@@ -31,10 +32,11 @@ void GameObject::RegisterComponent(Component* RegisterComponent, bool Activate, 
 		return;
 	}
 	m_Components.push_back(RegisterComponent);
+	RegisterComponent->GetLocalTransform() = StartTransform;
 	RegisterComponent->SetName(DisplayName);
 	RegisterComponent->Init(this);
 	RegisterComponent->BeginPlay();
-	if (Activate) { RegisterComponent->OnActivate(); }
+	if (Activate) { RegisterComponent->Activate(); }
 }
 
 void GameObject::Init(Object* OwningObject)
@@ -76,10 +78,13 @@ void GameObject::FixedUpdate()
 void GameObject::Render(sf::RenderWindow& Renderer)
 {
 	//TODO - Set a default sprite to render here
-	sf::CircleShape Shape(240.0f);
-	Shape.setFillColor(sf::Color::Green);
-	Shape.setPosition(sf::Vector2f(m_Transform.Location.x,m_Transform.Location.y));
-	Renderer.draw(Shape);
+
+	for (int Comp = 0; Comp < m_Components.size(); Comp++) 
+	{
+		if (m_Components[Comp] == nullptr) { continue; }
+		m_Components[Comp]->Render(Renderer);
+	}
+
 }
 
 void GameObject::OnDestroy()

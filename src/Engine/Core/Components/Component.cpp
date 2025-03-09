@@ -28,6 +28,7 @@ void Component::Update()
 	Object::Update();
 }
 
+
 void Component::FixedUpdate()
 {
 	Object::FixedUpdate();

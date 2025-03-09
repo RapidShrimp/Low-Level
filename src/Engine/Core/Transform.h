@@ -18,6 +18,12 @@ public:
 	Math::Vector2 Scale = Math::Vector2(1,1);
 	float Rotation = 0;
 
+	SinStr::Transform operator+(const SinStr::Transform& rhs_Tranform);
+	SinStr::Transform operator-(const SinStr::Transform& rhs_Tranform);
+	SinStr::Transform operator*(const SinStr::Transform& rhs_Tranform);
+	SinStr::Transform operator/(const SinStr::Transform& rhs_Tranform);
+	SinStr::Transform operator+=(const SinStr::Transform& rhs_Tranform);
+	SinStr::Transform operator-=(const SinStr::Transform& rhs_Tranform);
 };
 
 }

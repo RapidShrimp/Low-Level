@@ -11,21 +11,30 @@ public:
 
 protected:
 	Object* m_Owner = nullptr;
-
+	bool isActive = false;
 private:
 	std::string m_DisplayName = "Unassigned";
 
 public:
 	virtual void Init(Object* OwningObject);
-	virtual void OnActivate();
-	virtual void OnDeactivate();
 	virtual void BeginPlay();
+
+	void Activate();
+	void Deactivate();
+
 	virtual void Update();
 	virtual void FixedUpdate();
 	virtual void Render(sf::RenderWindow& Renderer);
 	virtual void OnDestroy();
 
+
+protected:
+	virtual void OnActivate();
+	virtual void OnDeactivate();
+
+public:
 	void SetName(std::string NewName) { m_DisplayName = NewName; }
 	std::string GetName() { return m_DisplayName; }
-	Object* GetOwner() { return m_Owner;}
+	virtual Object* GetOwner() { return m_Owner; }
+
 };

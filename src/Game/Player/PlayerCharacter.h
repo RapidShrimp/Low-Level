@@ -1,13 +1,14 @@
 #pragma once
 #include "Engine/Core/GameObject.h"
-#include "Game/Components/HealthComponent.h"
 #include "Engine/Core/Input/InputSystem.h"
+#include "Engine/Core/Components/SpriteRenderer.h"
+#include "Game/Components/HealthComponent.h"
 
 class PlayerCharacter : public GameObject 
 {
 protected:
 	HealthComponent* m_Health; 
-
+	SpriteRenderer* m_SpriteRenderer;
 	float m_MoveSpeed = 10.0f;
 
 public:

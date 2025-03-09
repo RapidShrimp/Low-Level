@@ -10,7 +10,17 @@ Object::~Object()
 	m_Owner = nullptr;
 };
 
-void Object::Init(Object* OwningObject) { m_Owner = OwningObject; };
+void Object::Init(Object* OwningObject) { m_Owner = OwningObject; }
+void Object::Activate()
+{
+	isActive = true;
+	OnActivate();
+}
+void Object::Deactivate()
+{
+	isActive = false;
+	OnDeactivate();
+}
 void Object::OnActivate() {};
 void Object::OnDeactivate() {};
 void Object::BeginPlay() {};
