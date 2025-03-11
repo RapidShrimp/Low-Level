@@ -32,11 +32,6 @@ void GameInstance::Update()
 		lastTime = std::chrono::steady_clock::now();
 		timeSinceLastPhysics += deltaTime;
 
-
-
-
-
-
 		//Exit Game
 		while (const optional event = m_GameWindow.pollEvent()) {
 			if (event->is<Event::Closed>())
@@ -45,7 +40,6 @@ void GameInstance::Update()
 				return;
 			}
 		}
-		m_CurrentScene->Update();
 
 
 		while (timeSinceLastPhysics >= physicsTimeStep)
@@ -55,6 +49,7 @@ void GameInstance::Update()
 		}
 
 
+		m_CurrentScene->Update();
 		Render();
 	}
 }
