@@ -50,7 +50,7 @@ namespace Math {
 		static Vector2 Right() { return Vector2(1, 0); }
 		static Vector2 Left() { return Vector2(-1, 0); }
 		static Vector2 Down() { return Vector2(0, -1); }
-		//sf::Vector2f ToSF() { return sf::Vector2f(x, y); }
+		sf::Vector2f ToSF() { return sf::Vector2f(x, y); }
 
 	};
 

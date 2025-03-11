@@ -14,9 +14,9 @@ FetchContent_MakeAvailable(SFML)
 add_executable(Low-Level "src/Game/main.cpp")
 
 file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+
 target_sources(Low-Level PRIVATE ${MY_SOURCES})
 target_include_directories(Low-Level PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
-
 target_link_libraries(Low-Level PRIVATE SFML::Graphics)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)

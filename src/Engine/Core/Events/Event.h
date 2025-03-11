@@ -26,13 +26,13 @@ namespace SinStr {
 		std::vector<Binding<T...>> listeners;
 
 	public:
-		Event<T...>& Invoke(T... args) 
+		Event<T...>& Invoke(T... args)
 		{
-			for (Binding<T...> l : listeners)
+			for (Binding<T...> l : listeners) 
 			{
 				l.Invoke(static_cast<T&&>(args)...);
-				return (*this);
-			}
+			} 
+			return (*this);
 		}
 
 		void AddListener(const Binding<T...> listener)

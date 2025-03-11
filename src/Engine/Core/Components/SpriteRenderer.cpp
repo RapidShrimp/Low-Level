@@ -11,7 +11,7 @@ void SpriteRenderer::BeginPlay()
 
 void SpriteRenderer::OnActivate()
 {
-	LoadTextureFromFile("Assets/Test.jpg");
+
 }
 
 void SpriteRenderer::OnDeactivate()
@@ -23,7 +23,16 @@ void SpriteRenderer::Render(sf::RenderWindow& Renderer)
  	GameObject* Owner = GetOwner();
 	if (!Owner || !isActive) { return; }
 
-
+	//TODO - Move the texture loading out of Render()
+	const sf::Image PackagedSheetCharacter("Assets/SinistarSprites.jpg");
+	bool Result = m_Texture.loadFromImage(PackagedSheetCharacter, true, sf::IntRect({0,0}, {32,32}));
+	
+	if (Result) 
+	{
+		sf::Sprite ShowSprite(m_Texture);
+		ShowSprite.setPosition(LocalTransform.Location.ToSF());
+		Renderer.draw(ShowSprite);
+	}
 	//Intexture.setSmooth(true);
 	//SinStr::Transform RenderTransform = SinStr::Transform(GetOwner()->m_Transform + LocalTransform);
 	//Intexture.setPosition(sf::Vector2f(RenderTransform.Location.x, RenderTransform.Location.y));
@@ -41,9 +50,9 @@ sf::Texture SpriteRenderer::LoadTextureFromFile(std::string Filename)
 	sf::Texture texture;
 	if (!texture.loadFromFile(Filename, false, sf::IntRect({10, 10}, {32, 32})))
 	{
-
+		//Error Here
 	}
-	return sf::Texture();
+	return texture;
 }
 
 
