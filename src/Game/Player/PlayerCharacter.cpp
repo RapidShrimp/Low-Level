@@ -5,7 +5,7 @@
 PlayerCharacter::PlayerCharacter()
 {
 	m_Health = new HealthComponent();
-	m_SpriteRenderer = new SpriteRenderer();
+	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSprites.jpg");
 }
 
 PlayerCharacter::~PlayerCharacter()

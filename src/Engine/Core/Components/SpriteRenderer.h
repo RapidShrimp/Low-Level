@@ -1,19 +1,13 @@
 #pragma once
 #include "Engine/Core/Components/Component.h"
 
-struct Sprite 
-{
-protected:
-	std::shared_ptr<sf::Texture> m_Texture;
-};
-
 class SpriteRenderer : public Component
 {
 	
 protected:
 
-	sf::Sprite m_Sprite;
 	sf::Texture m_Texture;
+	sf::Sprite* m_Sprite;
 
 public:
 	SpriteRenderer(std::string SpriteSheetFilepath);

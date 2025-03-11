@@ -1,8 +1,16 @@
 #pragma once
+#include "Engine/Core/Libs/GameFunctionLib.h"
 #include "SpriteRenderer.h"
 
-SpriteRenderer::SpriteRenderer()
+
+SpriteRenderer::SpriteRenderer(std::string SpriteSheetFilepath)
 {
+	const sf::Image SpriteSheet(SpriteSheetFilepath);
+	bool Result = m_Texture.loadFromImage(SpriteSheet, true, sf::IntRect({ 0,0 }, { 32,32 }));
+	if (Result) 
+	{
+		m_Sprite = new sf::Sprite(m_Texture);
+	}
 }
 
 void SpriteRenderer::BeginPlay()
@@ -23,6 +31,16 @@ void SpriteRenderer::Render(sf::RenderWindow& Renderer)
  	GameObject* Owner = GetOwner();
 	if (!Owner || !isActive) { return; }
 
+
+	if (m_Sprite == nullptr) 
+	{
+		Debug::Log(this, E_LogType::Error, "No Sprite Found");
+		return;
+	}
+
+	Renderer.draw(*m_Sprite);
+
+	return;
 	//TODO - Move the texture loading out of Render()
 	const sf::Image PackagedSheetCharacter("Assets/SinistarSprites.jpg");
 	bool Result = m_Texture.loadFromImage(PackagedSheetCharacter, true, sf::IntRect({0,0}, {32,32}));
@@ -31,7 +49,6 @@ void SpriteRenderer::Render(sf::RenderWindow& Renderer)
 	{
 		sf::Sprite ShowSprite(m_Texture);
 		ShowSprite.setPosition(LocalTransform.Location.ToSF());
-		Renderer.draw(ShowSprite);
 	}
 	//Intexture.setSmooth(true);
 	//SinStr::Transform RenderTransform = SinStr::Transform(GetOwner()->m_Transform + LocalTransform);
