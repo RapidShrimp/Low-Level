@@ -31,7 +31,7 @@ void SpriteRenderer::Render(sf::RenderWindow& Renderer)
  	GameObject* Owner = GetOwner();
 	if (!Owner || !isActive) { return; }
 
-
+	//Exit out of render loop if no sprite is found (This will cause Assertion Error if left unchecked
 	if (m_Sprite == nullptr) 
 	{
 		Debug::Log(this, E_LogType::Error, "No Sprite Found");
@@ -41,21 +41,6 @@ void SpriteRenderer::Render(sf::RenderWindow& Renderer)
 	Renderer.draw(*m_Sprite);
 
 	return;
-	//TODO - Move the texture loading out of Render()
-	const sf::Image PackagedSheetCharacter("Assets/SinistarSprites.jpg");
-	bool Result = m_Texture.loadFromImage(PackagedSheetCharacter, true, sf::IntRect({0,0}, {32,32}));
-	
-	if (Result) 
-	{
-		sf::Sprite ShowSprite(m_Texture);
-		ShowSprite.setPosition(LocalTransform.Location.ToSF());
-	}
-	//Intexture.setSmooth(true);
-	//SinStr::Transform RenderTransform = SinStr::Transform(GetOwner()->m_Transform + LocalTransform);
-	//Intexture.setPosition(sf::Vector2f(RenderTransform.Location.x, RenderTransform.Location.y));
-	//sf::Sprite TestSprite(Intexture);
-	
-	//Renderer.draw(m_Sprite);
 }
 
 void SpriteRenderer::OnDestroy()
