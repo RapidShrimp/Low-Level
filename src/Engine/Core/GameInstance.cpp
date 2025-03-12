@@ -12,9 +12,11 @@ GameInstance::~GameInstance()
 
 void GameInstance::Init(/*TODO - Game Scene ClassType To Load Into*/)
 {
-	m_GameWindow = RenderWindow(VideoMode({ 800,800 }), "Sinistar 2025 Remake");
+	m_GameWindow = sf::RenderWindow(sf::VideoMode({ 800,800 }), "Sinistar 2025 Remake");
 	m_CurrentScene = make_shared<GameLevel>();
 	m_CurrentScene->OnLoadScene();
+	InputEvents = new InputEventHandler();
+
 }
 
 void GameInstance::Update()
@@ -34,7 +36,7 @@ void GameInstance::Update()
 
 		//Exit Game
 		while (const optional event = m_GameWindow.pollEvent()) {
-			if (event->is<Event::Closed>())
+			if (event->is<sf::Event::Closed>())
 			{
 				CloseGame();
 				return;
@@ -42,15 +44,15 @@ void GameInstance::Update()
 		}
 
 
-		while (timeSinceLastPhysics >= physicsTimeStep)
+		if (timeSinceLastPhysics >= physicsTimeStep)
 		{
 			FixedUpdate(deltaTime);
 			timeSinceLastPhysics -= physicsTimeStep;
 		}
 
-
 		m_CurrentScene->Update();
 		Render();
+		InputEvents->Update();
 	}
 }
 

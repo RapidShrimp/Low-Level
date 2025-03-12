@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/Core/Libs/GameFunctionLib.h"
 #include "PlayerCharacter.h"
+#include "Engine/Core/Input/InputSystem.h"
 
 PlayerCharacter::PlayerCharacter()
 {
@@ -27,6 +28,7 @@ void PlayerCharacter::Init(Object* OwningObject)
 	Object::Init(OwningObject);
 	RegisterComponent(m_Health,true,"Health Component");
 	RegisterComponent(m_SpriteRenderer, true, "PlayerSpriteRenderer");
+
 }
 
 void PlayerCharacter::BeginPlay()
@@ -39,3 +41,4 @@ void PlayerCharacter::Update()
 	m_Health->Update();
 	//Debug::Log(this, E_LogType::Display, "Hello World");
 }
+

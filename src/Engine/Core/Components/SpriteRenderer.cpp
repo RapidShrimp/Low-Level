@@ -37,7 +37,8 @@ void SpriteRenderer::Render(sf::RenderWindow& Renderer)
 		Debug::Log(this, E_LogType::Error, "No Sprite Found");
 		return;
 	}
-
+	//Replace 0,0 with half the texture size
+	m_Sprite->setPosition((GetOwner()->m_Transform.Location).ToSF());
 	Renderer.draw(*m_Sprite);
 
 	return;

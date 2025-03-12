@@ -2,9 +2,8 @@
 #include "Object.h"
 #include "SFML/Graphics.hpp"
 #include "GameScene.h"
+#include "Engine/Core/Input/InputSystem.h"
 
-using namespace std;
-using namespace sf;
 
 class GameInstance {
 public:
@@ -16,8 +15,8 @@ public:
 protected:
 	shared_ptr<GameScene> m_CurrentScene;
 	shared_ptr<GameScene> m_NextScene;
-	RenderWindow m_GameWindow;
-
+	sf::RenderWindow m_GameWindow;
+	InputEventHandler* InputEvents = nullptr;
 public:
 	void Init();
 	void Update();
