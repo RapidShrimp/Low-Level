@@ -30,7 +30,7 @@ void PlayerCharacter::Init(Object* OwningObject)
 
 	BindableInput* UpKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::W);
 	//TODO - This Errors
-	//UpKey->OnInputUpdate += std::bind(&PlayerCharacter::FireWeapon, this, std::placeholders::_1);
+	UpKey->OnInputUpdate += std::bind(&PlayerCharacter::FireWeapon, this, std::placeholders::_1);
 }
 
 void PlayerCharacter::BeginPlay()
