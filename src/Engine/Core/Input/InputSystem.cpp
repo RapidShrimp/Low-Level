@@ -6,10 +6,11 @@
 BindableInput* InputEventHandler::CreateKeyInput(sf::Keyboard::Key DesiredKey)
 {
 	BindableInput* NewInput = CheckForExistingEvent(DesiredKey);
-	if (NewInput != nullptr)
-	{
-		KeyEvents.push_back(NewInput);
-	}
+	if (NewInput != nullptr) { return NewInput;}
+	
+	NewInput = new BindableInput();
+	NewInput->Action.KeyEvent = DesiredKey;
+	KeyEvents.push_back(NewInput);
 	return NewInput;
 }
 
@@ -35,14 +36,21 @@ void InputEventHandler::PollInputEvents()
 
 void BindableInput::PollEvent()
 {
-	CallbackContext CallbackType;
-	if (Action.IsTriggered == sf::Keyboard::isKeyPressed(Action.KeyEvent))
+	/*Contextual Inputs*/
+	if (Action.IsTriggered != sf::Keyboard::isKeyPressed(Action.KeyEvent)) 
 	{
-		CallbackType = Triggering;
+		if (Action.IsTriggered) 
+		{
+			CallbackData.Cancelled = true;
+		}
+		else 
+		{
+			CallbackData.Started = true;
+		}
 	}
-	else 
-	{
-		CallbackType = Action.IsTriggered ? Cancelled : Started;
-	}
-	OnInputUpdate(CallbackType);
+	Action.IsTriggered = sf::Keyboard::isKeyPressed(Action.KeyEvent);
+	CallbackData.Triggering = Action.IsTriggered;
+	OnInputUpdate(CallbackData);
+	CallbackData.Cancelled = false;
+	CallbackData.Started = false;
 }

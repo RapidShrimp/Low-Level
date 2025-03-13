@@ -19,7 +19,13 @@ void PlayerCharacter::MovePlayer(Math::Vector2 MoveDirection)
 
 void PlayerCharacter::FireWeapon(CallbackContext Context)
 {
-	
+	if (Context.Started) {
+		Debug::Log(this, Display, "Fire Started");
+	}
+	else if (Context.Cancelled) 
+	{
+		Debug::Log(this, Display, "Fire Cancelled");
+	}
 }
 
 void PlayerCharacter::Init(Object* OwningObject)
@@ -28,9 +34,12 @@ void PlayerCharacter::Init(Object* OwningObject)
 	RegisterComponent(m_Health,true,"Health Component");
 	RegisterComponent(m_SpriteRenderer, true, "PlayerSpriteRenderer");
 
-	BindableInput* UpKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::W);
-	//TODO - This Errors
-	UpKey->OnInputUpdate += std::bind(&PlayerCharacter::FireWeapon, this, std::placeholders::_1);
+	BindableInput* FireKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::Space);
+	BindableInput* UpKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::Space);
+
+	//TODO - This 
+	if (FireKey) { FireKey->OnInputUpdate += std::bind(&PlayerCharacter::FireWeapon, this, std::placeholders::_1);}
+
 }
 
 void PlayerCharacter::BeginPlay()

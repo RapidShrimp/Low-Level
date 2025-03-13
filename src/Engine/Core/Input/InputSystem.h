@@ -1,16 +1,18 @@
 #pragma once
 #include "ActionMapping.h"
 #include "./Engine/Core/Events/Event.h"
-enum CallbackContext 
+struct CallbackContext 
 {
-	Started,
-	Triggering,
-	Cancelled
+	bool Started = 0;
+	bool Triggering = 0;
+	bool Cancelled = 0;
+
 };
 
 class BindableInput
 {
 public:
+	CallbackContext CallbackData;
 	SinStr::Event<CallbackContext> OnInputUpdate;
 	ActionMapping Action;
 	void PollEvent();

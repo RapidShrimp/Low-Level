@@ -5,6 +5,7 @@
 GameLevel::GameLevel()
 {
 	m_SceneName = "Game Level";
+	SetName("Game Level 1");
 }
 
 void GameLevel::OnLoadScene()
