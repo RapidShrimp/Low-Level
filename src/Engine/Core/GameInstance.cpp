@@ -1,6 +1,8 @@
 #pragma once
+#include "Game/Scenes/GameLevel.h"
+#include "Engine/Core/Input/InputSystem.h"
 #include "GameInstance.h"
-#include <Game/Scenes/GameLevel.h>
+
 
 GameInstance::GameInstance()
 {
@@ -15,8 +17,6 @@ void GameInstance::Init(/*TODO - Game Scene ClassType To Load Into*/)
 	m_GameWindow = sf::RenderWindow(sf::VideoMode({ 800,800 }), "Sinistar 2025 Remake");
 	m_CurrentScene = make_shared<GameLevel>();
 	m_CurrentScene->OnLoadScene();
-	InputEvents = new InputEventHandler();
-
 }
 
 void GameInstance::Update()
@@ -52,7 +52,7 @@ void GameInstance::Update()
 
 		m_CurrentScene->Update();
 		Render();
-		InputEvents->Update();
+		//InputEventHandler::GetInstance()->PollInputEvents();
 	}
 }
 

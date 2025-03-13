@@ -2,60 +2,46 @@
 #include "Engine/Core/Libs/GameFunctionLib.h"
 #include "InputSystem.h"
 
-
-#pragma region Bindable Inputs
-
-template<typename U>
-BindableInput::BindableInput(sf::Keyboard::Key RegisteredKey, U ...)
+BindableInput* InputEventHandler::CreateKeyInput(sf::Keyboard::Key DesiredKey)
 {
-	//CallbackContext<U> CallbackType = CallbackContext<U>();
-	OnInputUpdate = new SinStr::Event<CallbackContext>();
-}
-
-BindableInput::BindableInput(sf::Keyboard::Key RegisteredKey)
-{
-	OnInputUpdate = new SinStr::Event<CallbackContext>();
-
-}
-
-void BindableInput::CalculateInput()
-{
-	//InputContext Context;
-	//if (IsHeld && sf::Keyboard::isKeyPressed(ListenerKey)) 
-	//{
-	//	Context = triggering;
-	//}
-	//else 
-	//{
-	//	Context = IsHeld ? cancelled : started;
-	//}
-	//OnInputUpdate.Invoke(Context);
-	//IsHeld = sf::Keyboard::isKeyPressed(ListenerKey);
-}
-#pragma endregion
-
-#pragma region Input Event Handler
-
-
-template<typename U>
-BindableInput* InputEventHandler::CreateInput(sf::Keyboard::Key RegisteredKey, U ReturnType)
-{
-	BindableInput* NewInput = new BindableInput(RegisteredKey, ReturnType);
-	if (NewInput != nullptr) 
+	BindableInput* NewInput = CheckForExistingEvent(DesiredKey);
+	if (NewInput != nullptr)
 	{
-		RegisteredInputs.push_back(NewInput);
+		KeyEvents.push_back(NewInput);
 	}
 	return NewInput;
 }
 
-BindableInput* InputEventHandler::CreateInput(sf::Keyboard::Key RegisteredKey)
+BindableInput* InputEventHandler::CheckForExistingEvent(sf::Keyboard::Key CheckKey)
 {
-
+	for(int i = 0; i<KeyEvents.size();i++)
+	{
+		if (KeyEvents[i]->Action.KeyEvent == CheckKey) 
+		{
+			return KeyEvents[i];
+		}
+	}
 	return nullptr;
 }
 
-void InputEventHandler::Update()
+void InputEventHandler::PollInputEvents()
 {
-	Debug::Log(this,Display ,"Input System Update");
+	for (int i = 0; i < KeyEvents.size(); i++)
+	{
+		KeyEvents[i]->PollEvent();
+	}
 }
-#pragma endregion
+
+void BindableInput::PollEvent()
+{
+	CallbackContext CallbackType;
+	if (Action.IsTriggered == sf::Keyboard::isKeyPressed(Action.KeyEvent))
+	{
+		CallbackType = Triggering;
+	}
+	else 
+	{
+		CallbackType = Action.IsTriggered ? Cancelled : Started;
+	}
+	OnInputUpdate.Invoke(CallbackType);
+}

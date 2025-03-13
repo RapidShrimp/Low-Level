@@ -1,57 +1,29 @@
 #pragma once
 #include "Engine/Core/Events/Event.h"
-#include "Engine/Core/Libs/Maths.h"
-#include "Engine/Core/Components/Component.h"
+#include "Engine/Core/Input/ActionMapping.h"
 
-struct CallbackContext
+enum CallbackContext 
 {
-	enum Result {
-		Started,
-		Triggering,
-		Cancelled
-	};
+	Started,
+	Triggering,
+	Cancelled
 };
 
 class BindableInput
 {
 public:
-	template<typename U>
-	BindableInput(sf::Keyboard::Key RegisteredKey, U...);
-	BindableInput(sf::Keyboard::Key RegisteredKey);
-
-	SinStr::Event<CallbackContext>* OnInputUpdate;
-	virtual void CalculateInput();
-private:
-	bool IsHeld = false;
-	sf::Keyboard::Key ListenerKey = sf::Keyboard::Key::Unknown;
+	SinStr::Event<CallbackContext> OnInputUpdate;
+	ActionMapping Action;
+	void PollEvent();
 };
 
-class InputEventHandler : public GameObject
+class InputEventHandler
 {
 private:
-	std::vector<BindableInput*> RegisteredInputs;
+	std::vector<BindableInput*> KeyEvents;
 public:
-	template<typename U>
-	BindableInput* CreateInput(sf::Keyboard::Key RegisteredKey,U ReturnTypes);
-	BindableInput* CreateInput(sf::Keyboard::Key RegisteredKey);
-
-	virtual void Update() override;
+	BindableInput* CreateKeyInput(sf::Keyboard::Key DesiredKey);
+	BindableInput* CheckForExistingEvent(sf::Keyboard::Key CheckKey);
+	void PollInputEvents();
 };
 
-struct XYAxisKey
-{
-	sf::Keyboard::Key Up = sf::Keyboard::Key::W;
-	sf::Keyboard::Key Down = sf::Keyboard::Key::S;
-	sf::Keyboard::Key Left = sf::Keyboard::Key::A;
-	sf::Keyboard::Key Right = sf::Keyboard::Key::D;
-
-	Math::Vector2 GetXYVector()
-	{
-		Math::Vector2 Direction = Math::Vector2(0, 0);
-		Direction.y += sf::Keyboard::isKeyPressed(Up);
-		Direction.y -= sf::Keyboard::isKeyPressed(Down);
-		Direction.x += sf::Keyboard::isKeyPressed(Right);
-		Direction.y -= sf::Keyboard::isKeyPressed(Left);
-		return Direction;
-	}
-};

@@ -64,7 +64,7 @@ void GameScene::Update()
 
 void GameScene::OnLoadScene()
 {
-	cout << "Loading Scene:" + m_SceneName << endl;
+	cout << "Loading Scene: " + m_SceneName << endl;
 	//Create Game Objects Here
 	//Example:
 	/*

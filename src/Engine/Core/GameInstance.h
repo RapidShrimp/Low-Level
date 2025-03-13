@@ -2,12 +2,10 @@
 #include "Object.h"
 #include "SFML/Graphics.hpp"
 #include "GameScene.h"
-#include "Engine/Core/Input/InputSystem.h"
-
-
+class InputEventHandler;
 class GameInstance {
 public:
-
+	
 	GameInstance();
 	~GameInstance();
 
@@ -16,7 +14,7 @@ protected:
 	shared_ptr<GameScene> m_CurrentScene;
 	shared_ptr<GameScene> m_NextScene;
 	sf::RenderWindow m_GameWindow;
-	InputEventHandler* InputEvents = nullptr;
+	InputEventHandler* m_InputSystem;
 public:
 	void Init();
 	void Update();
