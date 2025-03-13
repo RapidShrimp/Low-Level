@@ -1,16 +1,14 @@
 #pragma once
 #include "Game/Scenes/GameLevel.h"
-#include "Engine/Core/Input/InputSystem.h"
 #include "GameInstance.h"
+#include "Engine/Core/Input/InputSystem.h"
 
-
-GameInstance::GameInstance()
-{
-}
+InputEventHandler* InputEventHandler::m_InputSystemInstance = nullptr;
 
 GameInstance::~GameInstance()
 {
 }
+
 
 void GameInstance::Init(/*TODO - Game Scene ClassType To Load Into*/)
 {
@@ -49,10 +47,10 @@ void GameInstance::Update()
 			FixedUpdate(deltaTime);
 			timeSinceLastPhysics -= physicsTimeStep;
 		}
-
 		m_CurrentScene->Update();
 		Render();
-		//InputEventHandler::GetInstance()->PollInputEvents();
+		InputEventHandler::GetInstance()->PollInputEvents();
+		
 	}
 }
 

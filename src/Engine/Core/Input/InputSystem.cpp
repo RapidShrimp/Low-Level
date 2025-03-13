@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include "Engine/Core/Libs/GameFunctionLib.h"
 #include "InputSystem.h"
 
@@ -43,5 +44,5 @@ void BindableInput::PollEvent()
 	{
 		CallbackType = Action.IsTriggered ? Cancelled : Started;
 	}
-	OnInputUpdate.Invoke(CallbackType);
+	OnInputUpdate(CallbackType);
 }

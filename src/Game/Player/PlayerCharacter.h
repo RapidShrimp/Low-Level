@@ -1,7 +1,7 @@
 #pragma once
 #include "Engine/Core/GameObject.h"
-#include "Engine/Core/Input/InputSystem.h"
 #include "Engine/Core/Components/SpriteRenderer.h"
+#include "Engine/Core/Input/InputSystem.h"
 #include "Game/Components/HealthComponent.h"
 
 class PlayerCharacter : public GameObject 
@@ -16,7 +16,7 @@ public:
 	~PlayerCharacter();
 
 	void MovePlayer(Math::Vector2 MoveDirection);
-	void FireWeapon();
+	void FireWeapon(CallbackContext Context);
 	
 	virtual void Init(Object* OwningObject) override;
 	//virtual void OnActivate() override;

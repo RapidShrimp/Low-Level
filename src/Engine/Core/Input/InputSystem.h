@@ -1,7 +1,6 @@
 #pragma once
-#include "Engine/Core/Events/Event.h"
-#include "Engine/Core/Input/ActionMapping.h"
-
+#include "ActionMapping.h"
+#include "./Engine/Core/Events/Event.h"
 enum CallbackContext 
 {
 	Started,
@@ -17,8 +16,24 @@ public:
 	void PollEvent();
 };
 
+
 class InputEventHandler
 {
+private:
+
+	InputEventHandler() {}; //Prevent Direct Instantiate
+	InputEventHandler(const InputEventHandler&) = delete; //Prevent Copy Constructor
+	InputEventHandler& operator=(const InputEventHandler&) = delete; //Prevent Copy Assign
+	static InputEventHandler* m_InputSystemInstance;
+	~InputEventHandler();
+
+public:
+	static inline InputEventHandler* GetInstance() /*Create / Get;*/
+	{
+		if (m_InputSystemInstance == nullptr) { m_InputSystemInstance = new InputEventHandler(); }
+		return m_InputSystemInstance;
+	};
+
 private:
 	std::vector<BindableInput*> KeyEvents;
 public:

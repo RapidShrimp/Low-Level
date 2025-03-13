@@ -1,7 +1,6 @@
 #pragma once
 #include "Engine/Core/Libs/GameFunctionLib.h"
 #include "PlayerCharacter.h"
-#include "Engine/Core/Input/InputSystem.h"
 
 PlayerCharacter::PlayerCharacter()
 {
@@ -18,7 +17,7 @@ void PlayerCharacter::MovePlayer(Math::Vector2 MoveDirection)
 	
 }
 
-void PlayerCharacter::FireWeapon()
+void PlayerCharacter::FireWeapon(CallbackContext Context)
 {
 	
 }
@@ -29,6 +28,9 @@ void PlayerCharacter::Init(Object* OwningObject)
 	RegisterComponent(m_Health,true,"Health Component");
 	RegisterComponent(m_SpriteRenderer, true, "PlayerSpriteRenderer");
 
+	BindableInput* UpKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::W);
+	//TODO - This Errors
+	//UpKey->OnInputUpdate += std::bind(&PlayerCharacter::FireWeapon, this, std::placeholders::_1);
 }
 
 void PlayerCharacter::BeginPlay()

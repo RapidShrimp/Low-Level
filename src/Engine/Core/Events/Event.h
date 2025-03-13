@@ -1,6 +1,7 @@
 #pragma once
 #include "vector"
 #include "functional"
+#include "algorithm"
 
 namespace SinStr {
 
@@ -10,7 +11,7 @@ namespace SinStr {
 		size_t hash;
 		std::function<void(T...)> listener;
 	public:
-		Binding(std::function<void(T...)> func) : hash(func.target_type().hashCode()), listener(std::move(func)) {}
+		Binding(std::function<void(T...)> func) : hash(func.target_type().hash_code()), listener(std::move(func)) {}
 		bool operator==(const Binding<T...>& rhs) { return hash == rhs.hash; }
 		bool operator!=(const Binding<T...>& rhs) { return hash != rhs.hash; }
 		constexpr size_t hash_code() const throw() { return hash; }
@@ -37,14 +38,17 @@ namespace SinStr {
 
 		void AddListener(const Binding<T...> listener)
 		{
-			if (std::find_if(listeners.Begin(), listeners.end(), [listener](Binding<T...> b) {return listener.hash_code() == b.hash_code(); }) == listeners.end())
+			if (std::find_if(listeners.begin(), listeners.end(), [listener](Binding<T...> b) {return listener.hash_code() == b.hash_code(); }) == listeners.end())
 			{
 				listeners.push_back(listener);
 			}
 		}
 		void RemoveListener(const Binding<T...> listener) 
 		{ 
-			std::erase_if(listener, [listener](Binding<T...> b) {return listener.hash_code() == b.hash_code(); }); }
+			std::erase_if(listener, [listener](Binding<T...> b) 
+				{
+					return listener.hash_code() == b.hash_code(); }); 
+		}
 		void Empty() { listeners.clear(); }
 
 		Event<T...>& operator()(T...args) { Invoke(args...); return (*this); }

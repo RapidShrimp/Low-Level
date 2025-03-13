@@ -1,13 +1,13 @@
 #pragma once
+#include "main.h"
 #include <iostream>
 #include "Engine/Core/GameInstance.h"
-#include "main.h"
 
+GameInstance* GameInstance::m_GameInstance = nullptr;
 
 int main()
 {
 	InitialiseEngine();
-	UpdateLoop();
 	Shutdown();
 	return 0;
 }
@@ -15,21 +15,14 @@ int main()
 void InitialiseEngine() 
 {
 	cout << "Initialise Sinistar" << endl;
-	m_Instance = new GameInstance();
-	m_Instance->Init();
+	GameInstance::GetGameInstance()->Init();
+	GameInstance::GetGameInstance()->Update();
 }
 
-void UpdateLoop()
-{
-	m_Instance->Update();
-}
 
 void Shutdown()
 {
-	delete m_Instance;
-	m_Instance = nullptr;
 	cout << "Sinistar Shut Down..." << endl;
-
 }
 
 

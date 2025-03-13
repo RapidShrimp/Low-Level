@@ -6,7 +6,7 @@ class PlayerCharacter;
 class GameLevel : public GameScene 
 {
 protected:
-	PlayerCharacter* m_Player;
+	PlayerCharacter* m_Player = nullptr;
 public:
 
 	GameLevel();
