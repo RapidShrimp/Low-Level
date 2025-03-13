@@ -70,7 +70,7 @@ void GameObject::Update()
 	//Override Functionality Here:
 }
 
-void GameObject::FixedUpdate()
+void GameObject::FixedUpdate(float deltaTime)
 {
 	//Override Functionality Here:
 }

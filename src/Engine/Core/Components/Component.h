@@ -17,7 +17,7 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Update() override;
 	virtual void Render(sf::RenderWindow& Renderer) override;
-	virtual void FixedUpdate() override;
+	virtual void FixedUpdate(float deltaTime) override;
 	virtual void OnDestroy() override;
 
 	virtual GameObject* GetOwner() { return dynamic_cast<GameObject*>(m_Owner); }

@@ -23,7 +23,7 @@ public:
 	void Deactivate();
 
 	virtual void Update();
-	virtual void FixedUpdate();
+	virtual void FixedUpdate(float deltaTime);
 	virtual void Render(sf::RenderWindow& Renderer);
 	virtual void OnDestroy();
 

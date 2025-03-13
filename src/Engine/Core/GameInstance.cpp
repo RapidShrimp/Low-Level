@@ -42,7 +42,6 @@ void GameInstance::Update()
 			}
 		}
 
-
 		if (timeSinceLastPhysics >= physicsTimeStep)
 		{
 			FixedUpdate(deltaTime);
@@ -57,6 +56,7 @@ void GameInstance::Update()
 
 void GameInstance::FixedUpdate(float deltaTime)
 {
+	m_CurrentScene->FixedUpdate(deltaTime);
 }
 
 void GameInstance::Render() 

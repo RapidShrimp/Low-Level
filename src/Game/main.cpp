@@ -19,7 +19,6 @@ void InitialiseEngine()
 	GameInstance::GetGameInstance()->Update();
 }
 
-
 void Shutdown()
 {
 	cout << "Sinistar Shut Down..." << endl;

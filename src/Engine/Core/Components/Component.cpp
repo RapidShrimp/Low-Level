@@ -29,9 +29,9 @@ void Component::Update()
 }
 
 
-void Component::FixedUpdate()
+void Component::FixedUpdate(float deltaTime)
 {
-	Object::FixedUpdate();
+	Object::FixedUpdate(deltaTime);
 }
 
 void Component::Render(sf::RenderWindow& Renderer)

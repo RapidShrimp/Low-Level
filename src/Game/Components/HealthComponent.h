@@ -14,7 +14,7 @@ public:
 	HealthComponent(float Health);
 	
 	virtual void Update() override;
-	virtual void FixedUpdate() override;
+	virtual void FixedUpdate(float deltaTime) override;
 
 	void OnActivate() override;
 	void OnDeactivate() override;

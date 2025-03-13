@@ -20,7 +20,7 @@ void HealthComponent::Update()
 
 }
 
-void HealthComponent::FixedUpdate()
+void HealthComponent::FixedUpdate(float deltaTime)
 {
 }
 

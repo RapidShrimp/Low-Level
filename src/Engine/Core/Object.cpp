@@ -25,6 +25,6 @@ void Object::OnActivate() {};
 void Object::OnDeactivate() {};
 void Object::BeginPlay() {};
 void Object::Update() {};
-void Object::FixedUpdate() {};
+void Object::FixedUpdate(float deltaTime) {};
 void Object::Render(sf::RenderWindow& Renderer) {};
 void Object::OnDestroy() {};

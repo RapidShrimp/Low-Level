@@ -35,7 +35,8 @@ void PlayerCharacter::Init(Object* OwningObject)
 	RegisterComponent(m_SpriteRenderer, true, "PlayerSpriteRenderer");
 
 	BindableInput* FireKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::Space);
-	BindableInput* UpKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::Space);
+	ActionMapping<Math::Vector2> 
+	BindableInput* UpKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::W);
 
 	//TODO - This 
 	if (FireKey) { FireKey->OnInputUpdate += std::bind(&PlayerCharacter::FireWeapon, this, std::placeholders::_1);}
