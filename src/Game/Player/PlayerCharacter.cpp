@@ -12,9 +12,12 @@ PlayerCharacter::~PlayerCharacter()
 {
 }
 
-void PlayerCharacter::MovePlayer(Math::Vector2 MoveDirection)
+void PlayerCharacter::MovePlayer(CallbackContext Context, Math::Vector2 MoveVector)
 {
-	
+	if (Context.Triggering) {
+		Debug::Log(this, Display, "Moving");
+	}
+
 }
 
 void PlayerCharacter::FireWeapon(CallbackContext Context)
@@ -35,11 +38,13 @@ void PlayerCharacter::Init(Object* OwningObject)
 	RegisterComponent(m_SpriteRenderer, true, "PlayerSpriteRenderer");
 
 	BindableInput* FireKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::Space);
-	ActionMapping<Math::Vector2> 
-	BindableInput* UpKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::W);
+	
+	AxisActionMapping MoveKeys = AxisActionMapping(sf::Keyboard::Key::W, sf::Keyboard::Key::S, sf::Keyboard::Key::A, sf::Keyboard::Key::D);
+	AxisInput* MoveInput = InputEventHandler::GetInstance()->CreateAxisInput(MoveKeys);
 
 	//TODO - This 
 	if (FireKey) { FireKey->OnInputUpdate += std::bind(&PlayerCharacter::FireWeapon, this, std::placeholders::_1);}
+	if (MoveInput) { MoveInput->OnAxisInputUpdate += std::bind(&PlayerCharacter::MovePlayer, this, std::placeholders::_1, std::placeholders::_2); }
 
 }
 

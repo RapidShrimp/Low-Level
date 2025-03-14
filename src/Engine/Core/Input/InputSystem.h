@@ -12,12 +12,22 @@ struct CallbackContext
 class BindableInput
 {
 public:
+	BindableInput(ActionMapping(Map)) { Action = Map; }
+	ActionMapping Action;
 	CallbackContext CallbackData;
 	SinStr::Event<CallbackContext> OnInputUpdate;
-	ActionMapping Action;
 	void PollEvent();
 };
 
+class AxisInput 
+{
+public:
+	AxisInput(AxisActionMapping(Map)) { Actions = Map; }
+	AxisActionMapping Actions;
+	SinStr::Event<CallbackContext,Math::Vector2> OnAxisInputUpdate;
+	Math::Vector2 CurrentVector = Math::Vector2(0,0);
+	void PollEvent();
+};
 
 class InputEventHandler
 {
@@ -38,9 +48,13 @@ public:
 
 private:
 	std::vector<BindableInput*> KeyEvents;
+	std::vector<AxisInput*> AxisEvents;
+
 public:
-	BindableInput* CreateKeyInput(sf::Keyboard::Key DesiredKey);
+	BindableInput* CreateKeyInput(ActionMapping(Map));
 	BindableInput* CheckForExistingEvent(sf::Keyboard::Key CheckKey);
+	AxisInput* CreateAxisInput(AxisActionMapping(Map));
+
 	void PollInputEvents();
 };
 

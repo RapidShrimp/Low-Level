@@ -29,6 +29,12 @@ Math::Vector2 Math::Vector2::operator-=(const Vector2& Vector)
 	return Vector2(x-=Vector.x,y-=Vector.y);
 }
 
+void Math::Vector2::operator=(const Vector2& Vector)
+{
+	x = Vector.x;
+	y = Vector.y;
+}
+
 Math::Vector2 Math::Vector2::operator/(const float fValue)
 {
 	return Math::Vector2(x / fValue, y / fValue);
@@ -38,6 +44,13 @@ bool Math::Vector2::operator==(const Math::Vector2& Vector)
 {
 	if (Vector.x != x || Vector.y != y) { return false; }
 	return true;
+}
+
+bool Math::Vector2::operator!=(const Vector2& Vector)
+{
+	if (Vector.x != x || Vector.y != y) { return true; }
+	return false;
+
 }
 
 

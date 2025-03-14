@@ -14,8 +14,7 @@ protected:
 public:
 	PlayerCharacter();
 	~PlayerCharacter();
-
-	void MovePlayer(Math::Vector2 MoveDirection);
+	void MovePlayer(CallbackContext Context, Math::Vector2 MoveVector);
 	void FireWeapon(CallbackContext Context);
 	
 	virtual void Init(Object* OwningObject) override;

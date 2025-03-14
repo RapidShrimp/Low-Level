@@ -27,10 +27,14 @@ namespace Math {
 		Vector2 operator/(const Vector2& Vector);
 		Vector2 operator+=(const Vector2& Vector);
 		Vector2 operator-=(const Vector2& Vector);
+		void operator=(const Vector2& Vector);
+
 
 		Vector2 operator/(const float fValue);
 
 		bool operator==(const Vector2& Vector);
+		bool operator!=(const Vector2& Vector);
+
 
 		//Vector Functions 
 		void Abs();
