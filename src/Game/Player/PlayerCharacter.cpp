@@ -14,8 +14,9 @@ PlayerCharacter::~PlayerCharacter()
 
 void PlayerCharacter::MovePlayer(CallbackContext Context, Math::Vector2 MoveVector)
 {
-	if (Context.Triggering) {
-		Debug::Log(this, Display, "Moving");
+	if (Context.Triggering) 
+	{
+		Debug::Log(this, Display, MoveVector.ToString());
 	}
 
 }

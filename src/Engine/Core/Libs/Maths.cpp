@@ -1,4 +1,5 @@
 #include "Maths.h"
+#include <string>
 Math::Vector2 Math::Vector2::operator+(const Math::Vector2& Vector)
 {
 	return Math::Vector2(x + Vector.x,y + Vector.y);
@@ -69,6 +70,13 @@ void Math::Vector2::Abs()
 float Math::Vector2::Length()
 {
 	return std::sqrt(x * x + y * y);
+}
+
+std::string Math::Vector2::ToString()
+{
+	std::string ReturnString = "X: " + std::to_string(x) + " Y: " + std::to_string(y);
+	return ReturnString;
+
 }
 
 void Math::Vector2::Normalise(Math::Vector2& InVector)

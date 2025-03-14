@@ -84,6 +84,8 @@ void AxisInput::PollEvent()
 		Data.Cancelled = true;
 	}
 	Data.Triggering = (Direction != Math::Vector2(0, 0));
+	
+	Math::Vector2::Normalise(Direction);
 	CurrentVector = Direction;
 	OnAxisInputUpdate(Data, CurrentVector);
 }
