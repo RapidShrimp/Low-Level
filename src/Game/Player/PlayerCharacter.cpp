@@ -1,11 +1,15 @@
 #pragma once
 #include "Engine/Core/Libs/GameFunctionLib.h"
+#include "Engine/Core/Collider.h"
+
 #include "PlayerCharacter.h"
 
 PlayerCharacter::PlayerCharacter()
 {
 	m_Health = new HealthComponent();
 	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSprites.jpg");
+	m_Collider = new Collider(false,10.0f);
+	MoveDirection = Math::Vector2::Zero();
 }
 
 PlayerCharacter::~PlayerCharacter()
@@ -16,7 +20,11 @@ void PlayerCharacter::MovePlayer(CallbackContext Context, Math::Vector2 MoveVect
 {
 	if (Context.Triggering) 
 	{
-		Debug::Log(this, Display, MoveVector.ToString());
+		MoveDirection = MoveVector;
+	}
+	if (Context.Cancelled) 
+	{
+		MoveDirection = Math::Vector2::Zero();
 	}
 
 }
@@ -37,6 +45,7 @@ void PlayerCharacter::Init(Object* OwningObject)
 	Object::Init(OwningObject);
 	RegisterComponent(m_Health,true,"Health Component");
 	RegisterComponent(m_SpriteRenderer, true, "PlayerSpriteRenderer");
+	RegisterComponent(m_Collider, true, "PlayerCircleCollider");
 
 	BindableInput* FireKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::Space);
 	
@@ -56,7 +65,12 @@ void PlayerCharacter::BeginPlay()
 
 void PlayerCharacter::Update()
 {
-	m_Health->Update();
+	GameObject::Update();
 	//Debug::Log(this, E_LogType::Display, "Hello World");
 }
 
+void PlayerCharacter::FixedUpdate(float DeltaTime)
+{
+	GameObject::FixedUpdate(DeltaTime);
+	m_Transform.Location += MoveDirection * m_MoveSpeed;
+}

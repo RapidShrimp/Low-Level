@@ -14,21 +14,21 @@ public:
 	GameScene();
 	~GameScene();
 
-
-protected:
-	std::string m_SceneName = "Unassigned";
-	std::vector<Object*> SceneObjects;
-
-private:
-
-	void RegisterSpawnedObject(Object* RegisterObject, bool Activate);
-
-public:
-	GameObject* SpawnObject(GameObject* Spawnable, SinStr::Transform SpawnTransform, bool StartActive = true, std::string DisplayName = "Unassigned");
-	GameObject* SpawnObject(GameObject* Spawnable, Math::Vector2 SpawnLocation, bool StartActive = true, std::string DisplayName = "Unassigned");
-
 	void RenderScene(sf::RenderWindow& Renderer);
+	void FixedUpdate(float DeltaTime);
 	void Update();
 	virtual void OnLoadScene();
 	virtual void UnloadScene();
+
+protected:
+	std::string m_SceneName = "Unassigned";
+	std::vector<GameObject*> SceneObjects;
+
+public:	
+	GameObject* SpawnObject(GameObject* Spawnable, SinStr::Transform SpawnTransform, bool StartActive = true, std::string DisplayName = "Unassigned");
+	GameObject* SpawnObject(GameObject* Spawnable, Math::Vector2 SpawnLocation, bool StartActive = true, std::string DisplayName = "Unassigned");
+	const std::vector<GameObject*> GetGameObjects() { return SceneObjects; }
+private:
+
+	void RegisterSpawnedObject(GameObject* RegisterObject, bool Activate);
 };

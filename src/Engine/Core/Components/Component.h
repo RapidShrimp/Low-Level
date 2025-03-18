@@ -7,7 +7,7 @@ class Component : public Object
 
 
 protected:
-	SinStr::Transform LocalTransform = {};
+	SinStr::Transform m_LocalTransform = {};
 
 public:
 
@@ -21,6 +21,6 @@ public:
 	virtual void OnDestroy() override;
 
 	virtual GameObject* GetOwner() { return dynamic_cast<GameObject*>(m_Owner); }
-	void SetLocalTransform(SinStr::Transform NewTransform) { LocalTransform = NewTransform; };
-	SinStr::Transform& GetLocalTransform() { return LocalTransform; };
+	void SetLocalTransform(SinStr::Transform NewTransform) { m_LocalTransform = NewTransform; };
+	SinStr::Transform& GetLocalTransform() { return m_LocalTransform; };
 };

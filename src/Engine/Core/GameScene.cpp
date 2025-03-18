@@ -13,7 +13,7 @@ GameScene::~GameScene()
 	
 }
 
-void GameScene::RegisterSpawnedObject(Object* RegisterObject, bool Activate)
+void GameScene::RegisterSpawnedObject(GameObject* RegisterObject, bool Activate)
 {
 
 	//Find if an instance already exists in the registered scene objects
@@ -52,6 +52,14 @@ void GameScene::RenderScene(sf::RenderWindow& Renderer)
 		SceneObjects[Objects]->Render(Renderer);
 	}
 
+}
+
+void GameScene::FixedUpdate(float DeltaTime)
+{
+	for (int Objects = 0; Objects < SceneObjects.size(); Objects++)
+	{
+		SceneObjects[Objects]->FixedUpdate(DeltaTime);
+	}
 }
 
 void GameScene::Update()

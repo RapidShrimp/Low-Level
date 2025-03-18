@@ -3,7 +3,9 @@
 #include "Transform.h"
 #include "Libs/Maths.h"
 #include "Engine/Core/Events/Event.h"
+
 class Component;
+class Collider;
 
 class GameObject : public Object
 {
@@ -13,7 +15,7 @@ public:
 
 protected:
 	vector<Component*> m_Components;
-
+	vector<Collider*> m_Colliders;
 
 public:
 	GameObject();
@@ -31,4 +33,8 @@ public:
 	virtual void FixedUpdate(float deltaTime) override;
 	virtual void Render(sf::RenderWindow& Renderer) override;
 	virtual void OnDestroy() override;
+	virtual Collider* GetCollider(int ColliderIndex = 0) 
+	{ 
+		if (m_Colliders[ColliderIndex] == nullptr) { return nullptr; }
+		return m_Colliders[ColliderIndex]; }
 };

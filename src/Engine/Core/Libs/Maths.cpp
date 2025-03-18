@@ -36,9 +36,14 @@ void Math::Vector2::operator=(const Vector2& Vector)
 	y = Vector.y;
 }
 
-Math::Vector2 Math::Vector2::operator/(const float fValue)
+Math::Vector2 Math::Vector2::operator*(const float InFloat)
 {
-	return Math::Vector2(x / fValue, y / fValue);
+	return Vector2(x*InFloat,y*InFloat);
+}
+
+Math::Vector2 Math::Vector2::operator/(const float InFloat)
+{
+	return Vector2(x / InFloat , y / InFloat);
 }
 
 bool Math::Vector2::operator==(const Math::Vector2& Vector)

@@ -19,10 +19,12 @@ public:
 		return m_GameInstance;
 	};
 
+	GameScene* GetWorld() { return m_CurrentScene; }
+
 protected:
 	sf::RenderWindow m_GameWindow;
-	shared_ptr<GameScene> m_CurrentScene;
-	shared_ptr<GameScene> m_NextScene;
+	GameScene* m_CurrentScene;
+	GameScene* m_NextScene;
 
 public:
 	bool m_GameExit = false;

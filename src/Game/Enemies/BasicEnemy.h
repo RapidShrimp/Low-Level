@@ -1,25 +1,19 @@
 #pragma once
 #include "Engine/Core/GameObject.h"
 #include "Engine/Core/Components/SpriteRenderer.h"
-#include "Engine/Core/Input/InputSystem.h"
 #include "Game/Components/HealthComponent.h"
 
-class PlayerCharacter : public GameObject 
+class Enemy : public GameObject 
 {
 protected:
-	HealthComponent* m_Health; 
+	HealthComponent* m_Health;
 	SpriteRenderer* m_SpriteRenderer;
 	Collider* m_Collider;
 	float m_MoveSpeed = 1.0f;
 
-	Math::Vector2 MoveDirection;
-
 public:
-	PlayerCharacter();
-	~PlayerCharacter();
-	void MovePlayer(CallbackContext Context, Math::Vector2 MoveVector);
-	void FireWeapon(CallbackContext Context);
-	
+	Enemy();
+	~Enemy() {};
 	virtual void Init(Object* OwningObject) override;
 	//virtual void OnActivate() override;
 	//virtual void OnDeactivate() override;

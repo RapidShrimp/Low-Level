@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/Core/Components/Component.h"
 #include "Transform.h"
+#include "Engine/Core/Collider.h"
 #include "GameObject.h"
 #include <iostream>
 
@@ -35,6 +36,8 @@ void GameObject::RegisterComponent(Component* RegisterComponent, bool Activate, 
 	RegisterComponent->GetLocalTransform() = StartTransform;
 	RegisterComponent->SetName(DisplayName);
 	RegisterComponent->Init(this);
+	Collider* ColliderCheck = dynamic_cast<Collider*>(RegisterComponent);
+	if (ColliderCheck != nullptr) { m_Colliders.push_back(ColliderCheck);}
 	RegisterComponent->BeginPlay();
 	if (Activate) { RegisterComponent->Activate(); }
 }
@@ -68,11 +71,18 @@ void GameObject::BeginPlay()
 void GameObject::Update()
 {
 	//Override Functionality Here:
+	for (int ComponentIndex = 0; ComponentIndex < m_Components.size(); ComponentIndex++) 
+	{
+		m_Components[ComponentIndex]->Update();
+	}
 }
 
 void GameObject::FixedUpdate(float deltaTime)
 {
-	//Override Functionality Here:
+	for (int ComponentIndex = 0; ComponentIndex < m_Components.size(); ComponentIndex++)
+	{
+		m_Components[ComponentIndex]->Update();
+	}
 }
 
 void GameObject::Render(sf::RenderWindow& Renderer)

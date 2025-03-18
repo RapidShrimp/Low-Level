@@ -70,8 +70,8 @@ void AxisInput::PollEvent()
 {
 	CallbackContext Data;
 	Math::Vector2 Direction = Math::Vector2({ 0,0 });
-	Direction.y += sf::Keyboard::isKeyPressed(Actions.KeyUp);
-	Direction.y -= sf::Keyboard::isKeyPressed(Actions.KeyDown);
+	Direction.y -= sf::Keyboard::isKeyPressed(Actions.KeyUp);
+	Direction.y += sf::Keyboard::isKeyPressed(Actions.KeyDown);
 	Direction.x -= sf::Keyboard::isKeyPressed(Actions.KeyLeft);
 	Direction.x += sf::Keyboard::isKeyPressed(Actions.KeyRight);
 

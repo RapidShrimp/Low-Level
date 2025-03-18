@@ -13,6 +13,11 @@ namespace Math {
 		float y = 0.0f;
 
 		//Default Constructors
+		Vector2() {
+			x = 0;
+			y = 0;
+		};
+
 		Vector2(float XValue, float YValue)
 		{
 			x = XValue;
@@ -28,9 +33,10 @@ namespace Math {
 		Vector2 operator+=(const Vector2& Vector);
 		Vector2 operator-=(const Vector2& Vector);
 		void operator=(const Vector2& Vector);
+		Vector2 operator*(const float Vector);
+		Vector2 operator/(const float Vector);
 
 
-		Vector2 operator/(const float fValue);
 
 		bool operator==(const Vector2& Vector);
 		bool operator!=(const Vector2& Vector);
