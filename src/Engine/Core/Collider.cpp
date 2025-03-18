@@ -24,46 +24,67 @@ Collider::Collider(bool IsTrigger, Math::Vector2(BoxBounds), Math::Vector2(Offse
 void Collider::Update()
 {
 	std::vector<GameObject*> Objects = GameInstance::GetGameInstance()->GetWorld()->GetGameObjects();
-	
+
 	for (int i = 0; i < Objects.size(); i++) {
-		
+
 		//Ownership Distance Check && Collider Check 
 		if (Objects[i] == m_Owner) { continue; }
-		if (Objects[i]->GetCollider() == nullptr) { continue; }
+
+		Collider* OtherCollider = Objects[i]->GetCollider();
+		if (OtherCollider == nullptr) { continue; }
+
 		if ((Objects[i]->m_Transform.Location - GetOwner()->m_Transform.Location).Length() > 150.0f) { continue; }
-		
-		//if (CircleCollision(Objects[i]->GetCollider())) { return; }
+		bool Collided;
+		if (OtherCollider->m_CollisionType == Box && m_CollisionType == Box){
+			 Collided = BoxCollision(OtherCollider);
+		}
+		else if (OtherCollider->m_CollisionType == Circle && m_CollisionType == Circle){
+			Collided = CircleCollision(OtherCollider);
+		}
+		else {
+			Collided = BoxCircleCollision(OtherCollider);
+		}
+		Debug::Log(this, Display, "Colliding: " + std::to_string(Collided));
 	}
 }
 
-bool Collider::CircleCollision(Collider* CircleA, Collider* CircleB)
+bool Collider::CircleCollision(Collider* OtherCircle)
 {
-	if (CircleA == nullptr || CircleB == nullptr) { return false; }
-	//Validation Checks to see if we need to continue with this function
-	if (CircleA->m_CollisionType != Circle || CircleB->m_CollisionType != Circle) { return false; }
-	
+	if (OtherCircle == nullptr) { return false; }
 	//Get the distance between the 2 objects
 	float Distance = Math::Vector2(
-		(CircleA->GetOwner()->m_Transform.Location.x - CircleB->GetOwner()->m_Transform.Location.x),
-		(CircleA->GetOwner()->m_Transform.Location.y - CircleB->GetOwner()->m_Transform.Location.y)).Length();
-	
-	float CollisionDistance = CircleA->GetRadius() + CircleB->GetRadius();
+		(GetOwner()->m_Transform.Location.x - OtherCircle->GetOwner()->m_Transform.Location.x),
+		(GetOwner()->m_Transform.Location.y - OtherCircle->GetOwner()->m_Transform.Location.y)).Length();
+
+	float CollisionDistance = GetRadius() + OtherCircle->GetRadius();
+
 	return Distance < CollisionDistance;
 }
 
-bool Collider::BoxCollision(Collider* BoxA, Collider* BoxB)
+bool Collider::BoxCollision(Collider* OtherBox)
 {
-	//Validation Checks to see if we need to continue with this function
-	if (BoxA->m_CollisionType != Box || BoxB->m_CollisionType != Box) { return false; }
+	Math::Vector2 AMin = GetOwner()->m_Transform.Location - m_BoxBounds / 2;
+	Math::Vector2 AMax = GetOwner()->m_Transform.Location + m_BoxBounds / 2;
 
+	Math::Vector2 BMin = OtherBox->GetOwner()->m_Transform.Location - OtherBox->m_BoxBounds / 2;
+	Math::Vector2 BMax = OtherBox->GetOwner()->m_Transform.Location + OtherBox->m_BoxBounds / 2;
 
-	return false;
+	return (AMin.x < BMax.x && AMax.x > BMin.x && AMin.y < BMax.y && AMax.y > BMin.y);
 }
 
-bool Collider::BoxCircleCollision(Collider* ColliderA, Collider* ColliderB)
+bool Collider::BoxCircleCollision(Collider* OtherCollider)
 {
-	//Validation Checks to see if we need to continue with this function
-	if (ColliderA->m_CollisionType == ColliderB->m_CollisionType) { return false; }
-	
-	return false;
+	Collider* ACircle = m_CollisionType == Circle ? this : OtherCollider;
+	Collider* BBox = m_CollisionType != Circle ? this : OtherCollider;
+	Debug::Log(this, Warning, "HERE");
+	Math::Vector2 AMin = BBox->GetOwner()->m_Transform.Location - BBox->m_BoxBounds / 2;
+	Math::Vector2 AMax = BBox->GetOwner()->m_Transform.Location + BBox->m_BoxBounds / 2;
+
+	Math::Vector2 ClosestPoint = {
+		std::clamp(ACircle->GetOwner()->m_Transform.Location.x, AMin.x, AMax.x),
+		std::clamp(ACircle->GetOwner()->m_Transform.Location.y, AMin.y, AMax.y)
+	};
+
+	return  (ACircle->GetOwner()->m_Transform.Location - ClosestPoint).Length() <= ACircle->m_Radius;
 }
+

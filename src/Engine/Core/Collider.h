@@ -35,9 +35,9 @@ protected:
 	
 	E_ColliderType m_CollisionType = Circle;
 	bool m_IsTrigger = true;
-	static bool CircleCollision(Collider* CircleA, Collider* CircleB);
-	static bool BoxCollision(Collider* BoxA, Collider* BoxB);
-	static bool BoxCircleCollision(Collider* Box, Collider* Circle);
+	bool CircleCollision(Collider* OtherCircle);
+	bool BoxCollision(Collider* OtherBox);
+	bool BoxCircleCollision(Collider* OtherCollider);
 
 private:
 	float m_Radius = 0;

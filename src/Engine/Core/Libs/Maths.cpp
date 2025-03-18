@@ -77,6 +77,8 @@ float Math::Vector2::Length()
 	return std::sqrt(x * x + y * y);
 }
 
+
+
 std::string Math::Vector2::ToString()
 {
 	std::string ReturnString = "X: " + std::to_string(x) + " Y: " + std::to_string(y);

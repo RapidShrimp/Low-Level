@@ -2,12 +2,11 @@
 #include "Engine/Core/Libs/GameFunctionLib.h"
 #include "SpriteRenderer.h"
 
-
-SpriteRenderer::SpriteRenderer(std::string SpriteSheetFilepath)
+SpriteRenderer::SpriteRenderer(std::string SpriteSheetFilepath, Math::Vector2(ImageSize))
 {
 	const sf::Image SpriteSheet(SpriteSheetFilepath);
-	bool Result = m_Texture.loadFromImage(SpriteSheet, true, sf::IntRect({ 0,0 }, { 32,32 }));
-	if (Result) 
+	bool Result = m_Texture.loadFromImage(SpriteSheet, true, sf::IntRect({ 0,0 }, { (int)ImageSize.x,(int)ImageSize.y }));
+	if (Result)
 	{
 		m_Sprite = new sf::Sprite(m_Texture);
 	}
@@ -38,7 +37,7 @@ void SpriteRenderer::Render(sf::RenderWindow& Renderer)
 		return;
 	}
 	//Replace 0,0 with half the texture size
-	m_Sprite->setPosition((GetOwner()->m_Transform.Location).ToSF());
+	m_Sprite->setPosition({ GetOwner()->m_Transform.Location.x - (m_Texture.getSize().x/2), GetOwner()->m_Transform.Location.y - (m_Texture.getSize().y/2) });
 	Renderer.draw(*m_Sprite);
 
 	return;

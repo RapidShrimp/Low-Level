@@ -10,7 +10,7 @@ protected:
 	HealthComponent* m_Health; 
 	SpriteRenderer* m_SpriteRenderer;
 	Collider* m_Collider;
-	float m_MoveSpeed = 1.0f;
+	float m_MoveSpeed = 0.6f;
 
 	Math::Vector2 MoveDirection;
 

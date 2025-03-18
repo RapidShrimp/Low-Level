@@ -10,7 +10,7 @@ protected:
 	sf::Sprite* m_Sprite;
 
 public:
-	SpriteRenderer(std::string SpriteSheetFilepath);
+	SpriteRenderer(std::string SpriteSheetFilepath, Math::Vector2(ImageSize));
 	virtual void BeginPlay() override;
 	virtual void OnActivate() override;
 	virtual void OnDeactivate() override;

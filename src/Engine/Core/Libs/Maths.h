@@ -53,7 +53,7 @@ namespace Math {
 
 		//Screen Log Statement
 		friend ostream& operator<<(ostream&, const Vector2& Vector);
-
+		
 		static Vector2 Zero() { return Vector2(0, 0); }
 		static Vector2 One() { return Vector2(1, 1); }
 		static Vector2 Up() { return Vector2(0, 1); }

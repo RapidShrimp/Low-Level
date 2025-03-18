@@ -7,8 +7,8 @@
 PlayerCharacter::PlayerCharacter()
 {
 	m_Health = new HealthComponent();
-	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSprites.jpg");
-	m_Collider = new Collider(false,10.0f);
+	m_SpriteRenderer = new SpriteRenderer("Assets/CircleTest.png", {32,32});
+	m_Collider = new Collider(false, {32,32});
 	MoveDirection = Math::Vector2::Zero();
 }
 
@@ -47,10 +47,9 @@ void PlayerCharacter::Init(Object* OwningObject)
 	RegisterComponent(m_SpriteRenderer, true, "PlayerSpriteRenderer");
 	RegisterComponent(m_Collider, true, "PlayerCircleCollider");
 
-	BindableInput* FireKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::Space);
-	
 	AxisActionMapping MoveKeys = AxisActionMapping(sf::Keyboard::Key::W, sf::Keyboard::Key::S, sf::Keyboard::Key::A, sf::Keyboard::Key::D);
 	AxisInput* MoveInput = InputEventHandler::GetInstance()->CreateAxisInput(MoveKeys);
+	BindableInput* FireKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::Space);
 
 	//TODO - This 
 	if (FireKey) { FireKey->OnInputUpdate += std::bind(&PlayerCharacter::FireWeapon, this, std::placeholders::_1);}
