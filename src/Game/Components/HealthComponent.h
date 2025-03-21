@@ -12,12 +12,7 @@ public:
 public:
 	HealthComponent();
 	HealthComponent(float Health);
-	
-	virtual void Update() override;
-	virtual void FixedUpdate(float deltaTime) override;
 
-	void OnActivate() override;
-	void OnDeactivate() override;
 	void Handle_OnHeathChanged(float Damage, GameObject* Instigator);
 protected:
 	float m_CurrentHealth;

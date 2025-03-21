@@ -19,7 +19,8 @@ protected:
 
 public:
 	SpriteRenderer(std::string ImageFilepath, Math::Vector2(ImageSize)); //Single Image Constructor
-	SpriteRenderer(std::string SpriteSheetFilepath, Math::Vector2(SheetSize),Math::Vector2(SheetStart),int Columns = 1,int Rows = 1); //Spritesheet Constructor
+	SpriteRenderer(std::string SpriteSheetFilepath, Math::Vector2(SheetSize),Math::Vector2(SheetStart),int Columns = 1,int Rows = 1);
+	//Spritesheet Constructor
 	void SetSprite(int Row, int Column);
 	const Math::Vector2 GetSpriteIndexes() { return Math::Vector2(m_Row, m_Column); }
 	virtual void BeginPlay() override;

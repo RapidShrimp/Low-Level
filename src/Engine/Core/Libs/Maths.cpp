@@ -46,6 +46,16 @@ Math::Vector2 Math::Vector2::operator/(const float InFloat)
 	return Vector2(x / InFloat , y / InFloat);
 }
 
+Math::Vector2 Math::Vector2::operator*=(const float rhsFloat)
+{
+	return Vector2(x*=rhsFloat,y*=rhsFloat);
+}
+
+Math::Vector2 Math::Vector2::operator/=(const float rhsFloat)
+{
+	return Vector2(x/=rhsFloat,y/=rhsFloat);
+}
+
 bool Math::Vector2::operator==(const Math::Vector2& Vector)
 {
 	if (Vector.x != x || Vector.y != y) { return false; }
@@ -89,4 +99,9 @@ std::string Math::Vector2::ToString()
 void Math::Vector2::Normalise(Math::Vector2& InVector)
 {
 	InVector = InVector / InVector.Length();
+}
+
+Math::Vector2 Math::Vector2::Normalised()
+{
+	return Math::Vector2(x, y) / std::sqrt(x * x + y * y);
 }

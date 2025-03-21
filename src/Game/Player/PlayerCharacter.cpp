@@ -7,9 +7,11 @@
 PlayerCharacter::PlayerCharacter()
 {
 	m_Health = new HealthComponent();
-	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 106,14 }, {2,42},8,1);
-	m_SpriteRenderer->GetLocalTransform().SetScale(5, 5);
+	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 106,14 }, { 2,42 }, 8, 1);
+	m_SpriteRenderer->GetLocalTransform().SetScale(4, 4);
 	m_Collider = new Collider(false, {32,32});
+	m_RigidBody = new Rigidbody(0.5f);
+
 	MoveDirection = Math::Vector2::Zero();
 }
 
@@ -46,8 +48,9 @@ void PlayerCharacter::Init(Object* OwningObject)
 {
 	Object::Init(OwningObject);
 	RegisterComponent(m_Health,true,"Health Component");
-	RegisterComponent(m_SpriteRenderer, true, "PlayerSpriteRenderer");
-	RegisterComponent(m_Collider, true, "PlayerCircleCollider");
+	RegisterComponent(m_SpriteRenderer, true, "SpriteRenderer");
+	RegisterComponent(m_Collider, true, "Circle Collider");
+	RegisterComponent(m_RigidBody, true, "Rigid Body");
 
 	AxisActionMapping MoveKeys = AxisActionMapping(sf::Keyboard::Key::W, sf::Keyboard::Key::S, sf::Keyboard::Key::A, sf::Keyboard::Key::D);
 	AxisInput* MoveInput = InputEventHandler::GetInstance()->CreateAxisInput(MoveKeys);
@@ -73,5 +76,7 @@ void PlayerCharacter::Update()
 void PlayerCharacter::FixedUpdate(float DeltaTime)
 {
 	GameObject::FixedUpdate(DeltaTime);
-	m_Transform.Location += MoveDirection * m_MoveSpeed;
+	m_RigidBody->AddVelocity(MoveDirection*m_MoveSpeed);
+	m_Transform.Location += m_RigidBody->m_Velocity;
+	m_Transform.Rotation += m_RigidBody->m_AngluarVelocity;
 }

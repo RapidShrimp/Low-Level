@@ -15,36 +15,23 @@ HealthComponent::HealthComponent(float Health)
 	m_CurrentHealth = m_MaxHealth;
 }
 
-void HealthComponent::Update()
-{
-
-}
-
-void HealthComponent::FixedUpdate(float deltaTime)
-{
-}
-
-void HealthComponent::OnActivate()
-{
-	Debug::Log(this, E_LogType::Display, "Health Comp Debug");
-	GameObject* Owner = static_cast<GameObject*>(m_Owner);
-	if (Owner) 
-	{
-		//Owner->OnHealthChange += std::bind(&HealthComponent::Handle_OnHeathChanged, this, std::placeholders::_1);
-	}
-}
-
-void HealthComponent::OnDeactivate()
-{
-	GameObject* Owner = static_cast<GameObject*>(m_Owner);
-	if(Owner)
-	{
-		//Owner->OnHealthChange -= std::bind(&HealthComponent::Handle_OnHeathChanged, this, std::placeholders::_1);
-	}
-
-}
-
 void HealthComponent::Handle_OnHeathChanged(float Damage, GameObject* Instigator)
 {
+	if (!isActive) { return; }
 
+	bool isPositive = Damage >= 0;
+	m_CurrentHealth = std::clamp(m_CurrentHealth - Damage,0.0f,m_MaxHealth);
+	if (!isPositive) 
+	{
+		OnHealthRecieve(-Damage);
+	}
+	else 
+	{
+		OnDamageTaken(Damage);
+	}
+
+	if (m_CurrentHealth == 0) 
+	{
+		OnDeath();
+	}
 }

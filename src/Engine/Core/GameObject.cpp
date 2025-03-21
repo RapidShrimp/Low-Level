@@ -81,7 +81,7 @@ void GameObject::FixedUpdate(float deltaTime)
 {
 	for (int ComponentIndex = 0; ComponentIndex < m_Components.size(); ComponentIndex++)
 	{
-		m_Components[ComponentIndex]->Update();
+		m_Components[ComponentIndex]->FixedUpdate(deltaTime);
 	}
 }
 

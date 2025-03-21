@@ -32,9 +32,13 @@ namespace Math {
 		Vector2 operator/(const Vector2& Vector);
 		Vector2 operator+=(const Vector2& Vector);
 		Vector2 operator-=(const Vector2& Vector);
+
 		void operator=(const Vector2& Vector);
 		Vector2 operator*(const float Vector);
 		Vector2 operator/(const float Vector);
+		Vector2 operator*=(const float rhsFloat);
+		Vector2 operator/=(const float rhsFloat);
+
 
 
 
@@ -45,6 +49,8 @@ namespace Math {
 		//Vector Functions 
 		void Abs();
 		static void Normalise(Vector2& InVector);
+		Vector2 Normalised();
+
 		float Length();
 		Vector2 GetForwardVector();
 		Vector2 GetRightVector();

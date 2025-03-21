@@ -16,6 +16,8 @@ void Enemy::Init(Object* OwningObject)
 	RegisterComponent(m_Health, true, "EnemyHealth");
 	RegisterComponent(m_SpriteRenderer, true, "EnemySpriteRenderer");
 	RegisterComponent(m_Collider, true, "EnemyCollider");
+
+	m_Health->OnDeath += std::bind(&Enemy::Handle_EnemyDeath, this);
 }
 
 void Enemy::BeginPlay()
@@ -30,4 +32,9 @@ void Enemy::Update()
 void Enemy::FixedUpdate(float DeltaTime)
 {
 	GameObject::FixedUpdate(DeltaTime);
+}
+
+void Enemy::Handle_EnemyDeath()
+{
+	GameObject::OnDestroy();
 }
