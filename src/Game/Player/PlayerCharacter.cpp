@@ -8,7 +8,7 @@ PlayerCharacter::PlayerCharacter()
 {
 	m_Health = new HealthComponent();
 	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 106,14 }, { 2,42 }, 8, 1);
-	m_SpriteRenderer->GetLocalTransform().SetScale(4, 4);
+	m_SpriteRenderer->SetSpriteScale(3, 3);
 	m_Collider = new Collider(false, {32,32});
 	m_RigidBody = new Rigidbody(0.5f);
 

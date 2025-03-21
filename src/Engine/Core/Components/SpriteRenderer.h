@@ -22,6 +22,8 @@ public:
 	SpriteRenderer(std::string SpriteSheetFilepath, Math::Vector2(SheetSize),Math::Vector2(SheetStart),int Columns = 1,int Rows = 1);
 	//Spritesheet Constructor
 	void SetSprite(int Row, int Column);
+	void SetSpriteScale(float Width, float Height);
+
 	const Math::Vector2 GetSpriteIndexes() { return Math::Vector2(m_Row, m_Column); }
 	virtual void BeginPlay() override;
 	virtual void OnActivate() override;

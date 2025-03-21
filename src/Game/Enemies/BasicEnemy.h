@@ -22,4 +22,7 @@ public:
 	virtual void FixedUpdate(float DeltaTime) override;
 	//virtual void OnDestroy() override;
 
+private:
+	void Handle_EnemyDeath();
+
 };

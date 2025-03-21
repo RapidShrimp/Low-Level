@@ -23,13 +23,18 @@ SpriteRenderer::SpriteRenderer(std::string SpriteSheetFilepath, Math::Vector2(Sh
 	if (Result) 
 	{
 		m_Sprite = new sf::Sprite(m_Texture);
-		m_Sprite->setScale({5,5});
 	}
 }
 void SpriteRenderer::SetSprite(int Row, int Column)
 {
 	m_Column = Column;
 	m_Row = Row;
+}
+
+void SpriteRenderer::SetSpriteScale(float Width, float Height)
+{
+	m_LocalTransform.Scale = Math::Vector2(Width, Height);
+	m_Sprite->setScale({ m_LocalTransform.Scale.x,m_LocalTransform.Scale.y });
 }
 		
 
@@ -60,7 +65,6 @@ void SpriteRenderer::Render(sf::RenderWindow& Renderer)
 	//m_Sprite->setTextureRect(sf::IntRect({m_SpriteSheetStart.x+(m_CellSize.x * m_Columns),m_SpriteSheetStart.y + (m_CellSize.y * m_Rows)}, {m_CellSize.x,m_CellSize.y}));
 	//Replace 0,0 with half the texture size ( Center Sprite to character transform)
 	UpdateSpriteBounds();
-	m_Sprite->setScale(m_LocalTransform.Scale.ToSF());
 	m_Sprite->setPosition({ GetOwner()->m_Transform.Location.x - (m_Texture.getSize().x/2), GetOwner()->m_Transform.Location.y - (m_Texture.getSize().y/2) });
 	Renderer.draw(*m_Sprite);
 
