@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/Core/Collider.h"
+#include "Engine/Core/Components/Collider.h"
 
 #include "Game/Enemies/BasicEnemy.h"
 

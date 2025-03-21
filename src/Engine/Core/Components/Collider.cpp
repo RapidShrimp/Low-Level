@@ -44,7 +44,8 @@ void Collider::Update()
 		else {
 			Collided = BoxCircleCollision(OtherCollider);
 		}
-		Debug::Log(this, Display, "Colliding: " + std::to_string(Collided));
+		//TODO-Broadcast Collision Event
+		//OnCollisionEvent(this, E_CollisionEvent);
 	}
 }
 
@@ -76,7 +77,6 @@ bool Collider::BoxCircleCollision(Collider* OtherCollider)
 {
 	Collider* ACircle = m_CollisionType == Circle ? this : OtherCollider;
 	Collider* BBox = m_CollisionType != Circle ? this : OtherCollider;
-	Debug::Log(this, Warning, "HERE");
 	Math::Vector2 AMin = BBox->GetOwner()->m_Transform.Location - BBox->m_BoxBounds / 2;
 	Math::Vector2 AMax = BBox->GetOwner()->m_Transform.Location + BBox->m_BoxBounds / 2;
 

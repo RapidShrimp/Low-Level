@@ -1,13 +1,14 @@
 #pragma once
 #include "Engine/Core/Libs/GameFunctionLib.h"
-#include "Engine/Core/Collider.h"
+#include "Engine/Core/Components/Collider.h"
 
 #include "PlayerCharacter.h"
 
 PlayerCharacter::PlayerCharacter()
 {
 	m_Health = new HealthComponent();
-	m_SpriteRenderer = new SpriteRenderer("Assets/CircleTest.png", {32,32});
+	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 106,14 }, {2,42},8,1);
+	m_SpriteRenderer->GetLocalTransform().SetScale(5, 5);
 	m_Collider = new Collider(false, {32,32});
 	MoveDirection = Math::Vector2::Zero();
 }
@@ -33,6 +34,7 @@ void PlayerCharacter::FireWeapon(CallbackContext Context)
 {
 	if (Context.Started) {
 		Debug::Log(this, Display, "Fire Started");
+		//m_SpriteRenderer->SetSprite(m_SpriteRenderer->GetSpriteIndexes().x + 1, m_SpriteRenderer->GetSpriteIndexes().y);
 	}
 	else if (Context.Cancelled) 
 	{
