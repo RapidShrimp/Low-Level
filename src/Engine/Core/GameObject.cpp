@@ -25,21 +25,31 @@ GameObject::~GameObject()
 {
 }
 
-void GameObject::RegisterComponent(Component* RegisterComponent, bool Activate, std::string DisplayName, SinStr::Transform StartTransform)
+void GameObject::RegisterComponent(Component* InRegisterComponent, SinStr::Transform(StartTransform), bool Activate, std::string DisplayName)
 {
-	if (std::find(m_Components.begin(), m_Components.end(), RegisterComponent) != m_Components.end())
+	if (std::find(m_Components.begin(), m_Components.end(), InRegisterComponent) != m_Components.end())
 	{
 		cout << "Warning: Component Already Registered, avoid calling Register Component more than once" << endl;
 		return;
 	}
-	m_Components.push_back(RegisterComponent);
-	RegisterComponent->GetLocalTransform() = StartTransform;
-	RegisterComponent->SetName(DisplayName);
-	RegisterComponent->Init(this);
-	Collider* ColliderCheck = dynamic_cast<Collider*>(RegisterComponent);
-	if (ColliderCheck != nullptr) { m_Colliders.push_back(ColliderCheck);}
-	RegisterComponent->BeginPlay();
-	if (Activate) { RegisterComponent->Activate(); }
+	m_Components.push_back(InRegisterComponent);
+	InRegisterComponent->GetLocalTransform() = StartTransform;
+	InRegisterComponent->SetName(DisplayName);
+	InRegisterComponent->Init(this);
+	Collider* ColliderCheck = dynamic_cast<Collider*>(InRegisterComponent);
+	if (ColliderCheck != nullptr) { m_Colliders.push_back(ColliderCheck); }
+	InRegisterComponent->BeginPlay();
+	if (Activate) { InRegisterComponent->Activate(); }
+}
+
+void GameObject::RegisterComponent(Component* InRegisterComponent, Math::Vector2(StartLocation), bool Activate, std::string DisplayName)
+{
+	RegisterComponent(InRegisterComponent, SinStr::Transform(StartLocation, Math::Vector2(1, 1), 0), Activate, DisplayName);
+}
+
+void GameObject::RegisterComponent(Component* InRegisterComponent, bool Activate, std::string DisplayName)
+{
+	RegisterComponent(InRegisterComponent, SinStr::Transform({ 0,0 }), Activate, DisplayName);
 }
 
 void GameObject::Init(Object* OwningObject)
@@ -95,8 +105,8 @@ void GameObject::Render(sf::RenderWindow& Renderer)
 	}
 
 	sf::CircleShape circle;
-	circle.setRadius(5);
-	circle.setPosition(m_Transform.Location.ToSF());
+	circle.setRadius(2);
+	circle.setPosition(sf::Vector2f(m_Transform.Location.x-2,m_Transform.Location.y-2));
 	Renderer.draw(circle);
 
 }

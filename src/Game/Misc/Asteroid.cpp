@@ -16,7 +16,7 @@ Asteroid::~Asteroid()
 
 void Asteroid::Init(Object* OwningObject)
 {
-	RegisterComponent(m_Health, true, "Health Component");
+	RegisterComponent(m_Health, true, "Heatlh");
 	RegisterComponent(m_SpriteRenderer, true, "Sprite Renderer");
 	RegisterComponent(m_Collider, true, "Circle Collider");
 	RegisterComponent(m_RigidBody, true, "Rigid Body");

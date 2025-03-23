@@ -7,7 +7,7 @@ PlayerCharacter::PlayerCharacter()
 	m_Health = new HealthComponent();
 	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 106,14 }, { 2,42 }, 8, 1);
 	m_SpriteRenderer->SetSpriteScale(3, 3);
-	m_Collider = new Collider(false, { 32,32 },{-16,-16});
+	m_Collider = new Collider(false, { 32,32 });
 	m_RigidBody = new Rigidbody(0.5f);
 
 	MoveDirection = Math::Vector2::Zero();
@@ -52,7 +52,7 @@ void PlayerCharacter::Init(Object* OwningObject)
 	Object::Init(OwningObject);
 	RegisterComponent(m_Health,true,"Health Component");
 	RegisterComponent(m_SpriteRenderer, true, "SpriteRenderer");
-	RegisterComponent(m_Collider, true, "Circle Collider");
+	RegisterComponent(m_Collider, Math::Vector2(-10, -10), true, "Circle Collider");
 	RegisterComponent(m_RigidBody, true, "Rigid Body");
 
 

@@ -23,7 +23,9 @@ public:
 	GameObject(Math::Vector2 SpawnLocation);
 	~GameObject();
 
-	void RegisterComponent(Component* RegisterComponent, bool Activate = true , std::string DisplayName = "", SinStr::Transform StartTransform = SinStr::Transform());
+	void RegisterComponent(Component* InRegisterComponent, SinStr::Transform(StartTransform) = SinStr::Transform(), bool Activate = true, std::string DisplayName = "");
+	void RegisterComponent(Component* InRegisterComponent, Math::Vector2(StartLocation) = Math::Vector2(0, 0),bool Activate = true, std::string DisplayName = "");
+	void RegisterComponent(Component* InRegisterComponent, bool Activate = true, std::string DisplayName = "");
 
 	virtual void Init(Object* OwningObject) override;
 	virtual void OnActivate() override;

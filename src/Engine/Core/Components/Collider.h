@@ -27,10 +27,13 @@ public:
 	//Events And Constructors
 	SinStr::Event<Collider*, E_CollisionEvent> OnCollisionEvent;
 
-	Collider(bool IsTrigger,float Radius,Math::Vector2(Offset) = Math::Vector2::Zero());
-	Collider(bool IsTrigger,Math::Vector2(BoxBounds), Math::Vector2(Offset) = Math::Vector2::Zero());
+	Collider(bool IsTrigger,float Radius);
+	Collider(bool IsTrigger,Math::Vector2(BoxBounds));
 	~Collider() {};
 
+
+
+	void Init(Object* Owner) override;
 	virtual void Update() override;
 	virtual void Render(sf::RenderWindow& Renderer) override;
 

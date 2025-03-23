@@ -65,10 +65,28 @@ void SpriteRenderer::Render(sf::RenderWindow& Renderer)
 	//m_Sprite->setTextureRect(sf::IntRect({m_SpriteSheetStart.x+(m_CellSize.x * m_Columns),m_SpriteSheetStart.y + (m_CellSize.y * m_Rows)}, {m_CellSize.x,m_CellSize.y}));
 	//Replace 0,0 with half the texture size ( Center Sprite to character transform)
 	UpdateSpriteBounds();
-	m_Sprite->setPosition({ GetOwner()->m_Transform.Location.x - (m_Texture.getSize().x/2), GetOwner()->m_Transform.Location.y - (m_Texture.getSize().y/2) });
+
+	m_Sprite->setPosition({ 
+		GetOwner()->m_Transform.Location.x + (m_CellSize.x), 
+		GetOwner()->m_Transform.Location.y + (m_CellSize.y) 
+		});
+
+	//m_Sprite->setPosition({ GetOwner()->m_Transform.Location.x - (m_Texture.getSize().x/2), GetOwner()->m_Transform.Location.y - (m_Texture.getSize().y/2) });
 	Renderer.draw(*m_Sprite);
 
-	return;
+	//return;
+
+	//Debugging
+
+	sf::RectangleShape Rect;
+	Rect.setSize(m_CellSize.ToSF());
+	Rect.setScale(m_Sprite->getScale());
+	Rect.setFillColor(sf::Color::Transparent);
+	Rect.setOutlineColor(sf::Color::Cyan);
+	Rect.setOutlineThickness(1.0f);
+	Rect.setPosition({ GetOwner()->m_Transform.Location.x - (m_Texture.getSize().x / 2), GetOwner()->m_Transform.Location.y - (m_Texture.getSize().y / 2) });
+	Renderer.draw(Rect);
+
 }
 
 void SpriteRenderer::OnDestroy()

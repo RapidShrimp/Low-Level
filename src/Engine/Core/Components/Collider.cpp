@@ -5,20 +5,26 @@
 
 
 
-Collider::Collider(bool IsTrigger, float Radius, Math::Vector2(Offset))
+Collider::Collider(bool IsTrigger, float Radius)
 {
 	m_CollisionType = Circle;
 	m_IsTrigger = IsTrigger;
 	m_Radius = Radius;
-	m_LocalTransform.Location = Offset;
 }
 
-Collider::Collider(bool IsTrigger, Math::Vector2(BoxBounds), Math::Vector2(Offset))
+Collider::Collider(bool IsTrigger, Math::Vector2(BoxBounds))
 {
 	m_CollisionType = Box;
 	m_IsTrigger = IsTrigger;
 	m_BoxBounds = BoxBounds;
-	m_LocalTransform.Location = Offset;
+}
+
+void Collider::Init(Object* Owner)
+{
+	Object::Init(Owner);
+
+	
+	m_LocalTransform.Location += m_CollisionType == Box ? m_BoxBounds / 2 : Math::Vector2(m_Radius,m_Radius);
 }
 
 void Collider::Update()
@@ -93,6 +99,7 @@ void Collider::Update()
 
 void Collider::Render(sf::RenderWindow& Renderer)
 {
+	//Debugging
 	if (m_CollisionType == Circle) 
 	{
 		sf::CircleShape circle;
@@ -100,7 +107,7 @@ void Collider::Render(sf::RenderWindow& Renderer)
 		circle.setFillColor(sf::Color::Transparent);
 		circle.setOutlineColor(sf::Color::Green);
 		circle.setOutlineThickness(1.0f);
-		circle.setPosition((GetOwner()->m_Transform.Location +m_LocalTransform.Location).ToSF());
+		circle.setPosition((GetOwner()->m_Transform.Location + Math::Vector2(-m_Radius,-m_Radius)).ToSF());
 		Renderer.draw(circle);
 	}
 	else if (m_CollisionType == Box) {
@@ -109,7 +116,7 @@ void Collider::Render(sf::RenderWindow& Renderer)
 		Rect.setOutlineColor(sf::Color::Green);
 		Rect.setOutlineThickness(1.0f);
 		Rect.setSize(m_BoxBounds.ToSF());
-		Rect.setPosition((GetOwner()->m_Transform.Location + m_LocalTransform.Location).ToSF());
+		Rect.setPosition((GetOwner()->m_Transform.Location - m_BoxBounds/2).ToSF());
 		Renderer.draw(Rect);
 	}
 
