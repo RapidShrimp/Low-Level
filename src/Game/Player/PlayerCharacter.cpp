@@ -34,7 +34,8 @@ void PlayerCharacter::FireWeapon(CallbackContext Context)
 {
 	if (Context.Started) {
 		Debug::Log(this, Display, "Fire Started");
-		//m_SpriteRenderer->SetSprite(m_SpriteRenderer->GetSpriteIndexes().x + 1, m_SpriteRenderer->GetSpriteIndexes().y);
+
+		m_SpriteRenderer->SetSprite(m_SpriteRenderer->GetSpriteIndexes().x + 1, m_SpriteRenderer->GetSpriteIndexes().y);
 	}
 	else if (Context.Cancelled) 
 	{

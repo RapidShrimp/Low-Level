@@ -10,6 +10,7 @@ SpriteRenderer::SpriteRenderer(std::string ImageFilepath, Math::Vector2(ImageSiz
 	if (Result)
 	{
 		m_Sprite = new sf::Sprite(m_Texture);
+		//m_Sprite->setOrigin({ m_CellSize.x / 2,m_CellSize.y / 2 });
 	}
 }
 
@@ -23,6 +24,7 @@ SpriteRenderer::SpriteRenderer(std::string SpriteSheetFilepath, Math::Vector2(Sh
 	if (Result) 
 	{
 		m_Sprite = new sf::Sprite(m_Texture);
+		//m_Sprite->setOrigin({ m_CellSize.x / 2,m_CellSize.y / 2 });
 	}
 }
 void SpriteRenderer::SetSprite(int Row, int Column)
@@ -33,8 +35,7 @@ void SpriteRenderer::SetSprite(int Row, int Column)
 
 void SpriteRenderer::SetSpriteScale(float Width, float Height)
 {
-	m_LocalTransform.Scale = Math::Vector2(Width, Height);
-	m_Sprite->setScale({ m_LocalTransform.Scale.x,m_LocalTransform.Scale.y });
+	m_Sprite->setScale({ Width,Height });
 }
 		
 
@@ -62,16 +63,13 @@ void SpriteRenderer::Render(sf::RenderWindow& Renderer)
 		Debug::Log(this, E_LogType::Error, "No Sprite Found");
 		return;
 	}
-	//m_Sprite->setTextureRect(sf::IntRect({m_SpriteSheetStart.x+(m_CellSize.x * m_Columns),m_SpriteSheetStart.y + (m_CellSize.y * m_Rows)}, {m_CellSize.x,m_CellSize.y}));
-	//Replace 0,0 with half the texture size ( Center Sprite to character transform)
+
 	UpdateSpriteBounds();
-
+	
 	m_Sprite->setPosition({ 
-		GetOwner()->m_Transform.Location.x + (m_CellSize.x), 
-		GetOwner()->m_Transform.Location.y + (m_CellSize.y) 
-		});
+		GetOwner()->m_Transform.Location.x - (m_CellSize.x / 2)* m_Sprite->getScale().x ,
+		GetOwner()->m_Transform.Location.y - (m_CellSize.y / 2)* m_Sprite->getScale().y});
 
-	//m_Sprite->setPosition({ GetOwner()->m_Transform.Location.x - (m_Texture.getSize().x/2), GetOwner()->m_Transform.Location.y - (m_Texture.getSize().y/2) });
 	Renderer.draw(*m_Sprite);
 
 	//return;
@@ -83,18 +81,24 @@ void SpriteRenderer::Render(sf::RenderWindow& Renderer)
 	Rect.setScale(m_Sprite->getScale());
 	Rect.setFillColor(sf::Color::Transparent);
 	Rect.setOutlineColor(sf::Color::Cyan);
-	Rect.setOutlineThickness(1.0f);
-	Rect.setPosition({ GetOwner()->m_Transform.Location.x - (m_Texture.getSize().x / 2), GetOwner()->m_Transform.Location.y - (m_Texture.getSize().y / 2) });
+	Rect.setOutlineThickness(1.0f/m_Sprite->getScale().x);
+	Rect.setPosition({
+		GetOwner()->m_Transform.Location.x - (m_CellSize.x / 2) * m_Sprite->getScale().x ,
+		GetOwner()->m_Transform.Location.y - (m_CellSize.y / 2) * m_Sprite->getScale().y });
 	Renderer.draw(Rect);
 
 }
 
 void SpriteRenderer::OnDestroy()
 {
+
 }
 
 void SpriteRenderer::UpdateSpriteBounds()
 {
+	std::string positon = std::to_string(m_Sprite->getTextureRect().position.x) + std::to_string(m_Sprite->getTextureRect().position.y);
+	std::string size = std::to_string(m_Sprite->getTextureRect().size.x) + std::to_string(m_Sprite->getTextureRect().size.y);
+
 	int XLocation = ((int)m_CellSize.x) * m_Row;
 	int YLocation = ((int)m_CellSize.y) * m_Column;
 

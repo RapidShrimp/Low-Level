@@ -1,5 +1,4 @@
 #pragma once
-#include "Engine/Core/Components/Component.h"
 #include "Transform.h"
 #include "Engine/Core/Components/Collider.h"
 #include "GameObject.h"
