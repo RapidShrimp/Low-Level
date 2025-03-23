@@ -20,7 +20,7 @@ public:
 	};
 
 	GameScene* GetWorld() { return m_CurrentScene; }
-
+	bool ShouldDrawDebug() { return m_Debug; }
 protected:
 	sf::RenderWindow m_GameWindow;
 	GameScene* m_CurrentScene;
@@ -34,5 +34,8 @@ public:
 	void FixedUpdate(float deltaTime);
 	void Render();
 	void CloseGame();
+
+private:
+	bool m_Debug = false;
 };
 

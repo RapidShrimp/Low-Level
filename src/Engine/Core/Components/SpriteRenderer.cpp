@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/Core/Libs/GameFunctionLib.h"
+#include "Engine/Core/GameInstance.h"
 #include "SpriteRenderer.h"
 
 SpriteRenderer::SpriteRenderer(std::string ImageFilepath, Math::Vector2(ImageSize))
@@ -27,7 +28,7 @@ SpriteRenderer::SpriteRenderer(std::string SpriteSheetFilepath, Math::Vector2(Sh
 		//m_Sprite->setOrigin({ m_CellSize.x / 2,m_CellSize.y / 2 });
 	}
 }
-void SpriteRenderer::SetSprite(int Row, int Column)
+void SpriteRenderer::SetSprite(int Column, int Row)
 {
 	m_Column = Column;
 	m_Row = Row;
@@ -70,9 +71,10 @@ void SpriteRenderer::Render(sf::RenderWindow& Renderer)
 		GetOwner()->m_Transform.Location.x - (m_CellSize.x / 2)* m_Sprite->getScale().x ,
 		GetOwner()->m_Transform.Location.y - (m_CellSize.y / 2)* m_Sprite->getScale().y});
 
+	//m_Sprite->setRotation();
 	Renderer.draw(*m_Sprite);
 
-	//return;
+	if (!GameInstance::GetGameInstance()->ShouldDrawDebug()) { return; }
 
 	//Debugging
 
@@ -99,8 +101,8 @@ void SpriteRenderer::UpdateSpriteBounds()
 	std::string positon = std::to_string(m_Sprite->getTextureRect().position.x) + std::to_string(m_Sprite->getTextureRect().position.y);
 	std::string size = std::to_string(m_Sprite->getTextureRect().size.x) + std::to_string(m_Sprite->getTextureRect().size.y);
 
-	int XLocation = ((int)m_CellSize.x) * m_Row;
-	int YLocation = ((int)m_CellSize.y) * m_Column;
+	int XLocation = ((int)m_CellSize.x) * m_Column;
+	int YLocation = ((int)m_CellSize.y) * m_Row;
 
 	sf::IntRect NewRect = sf::IntRect({XLocation,YLocation}, { (int)m_CellSize.x,(int)m_CellSize.y });
 	m_Sprite->setTextureRect(NewRect);

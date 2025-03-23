@@ -6,7 +6,8 @@
 Enemy::Enemy()
 {
 	m_Health = new HealthComponent();
-	m_SpriteRenderer = new SpriteRenderer("Assets/CircleTest.png", {32,32});
+	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", {116,16}, {2,82},8,1);
+	m_SpriteRenderer->SetSpriteScale(2, 2);
 	m_Collider = new Collider(false, 16.0f);
 }
 

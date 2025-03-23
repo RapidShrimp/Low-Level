@@ -82,6 +82,17 @@ void Math::Vector2::Abs()
 	y = std::abs(y);
 }
 
+
+float Math::Vector2::GetRadians()
+{
+	return std::atan2(y, x);
+}
+
+float Math::Vector2::Rad2Deg(float Radians)
+{
+	return (Radians/ 3.141592f) * 180;
+}
+
 float Math::Vector2::Length()
 {
 	return std::sqrt(x * x + y * y);

@@ -51,11 +51,9 @@ namespace Math {
 		static void Normalise(Vector2& InVector);
 		Vector2 Normalised();
 
+		float GetRadians();
+		float Rad2Deg(float Radians);
 		float Length();
-		Vector2 GetForwardVector();
-		Vector2 GetRightVector();
-		float DotProduct(Vector2& VectorB);
-		static float DotProduct(Vector2& VecA, Vector2& VecB);
 
 		//Screen Log Statement
 		friend ostream& operator<<(ostream&, const Vector2& Vector);

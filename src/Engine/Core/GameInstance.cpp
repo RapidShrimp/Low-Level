@@ -12,7 +12,7 @@ GameInstance::~GameInstance()
 
 void GameInstance::Init(/*TODO - Game Scene ClassType To Load Into*/)
 {
-	m_GameWindow = sf::RenderWindow(sf::VideoMode({ 800,800 }), "Sinistar 2025 Remake");
+	m_GameWindow = sf::RenderWindow(sf::VideoMode({ 720,960}), "Sinistar 2025 Remake");
 	InputEventHandler::GetInstance();
 	m_CurrentScene = new GameLevel();
 	m_CurrentScene->OnLoadScene();

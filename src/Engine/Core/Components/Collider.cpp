@@ -99,6 +99,7 @@ void Collider::Update()
 
 void Collider::Render(sf::RenderWindow& Renderer)
 {
+	if (!GameInstance::GetGameInstance()->ShouldDrawDebug()) { return; }
 	//Debugging
 	if (m_CollisionType == Circle) 
 	{
