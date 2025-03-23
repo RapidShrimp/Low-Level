@@ -5,9 +5,12 @@
 
 enum E_CollisionEvent
 {
+	None,
 	TriggerEnter,
+	TriggerColliding,
 	TriggerExit,
 	CollisionEnter,
+	CollisionColliding,
 	CollisionExit
 };
 
@@ -29,6 +32,8 @@ public:
 	~Collider() {};
 
 	virtual void Update() override;
+	virtual void Render(sf::RenderWindow& Renderer) override;
+
 	const float GetRadius() { return m_Radius; }
 	const Math::Vector2 GetBoxBounds() { return m_BoxBounds; }
 protected:
@@ -38,6 +43,8 @@ protected:
 	bool CircleCollision(Collider* OtherCircle);
 	bool BoxCollision(Collider* OtherBox);
 	bool BoxCircleCollision(Collider* OtherCollider);
+
+	std::vector<Collider*> Overlapping;
 
 private:
 	float m_Radius = 0;

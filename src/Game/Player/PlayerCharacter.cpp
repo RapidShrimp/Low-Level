@@ -1,7 +1,5 @@
 #pragma once
 #include "Engine/Core/Libs/GameFunctionLib.h"
-#include "Engine/Core/Components/Collider.h"
-
 #include "PlayerCharacter.h"
 
 PlayerCharacter::PlayerCharacter()
@@ -9,7 +7,7 @@ PlayerCharacter::PlayerCharacter()
 	m_Health = new HealthComponent();
 	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 106,14 }, { 2,42 }, 8, 1);
 	m_SpriteRenderer->SetSpriteScale(3, 3);
-	m_Collider = new Collider(false, {32,32});
+	m_Collider = new Collider(false, { 32,32 },{-16,-16});
 	m_RigidBody = new Rigidbody(0.5f);
 
 	MoveDirection = Math::Vector2::Zero();
@@ -44,6 +42,11 @@ void PlayerCharacter::FireWeapon(CallbackContext Context)
 	}
 }
 
+void PlayerCharacter::OnCollisionEventCallback(Collider* OtherCollider, E_CollisionEvent Response)
+{
+
+}
+
 void PlayerCharacter::Init(Object* OwningObject)
 {
 	Object::Init(OwningObject);
@@ -52,11 +55,13 @@ void PlayerCharacter::Init(Object* OwningObject)
 	RegisterComponent(m_Collider, true, "Circle Collider");
 	RegisterComponent(m_RigidBody, true, "Rigid Body");
 
+
+	m_Collider->OnCollisionEvent += std::bind(&PlayerCharacter::OnCollisionEventCallback, this, std::placeholders::_1, std::placeholders::_2);
+
 	AxisActionMapping MoveKeys = AxisActionMapping(sf::Keyboard::Key::W, sf::Keyboard::Key::S, sf::Keyboard::Key::A, sf::Keyboard::Key::D);
 	AxisInput* MoveInput = InputEventHandler::GetInstance()->CreateAxisInput(MoveKeys);
 	BindableInput* FireKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::Space);
 
-	//TODO - This 
 	if (FireKey) { FireKey->OnInputUpdate += std::bind(&PlayerCharacter::FireWeapon, this, std::placeholders::_1);}
 	if (MoveInput) { MoveInput->OnAxisInputUpdate += std::bind(&PlayerCharacter::MovePlayer, this, std::placeholders::_1, std::placeholders::_2); }
 
@@ -70,7 +75,11 @@ void PlayerCharacter::BeginPlay()
 void PlayerCharacter::Update()
 {
 	GameObject::Update();
-	//Debug::Log(this, E_LogType::Display, "Hello World");
+}
+
+void PlayerCharacter::Render(sf::RenderWindow& Renderer)
+{
+	GameObject::Render(Renderer);
 }
 
 void PlayerCharacter::FixedUpdate(float DeltaTime)

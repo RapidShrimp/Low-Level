@@ -88,12 +88,16 @@ void GameObject::FixedUpdate(float deltaTime)
 void GameObject::Render(sf::RenderWindow& Renderer)
 {
 	//TODO - Set a default sprite to render here
-
 	for (int Comp = 0; Comp < m_Components.size(); Comp++) 
 	{
 		if (m_Components[Comp] == nullptr) { continue; }
 		m_Components[Comp]->Render(Renderer);
 	}
+
+	sf::CircleShape circle;
+	circle.setRadius(5);
+	circle.setPosition(m_Transform.Location.ToSF());
+	Renderer.draw(circle);
 
 }
 
