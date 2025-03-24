@@ -7,7 +7,7 @@ class SpriteRenderer : public Component
 protected:
 
 	sf::Texture m_Texture;
-	sf::Sprite* m_Sprite;
+	sf::Sprite* m_Sprite = nullptr;
 
 	//Sprite sheet specifics
 	unsigned int m_Row = 0;

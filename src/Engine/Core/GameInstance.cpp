@@ -1,5 +1,6 @@
 #pragma once
 #include "Game/Scenes/GameLevel.h"
+#include "Game/Scenes/MainMenu.h"
 #include "GameInstance.h"
 #include "Engine/Core/Input/InputSystem.h"
 
@@ -14,7 +15,8 @@ void GameInstance::Init(/*TODO - Game Scene ClassType To Load Into*/)
 {
 	m_GameWindow = sf::RenderWindow(sf::VideoMode({ 720,960}), "Sinistar 2025 Remake");
 	InputEventHandler::GetInstance();
-	m_CurrentScene = new GameLevel();
+	m_CurrentScene = new MainMenu();
+	//m_CurrentScene = new GameLevel();
 	m_CurrentScene->OnLoadScene();
 }
 
