@@ -74,10 +74,9 @@ void SpriteRenderer::Render(sf::RenderWindow& Renderer)
 	//m_Sprite->setRotation();
 	Renderer.draw(*m_Sprite);
 
-	if (!GameInstance::GetGameInstance()->ShouldDrawDebug()) { return; }
 
 	//Debugging
-
+	if (!GameInstance::GetGameInstance()->ShouldDrawDebug()) { return; }
 	sf::RectangleShape Rect;
 	Rect.setSize(m_CellSize.ToSF());
 	Rect.setScale(m_Sprite->getScale());

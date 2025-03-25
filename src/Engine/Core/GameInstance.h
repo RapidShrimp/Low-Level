@@ -36,6 +36,6 @@ public:
 	void CloseGame();
 
 private:
-	bool m_Debug = false;
+	bool m_Debug = true;
 };
 
