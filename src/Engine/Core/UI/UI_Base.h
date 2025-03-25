@@ -12,6 +12,7 @@ public:
 	void AddToNavigationPath(UI_Element* Element);
 	void RemoveFromNavigationPath(UI_Element* Element);
 	virtual void Render(sf::RenderWindow& Renderer) override;
+	void AddElement(UI_Element* Element);
 
 protected:
 

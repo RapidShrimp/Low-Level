@@ -27,6 +27,7 @@ void UI_Base::AddToNavigationPath(UI_Element* Element)
 {
 	if (Element == nullptr) { return; }
 	m_NavigationPath.push_back(Element);
+	m_Elements.push_back(Element);
 }
  
 void UI_Base::RemoveFromNavigationPath(UI_Element* Element)
@@ -39,8 +40,13 @@ void UI_Base::RemoveFromNavigationPath(UI_Element* Element)
 void UI_Base::Render(sf::RenderWindow& Renderer)
 {
 	for (int i = 0; i < m_Elements.size(); i++) {
-	//m_Elements[i].
+		m_Elements[i]->Render(Renderer);
 	}
+}
+
+void UI_Base::AddElement(UI_Element* Element)
+{
+	m_Elements.push_back(Element);
 }
 
 void UI_Base::SetNavigationFocus()

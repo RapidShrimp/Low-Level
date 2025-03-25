@@ -23,9 +23,10 @@ void MainMenu::OnLoadScene()
 	UI_Base* MainMenuUI = new UI_Base();
 	SpawnObject(MainMenuUI, { 0,0 });
 	UI_Text* PlayGameText = new UI_Text("Play Game", "Assets/Fonts/sinistar.ttf", 24);
-	PlayGameText->m_Transform.SetPosition(400, 100);
-	UI_Text* ExitButton = new UI_Text("Play Game", "Assets/Fonts/sinistar.ttf", 24);
 	MainMenuUI->AddToNavigationPath(PlayGameText);
+	PlayGameText->m_Transform.SetPosition(400, 100);
+
+	UI_Text* ExitButton = new UI_Text("Play Game", "Assets/Fonts/sinistar.ttf", 24);
 	MainMenuUI->AddToNavigationPath(ExitButton);
 
 	/*UI_Text* Text = new UI_Text("SINISTAR TEST", "Assets/Fonts/sinistar.ttf");
