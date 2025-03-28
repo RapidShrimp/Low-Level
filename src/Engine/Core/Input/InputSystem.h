@@ -55,6 +55,8 @@ public:
 	BindableInput* CheckForExistingEvent(sf::Keyboard::Key CheckKey);
 	AxisInput* CreateAxisInput(AxisActionMapping(Map));
 
+	void RemoveMappings();
+
 	void PollInputEvents();
 };
 

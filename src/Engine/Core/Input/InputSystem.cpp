@@ -31,7 +31,19 @@ AxisInput* InputEventHandler::CreateAxisInput(AxisActionMapping(Map))
 	return NewInput;
 }
 
-
+void InputEventHandler::RemoveMappings()
+{
+	for (int i = 0; i < KeyEvents.size(); i++)
+	{
+		delete KeyEvents[i];
+	}
+	KeyEvents.clear();
+	for (int i = 0; i < AxisEvents.size(); i++)
+	{
+		delete AxisEvents[i];
+	}
+	AxisEvents.clear();
+}
 
 void InputEventHandler::PollInputEvents()
 {

@@ -1,8 +1,7 @@
 #pragma once
 #include "MainMenu.h"
-#include "Engine/Core/UI/UI_Text.h"
 #include "Engine/Core/Components/SpriteRenderer.h"
-#include "Engine/Core/UI/UI_Base.h"
+#include "Game/UI/UI_MainMenu.h"
 #include <iostream>
 
 void MainMenu::OnLoadScene()
@@ -18,17 +17,11 @@ void MainMenu::OnLoadScene()
 	MainMenu->RegisterComponent(MenuLogoSprite,true,"MenuSprite");
 
 
-	//TODO - Move this into its Own Hud/Widget class so single spawn is easier
-	//Play Game Menu Base
-	UI_Base* MainMenuUI = new UI_Base();
+	//Spawn UI
+	UI_Base* MainMenuUI = new UI_MainMenu();
 	SpawnObject(MainMenuUI, { 0,0 });
-	UI_Text* PlayGameText = new UI_Text("Play Game", "Assets/Fonts/sinistar.ttf", 24);
-	MainMenuUI->AddToNavigationPath(PlayGameText);
-	PlayGameText->m_Transform.SetPosition(400, 100);
 
-	UI_Text* ExitButton = new UI_Text("Play Game", "Assets/Fonts/sinistar.ttf", 24);
-	MainMenuUI->AddToNavigationPath(ExitButton);
 
-	/*UI_Text* Text = new UI_Text("SINISTAR TEST", "Assets/Fonts/sinistar.ttf");
-	SpawnObject(Text, Math::Vector2::Zero(), true, "Text");*/
+
+
 }

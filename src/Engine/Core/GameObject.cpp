@@ -2,6 +2,7 @@
 #include "Transform.h"
 #include "Engine/Core/Components/Collider.h"
 #include "GameObject.h"
+#include "Engine/Core/GameInstance.h"
 #include <iostream>
 
 
@@ -102,6 +103,8 @@ void GameObject::Render(sf::RenderWindow& Renderer)
 		m_Components[Comp]->Render(Renderer);
 	}
 
+
+	if (!GameInstance::GetGameInstance()->ShouldDrawDebug()) { return; }
 	sf::CircleShape circle;
 	circle.setRadius(2);
 	circle.setPosition(sf::Vector2f(m_Transform.Location.x-2,m_Transform.Location.y-2));

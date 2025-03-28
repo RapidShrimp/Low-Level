@@ -1,10 +1,15 @@
 #pragma once
 #include "UI_Element.h"
+#include "Engine/Core/Events/Event.h"
+#include "Engine/Core/Input/InputSystem.h"
+
 #include <vector>
 
 class UI_Base : public GameObject {
 
 public:
+
+	virtual void Init(Object* OwningObject) override;
 
 	void NavigateNext();
 	void NavigatePrevious();
@@ -13,6 +18,8 @@ public:
 	void RemoveFromNavigationPath(UI_Element* Element);
 	virtual void Render(sf::RenderWindow& Renderer) override;
 	void AddElement(UI_Element* Element);
+	virtual void OnDestroy() override;
+
 
 protected:
 

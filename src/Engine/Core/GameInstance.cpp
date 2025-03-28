@@ -10,6 +10,12 @@ GameInstance::~GameInstance()
 {
 }
 
+void GameInstance::LoadScene(GameScene* NewScene)
+{
+	m_CurrentScene->UnloadScene();
+	NewScene->OnLoadScene();
+	m_CurrentScene = NewScene;
+}
 
 void GameInstance::Init(/*TODO - Game Scene ClassType To Load Into*/)
 {

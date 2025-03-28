@@ -14,7 +14,7 @@ UI_Text::UI_Text(std::string DisplayText, std::string FontFilepath, int TextScal
 	}
 	m_Text = new sf::Text(*m_Font);
 
-	m_Text->setString("HelloWorld");
+	m_Text->setString(DisplayText);
 
 	m_Text->setCharacterSize(24);
 
@@ -40,4 +40,36 @@ void UI_Text::UpdateText(std::string NewString, sf::Text::Style InStyle)
 
 void UI_Text::SetColour(sf::Color NewColour)
 {
+	if (m_Text == nullptr) { return; }
+
+	m_Text->setFillColor(NewColour);
+}
+
+void UI_Text::SetAlignment(E_TextAlignment AlignText)
+{
+
+	switch (AlignText)
+	{
+	case Left:
+		m_Text->setOrigin({ 0,0 });
+		break;
+	case Center:
+		m_Text->setOrigin(m_Text->getGlobalBounds().getCenter());
+		break;
+	case Right:
+		m_Text->setOrigin({ m_Text->getGlobalBounds().size.x,0 });
+		break;
+	default:
+		break;
+	}
+}
+
+void UI_Text::OnSetFocus()
+{
+	SetColour(sf::Color::White);
+}
+
+void UI_Text::OnRemoveFocus()
+{
+	SetColour(sf::Color::Blue);
 }

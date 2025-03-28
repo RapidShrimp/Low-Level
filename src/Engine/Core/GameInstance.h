@@ -20,6 +20,7 @@ public:
 	};
 
 	GameScene* GetWorld() { return m_CurrentScene; }
+	void LoadScene(GameScene* NewScene);
 	bool ShouldDrawDebug() { return m_Debug; }
 protected:
 	sf::RenderWindow m_GameWindow;
