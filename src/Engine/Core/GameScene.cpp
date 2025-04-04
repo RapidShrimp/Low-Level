@@ -1,5 +1,6 @@
 #pragma once
 #include "GameScene.h"
+#include "Game/Player/PlayerCharacter.h"
 #include <iostream>
 
 GameScene::GameScene()
@@ -29,6 +30,7 @@ void GameScene::RegisterSpawnedObject(GameObject* RegisterObject, bool Activate)
 	RegisterObject->BeginPlay();
 
 	if (Activate) { RegisterObject->Activate(); }
+	else { RegisterObject->Deactivate(); }
 }
 
 GameObject* GameScene::SpawnObject(GameObject* Spawnable, SinStr::Transform SpawnTransform, bool StartActive, std::string DisplayName)

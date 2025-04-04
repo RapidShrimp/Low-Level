@@ -15,6 +15,8 @@ protected:
 	Rigidbody* m_RigidBody;
 	float m_MoveSpeed = 0.004f;
 
+	int m_SinibombsHeld = 0;
+
 	Math::Vector2 MoveDirection;
 
 public:
@@ -22,6 +24,9 @@ public:
 	~PlayerCharacter();
 	void MovePlayer(CallbackContext Context, Math::Vector2 MoveVector);
 	void FireWeapon(CallbackContext Context);
+
+	void CollectSinibomb(); 
+	
 	void OnCollisionEventCallback(Collider* OtherCollider, E_CollisionEvent Response);
 
 	virtual void Init(Object* OwningObject) override;
@@ -30,7 +35,6 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Update() override;
 	virtual void Render(sf::RenderWindow& Renderer) override;
-
 	virtual void FixedUpdate(float DeltaTime) override;
 	//virtual void OnDestroy() override;
 

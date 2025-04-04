@@ -1,6 +1,9 @@
 #pragma once
 #include "Engine/Core/Libs/GameFunctionLib.h"
+#include "Engine/Core/GameInstance.h"
+#include "Engine/Core/ObjectPooler.h"
 #include "PlayerCharacter.h"
+#include <Game/Scenes/GameLevel.h>
 
 PlayerCharacter::PlayerCharacter()
 {
@@ -35,7 +38,16 @@ void PlayerCharacter::FireWeapon(CallbackContext Context)
 	if (Context.Started) {
 		Debug::Log(this, Display, "Fire Started");
 
-		m_SpriteRenderer->SetSprite(m_SpriteRenderer->GetSpriteIndexes().x + 1, m_SpriteRenderer->GetSpriteIndexes().y);
+
+		GameLevel* CurrGameScene = dynamic_cast<GameLevel*>(GameInstance::GetGameInstance()->GetWorld());
+		if (CurrGameScene == nullptr) { return; }
+
+		ObjectPooler<Projectile>* BulletObejctPooler = CurrGameScene->m_BulletPooler;
+		Projectile* Bullet = BulletObejctPooler->GetFreeObject();
+		Bullet->m_Transform = m_Transform;
+		Bullet->Activate();
+
+		//Bullet.OnFired(this)
 	}
 	else if (Context.Cancelled) 
 	{
@@ -43,8 +55,16 @@ void PlayerCharacter::FireWeapon(CallbackContext Context)
 	}
 }
 
+void PlayerCharacter::CollectSinibomb()
+{
+	m_SinibombsHeld++; 
+	Debug::Log(this, Display, "Sinibomb Collected");
+
+}
+
 void PlayerCharacter::OnCollisionEventCallback(Collider* OtherCollider, E_CollisionEvent Response)
 {
+	//Debug::Log(this, Display, "Collision Event Callback");
 
 }
 
@@ -87,6 +107,6 @@ void PlayerCharacter::FixedUpdate(float DeltaTime)
 {
 	GameObject::FixedUpdate(DeltaTime);
 	m_RigidBody->AddVelocity(MoveDirection*m_MoveSpeed);
-	m_Transform.Location += m_RigidBody->m_Velocity;
-	m_Transform.Rotation += m_RigidBody->m_AngluarVelocity;
+	m_Transform.Location += m_RigidBody->m_Velocity * DeltaTime;
+	m_Transform.Rotation += m_RigidBody->m_AngluarVelocity * DeltaTime;
 }

@@ -18,8 +18,16 @@ void Rigidbody::Init(Object* Owner)
 
 void Rigidbody::FixedUpdate(float deltaTime)
 {	
-	CalculateLateralVelocity();
-	CalculateAngularVelocity();
+	//Linear Damped
+	if (m_Velocity.Length() <= m_LinearDamp)
+	{
+		m_Velocity = { 0,0 };
+		return;
+	}
+	m_Velocity -= m_Velocity.Normalised() * m_LinearDamp;
+	
+	//Angular Dampen
+	m_AngluarVelocity = (m_AngluarVelocity * -1) - m_AngularDamp;
 
 }
 
@@ -38,22 +46,4 @@ void Rigidbody::AddVelocity(Math::Vector2(Velocity))
 		Math::Vector2::Normalise(m_Velocity);
 		m_Velocity = m_Velocity * m_MaxSpeed ;
 	}
-
-}
-
-void Rigidbody::CalculateLateralVelocity()
-{
-	if (m_Velocity.Length() <= m_LinearDamp)
-	{
-		m_Velocity = { 0,0 };
-		return;
-	}
-	//Decelerate
-	m_Velocity -= m_Velocity.Normalised() * m_LinearDamp;
-}
-
-void Rigidbody::CalculateAngularVelocity()
-{
-	m_AngluarVelocity = (m_AngluarVelocity * -1) - m_AngularDamp;
-
 }

@@ -10,7 +10,12 @@ class Collider;
 class GameObject : public Object
 {
 public:
-	SinStr::Event<float, GameObject*> OnHealthChange;
+	/*
+	OnTakeDamage
+	Float - Incoming Health Change
+	GameObject - Causing GameObject
+	*/
+	SinStr::Event<float, GameObject*> OnTakeDamage;
 	SinStr::Transform m_Transform;
 
 protected:
@@ -37,6 +42,7 @@ public:
 	virtual void OnDestroy() override;
 	virtual Collider* GetCollider(int ColliderIndex = 0) 
 	{ 
-		if (m_Colliders[ColliderIndex] == nullptr) { return nullptr; }
+		if (m_Colliders.size() == 0) { return nullptr; }
 		return m_Colliders[ColliderIndex]; }
+
 };

@@ -29,25 +29,30 @@ void Collider::Init(Object* Owner)
 
 void Collider::Update()
 {
+	if (!isActive) { return; }
+
 	std::vector<GameObject*> Objects = GameInstance::GetGameInstance()->GetWorld()->GetGameObjects();
 	E_CollisionEvent ColliderEvent;
 	for (int i = 0; i < Objects.size(); i++) {
 
 		ColliderEvent = None;
 	
-		//Ownership Distance Check && Collider Check 
-		if (Objects[i] == m_Owner) { continue; }
+		//Ownership Check && Collider Owner Null Check 
+		if (Objects[i] == m_Owner || Objects[i] == nullptr) { continue; }
 		Collider* OtherCollider = Objects[i]->GetCollider();
-		if (OtherCollider == nullptr) { continue; }
-
-		//Is Both Triggers?
-		if (m_IsTrigger && OtherCollider->m_IsTrigger) { continue; }
-		
 
 		//Is In collision check range?
 		if ((Objects[i]->m_Transform.Location - GetOwner()->m_Transform.Location).Length() > 150.0f) { continue; }
 		bool Collided;
 
+		//If the collider does not exist
+		if (OtherCollider == nullptr) { continue; }
+
+		//If the other Collider is Active
+		if (!OtherCollider->isActive) { continue; }
+
+		//Are Both Triggers?
+		if (m_IsTrigger && OtherCollider->m_IsTrigger) { continue; }
 
 		//Collision Checks
 		if (OtherCollider->m_CollisionType == Box && m_CollisionType == Box){ //Box
@@ -99,6 +104,8 @@ void Collider::Update()
 
 void Collider::Render(sf::RenderWindow& Renderer)
 {
+	if (!isActive) { return; }
+
 	if (!GameInstance::GetGameInstance()->ShouldDrawDebug()) { return; }
 	//Debugging
 	if (m_CollisionType == Circle) 

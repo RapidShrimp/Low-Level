@@ -3,6 +3,7 @@
 #include "Game/Scenes/MainMenu.h"
 #include "GameInstance.h"
 #include "Engine/Core/Input/InputSystem.h"
+#include "Engine/Core/Libs/GameFunctionLib.h"
 
 InputEventHandler* InputEventHandler::m_InputSystemInstance = nullptr;
 
@@ -13,8 +14,22 @@ GameInstance::~GameInstance()
 void GameInstance::LoadScene(GameScene* NewScene)
 {
 	m_CurrentScene->UnloadScene();
-	NewScene->OnLoadScene();
 	m_CurrentScene = NewScene;
+	m_CurrentScene->OnLoadScene();
+}
+
+const PlayerCharacter* GameInstance::GetPlayer()
+{
+	if (m_CurrentScene == nullptr) {
+		Debug::Log(nullptr, Error, "No Scene Loaded when calling get player, Fatal Error");
+		return nullptr;
+	}
+	if(m_CurrentScene->GetPlayerCharacter() == nullptr)
+	{
+		Debug::Log(nullptr, Warning, "No Player Loaded into the scene");
+		return nullptr;
+	}
+	return m_CurrentScene->GetPlayerCharacter();;
 }
 
 void GameInstance::Init(/*TODO - Game Scene ClassType To Load Into*/)
@@ -52,7 +67,8 @@ void GameInstance::Update()
 
 		if (timeSinceLastPhysics >= physicsTimeStep)
 		{
-			FixedUpdate(deltaTime);
+			//Convert from Micro to Miliseconds
+			FixedUpdate(deltaTime / 1000.f);
 			timeSinceLastPhysics -= physicsTimeStep;
 		}
 		m_CurrentScene->Update();

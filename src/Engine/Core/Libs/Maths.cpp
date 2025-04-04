@@ -116,3 +116,17 @@ Math::Vector2 Math::Vector2::Normalised()
 {
 	return Math::Vector2(x, y) / std::sqrt(x * x + y * y);
 }
+
+int Math::Random::Range(int Min, int Max)
+{
+	//seeding
+	//srand(time(NULL)); 
+		
+	return 0;
+	//Min + rand() % ((Max + 1) - Min);
+}
+
+float Math::Random::Range(float Min, float Max)
+{
+	return 0;
+}

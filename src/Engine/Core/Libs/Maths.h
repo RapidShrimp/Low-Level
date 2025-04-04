@@ -5,6 +5,15 @@ using namespace std;
 
 namespace Math {
 	//Vector Maths
+
+	static class Random 
+	{
+	public:
+		static int Range(int Min, int Max);
+		static float Range(float Min, float Max);
+
+	};
+
 	class Vector2
 	{
 

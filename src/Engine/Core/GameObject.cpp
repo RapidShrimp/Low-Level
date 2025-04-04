@@ -59,18 +59,20 @@ void GameObject::Init(Object* OwningObject)
 
 void GameObject::OnActivate()
 {
-	/*
-	* EnableComponents
-	* EnableRenderer
-	*/ 
+	for (int ComponentIndex = 0; ComponentIndex < m_Components.size(); ComponentIndex++)
+	{
+		if (m_Components[ComponentIndex] == nullptr) { continue; }
+		m_Components[ComponentIndex]->Activate();
+	}
 }
 
 void GameObject::OnDeactivate()
 {
-	/*
-	* DisableComponents
-	* DisableRenderer
-	*/
+	for (int ComponentIndex = 0; ComponentIndex < m_Components.size(); ComponentIndex++)
+	{
+		if (m_Components[ComponentIndex] == nullptr) { continue; }
+		m_Components[ComponentIndex]->Deactivate();
+	}
 }
 
 void GameObject::BeginPlay()
@@ -80,23 +82,30 @@ void GameObject::BeginPlay()
 
 void GameObject::Update()
 {
+	if (!isActive) { return; }
 	//Override Functionality Here:
 	for (int ComponentIndex = 0; ComponentIndex < m_Components.size(); ComponentIndex++) 
 	{
+		if (m_Components[ComponentIndex] == nullptr) { continue; }
 		m_Components[ComponentIndex]->Update();
 	}
 }
 
 void GameObject::FixedUpdate(float deltaTime)
 {
+	if (!isActive) { return; }
+
 	for (int ComponentIndex = 0; ComponentIndex < m_Components.size(); ComponentIndex++)
 	{
+		if (m_Components[ComponentIndex] == nullptr) { continue; }
 		m_Components[ComponentIndex]->FixedUpdate(deltaTime);
 	}
 }
 
 void GameObject::Render(sf::RenderWindow& Renderer)
 {
+	if (!isActive) { return; }
+
 	for (int Comp = 0; Comp < m_Components.size(); Comp++) 
 	{
 		if (m_Components[Comp] == nullptr) { continue; }

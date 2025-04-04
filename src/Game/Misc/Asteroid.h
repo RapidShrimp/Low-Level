@@ -25,4 +25,8 @@ public:
 	virtual void Update() override;
 	virtual void FixedUpdate(float DeltaTime) override;
 	//virtual void OnDestroy() override;
+
+private:
+	void Handle_OnAsteroidHit(float InDamage);
+	void Handle_OnAsteroidDestroyed(float InDamage);
 };

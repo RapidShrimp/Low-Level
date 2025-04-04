@@ -20,6 +20,10 @@ void Asteroid::Init(Object* OwningObject)
 	RegisterComponent(m_SpriteRenderer, true, "Sprite Renderer");
 	RegisterComponent(m_Collider, true, "Circle Collider");
 	RegisterComponent(m_RigidBody, true, "Rigid Body");
+
+	m_Health->OnDamageTaken += std::bind(&Asteroid::Handle_OnAsteroidHit, this, std::placeholders::_1);
+	m_Health->OnDeath += std::bind(&Asteroid::Handle_OnAsteroidDestroyed, this,0);
+
 }
 
 void Asteroid::BeginPlay()
@@ -31,5 +35,13 @@ void Asteroid::Update()
 }
 
 void Asteroid::FixedUpdate(float DeltaTime)
+{
+}
+
+void Asteroid::Handle_OnAsteroidHit(float InDamage)
+{
+}
+
+void Asteroid::Handle_OnAsteroidDestroyed(float InDamage)
 {
 }

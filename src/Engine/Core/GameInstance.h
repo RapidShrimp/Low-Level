@@ -22,6 +22,8 @@ public:
 	GameScene* GetWorld() { return m_CurrentScene; }
 	void LoadScene(GameScene* NewScene);
 	bool ShouldDrawDebug() { return m_Debug; }
+
+	const PlayerCharacter* GetPlayer();
 protected:
 	sf::RenderWindow m_GameWindow;
 	GameScene* m_CurrentScene;

@@ -6,7 +6,7 @@
 void GameFucntionLib::ApplyDamage(GameObject* DamageObject, float Damage, GameObject* Instigator)
 {
 	if (DamageObject == nullptr) { return; }
-	DamageObject->OnHealthChange.Invoke(Damage, Instigator);
+	DamageObject->OnTakeDamage.Invoke(Damage, Instigator);
 }
 
 void Debug::Log(Object* CallingObject, E_LogType LogType, std::string LogMessage) 
