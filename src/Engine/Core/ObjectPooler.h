@@ -24,6 +24,7 @@ protected:
 template<typename T>
 inline T* ObjectPooler<T>::GetFreeObject()
 {
+	//Check for a free object, return the casted type
 	for (int i = 0; i < m_PooledObjects.size(); i++) 
 	{
 		if (!m_PooledObjects[i]->GetIsActive()) 
@@ -31,8 +32,8 @@ inline T* ObjectPooler<T>::GetFreeObject()
 			return dynamic_cast<T*>(m_PooledObjects[i]); 
 		}
 	}
-	Debug::Log(this,Warning,"No Free Object Creating and Adding to the Stack");
 	
+	Debug::Log(this,Warning,"No Free Object Creating and Adding to the Stack");
 	T* CreatedObject;
 	CreatedObject = new T;
 	if (CreatedObject == nullptr) { return nullptr; }

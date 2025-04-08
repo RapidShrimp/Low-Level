@@ -38,7 +38,6 @@ void PlayerCharacter::FireWeapon(CallbackContext Context)
 	if (Context.Started) {
 		Debug::Log(this, Display, "Fire Started");
 
-
 		GameLevel* CurrGameScene = dynamic_cast<GameLevel*>(GameInstance::GetGameInstance()->GetWorld());
 		if (CurrGameScene == nullptr) { return; }
 
@@ -46,8 +45,7 @@ void PlayerCharacter::FireWeapon(CallbackContext Context)
 		Projectile* Bullet = BulletObejctPooler->GetFreeObject();
 		Bullet->m_Transform = m_Transform;
 		Bullet->Activate();
-
-		//Bullet.OnFired(this)
+		Bullet->OnFired(this,Math::Vector2::Up());
 	}
 	else if (Context.Cancelled) 
 	{

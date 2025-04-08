@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Engine/Core/Object.h"
+#include "Engine/Core/GameInstance.h"
 #include "GameFunctionLib.h"
 
 void GameFucntionLib::ApplyDamage(GameObject* DamageObject, float Damage, GameObject* Instigator)
@@ -11,7 +12,7 @@ void GameFucntionLib::ApplyDamage(GameObject* DamageObject, float Damage, GameOb
 
 void Debug::Log(Object* CallingObject, E_LogType LogType, std::string LogMessage) 
 {
-
+	if (!GameInstance::GetGameInstance()->ShouldLogDisplay() && LogType == Display) { return; }
 	std::string ObjectName = "";
 	if (CallingObject != nullptr) 
 	{

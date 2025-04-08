@@ -22,6 +22,8 @@ public:
 	GameScene* GetWorld() { return m_CurrentScene; }
 	void LoadScene(GameScene* NewScene);
 	bool ShouldDrawDebug() { return m_Debug; }
+	bool ShouldLogDisplay() { return m_LogDisplay; }
+
 
 	const PlayerCharacter* GetPlayer();
 protected:
@@ -40,5 +42,6 @@ public:
 
 private:
 	bool m_Debug = true;
+	bool m_LogDisplay = false;
 };
 

@@ -20,7 +20,6 @@ public:
 	//Overrides Current Velocity and Sets direct Velocity
 	void SetVelocity(Math::Vector2(NewVelocity));
 	void AddVelocity(Math::Vector2(Velocity));
-protected:
 
 	float m_MaxSpeed = 10.0f;
 	float m_LinearDamp = 0.001f; // 0.01 - 1 || 1 = No Dampen
