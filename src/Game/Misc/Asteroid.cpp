@@ -1,4 +1,5 @@
 #pragma once
+#include "Engine/Core/Libs/GameFunctionLib.h"
 #include "Asteroid.h"
 
 Asteroid::Asteroid()
@@ -40,8 +41,12 @@ void Asteroid::FixedUpdate(float DeltaTime)
 
 void Asteroid::Handle_OnAsteroidHit(float InDamage)
 {
+	Debug::Log(this, Warning, "Hit");
 }
 
 void Asteroid::Handle_OnAsteroidDestroyed(float InDamage)
 {
+
+	Debug::Log(this, Error, "Asteroid Destroyed");
+	m_Collider->Deactivate();
 }

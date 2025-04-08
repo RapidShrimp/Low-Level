@@ -11,7 +11,6 @@ SpriteRenderer::SpriteRenderer(std::string ImageFilepath, Math::Vector2(ImageSiz
 	if (Result)
 	{
 		m_Sprite = new sf::Sprite(m_Texture);
-		//m_Sprite->setOrigin({ m_CellSize.x / 2,m_CellSize.y / 2 });
 	}
 }
 
@@ -25,7 +24,6 @@ SpriteRenderer::SpriteRenderer(std::string SpriteSheetFilepath, Math::Vector2(Sh
 	if (Result) 
 	{
 		m_Sprite = new sf::Sprite(m_Texture);
-		//m_Sprite->setOrigin({ m_CellSize.x / 2,m_CellSize.y / 2 });
 	}
 }
 void SpriteRenderer::SetSprite(int Column, int Row)
@@ -66,10 +64,17 @@ void SpriteRenderer::Render(sf::RenderWindow& Renderer)
 	}
 
 	UpdateSpriteBounds();
-	
+
+	m_Sprite->setOrigin({ m_CellSize.x / 2,m_CellSize.y / 2 });
+	if (GetOwner() != nullptr) {
+		m_Sprite->setRotation(sf::Angle(sf::radians(GetOwner()->m_Transform.Rotation + m_LocalTransform.Rotation)));
+	}
+	else {
+		m_Sprite->setRotation(sf::Angle(sf::radians(m_LocalTransform.Rotation)));
+	}
 	m_Sprite->setPosition({ 
-		GetOwner()->m_Transform.Location.x - (m_CellSize.x / 2)* m_Sprite->getScale().x ,
-		GetOwner()->m_Transform.Location.y - (m_CellSize.y / 2)* m_Sprite->getScale().y});
+		GetOwner()->m_Transform.Location.x/* + (m_CellSize.x / 2 * m_Sprite->getScale().x)*/ ,
+		GetOwner()->m_Transform.Location.y /*+ (m_CellSize.y / 2 * m_Sprite->getScale().y)*/});
 
 	//m_Sprite->setRotation();
 	Renderer.draw(*m_Sprite);
@@ -83,9 +88,11 @@ void SpriteRenderer::Render(sf::RenderWindow& Renderer)
 	Rect.setFillColor(sf::Color::Transparent);
 	Rect.setOutlineColor(sf::Color::Cyan);
 	Rect.setOutlineThickness(1.0f/m_Sprite->getScale().x);
+	Rect.setOrigin({ m_CellSize.x / 2,m_CellSize.y / 2 });
+	Rect.setRotation(sf::Angle(sf::radians(GetOwner()->m_Transform.Rotation + m_LocalTransform.Rotation)));
 	Rect.setPosition({
-		GetOwner()->m_Transform.Location.x - (m_CellSize.x / 2) * m_Sprite->getScale().x ,
-		GetOwner()->m_Transform.Location.y - (m_CellSize.y / 2) * m_Sprite->getScale().y });
+		GetOwner()->m_Transform.Location.x /*- (m_CellSize.x / 2) * m_Sprite->getScale().x*/ ,
+		GetOwner()->m_Transform.Location.y /*- (m_CellSize.y / 2) * m_Sprite->getScale().y*/ });
 	Renderer.draw(Rect);
 
 }

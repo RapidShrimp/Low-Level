@@ -1,6 +1,14 @@
 #pragma once
 #include "Engine/Core/Libs/GameFunctionLib.h"
+#include "Engine/Core/GameInstance.h"
 #include "InputSystem.h"
+
+sf::Vector2i InputEventHandler::GetMousePosition()
+{
+	if (MouseEvents == nullptr) { return { 0,0 }; }
+
+	return MouseEvents->MousePos;
+}
 
 BindableInput* InputEventHandler::CreateKeyInput(ActionMapping(Map))
 {
@@ -31,6 +39,16 @@ AxisInput* InputEventHandler::CreateAxisInput(AxisActionMapping(Map))
 	return NewInput;
 }
 
+MouseInput* InputEventHandler::CreateMouseInput()
+{
+	if (MouseEvents != nullptr)
+	{
+		return MouseEvents;
+	}
+
+	return MouseEvents = new MouseInput();
+}
+
 void InputEventHandler::RemoveMappings()
 {
 	for (int i = 0; i < KeyEvents.size(); i++)
@@ -43,10 +61,15 @@ void InputEventHandler::RemoveMappings()
 		delete AxisEvents[i];
 	}
 	AxisEvents.clear();
+	delete MouseEvents;
+	MouseEvents = nullptr;
 }
 
 void InputEventHandler::PollInputEvents()
 {
+	if (MouseEvents != nullptr) {
+		MouseEvents->PollEvent();
+	}
 	for (int i = 0; i < KeyEvents.size(); i++)
 	{
 		KeyEvents[i]->PollEvent();
@@ -100,4 +123,10 @@ void AxisInput::PollEvent()
 	Math::Vector2::Normalise(Direction);
 	CurrentVector = Direction;
 	OnAxisInputUpdate(Data, CurrentVector);
+}
+
+void MouseInput::PollEvent()
+{
+	MousePos = sf::Mouse::getPosition(GameInstance::GetGameInstance()->GetWindow());
+	OnMouseInputUpdate(Math::Vector2( MousePos.x,MousePos.y ));
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <windows.h>
 #include "Engine/Core/Object.h"
 #include "Engine/Core/GameInstance.h"
 #include "GameFunctionLib.h"
@@ -26,17 +27,24 @@ void Debug::Log(Object* CallingObject, E_LogType LogType, std::string LogMessage
 	}
 
 	std::string LogTypeStr;
+	HANDLE hConsole;
+	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	switch (LogType)
 	{
 	case Display:
 		LogTypeStr = "Display: ";
+		SetConsoleTextAttribute(hConsole,15);
 		break;
 	case Warning:
 		LogTypeStr = "Warning: ";
+		SetConsoleTextAttribute(hConsole, 14);
 		break;
 	case Error:
 		LogTypeStr = "ERROR: ";
+		SetConsoleTextAttribute(hConsole, 4);
 		break;
 	}
 	cout << ObjectName << LogTypeStr << LogMessage << endl;
+	SetConsoleTextAttribute(hConsole, 15);
+
 }

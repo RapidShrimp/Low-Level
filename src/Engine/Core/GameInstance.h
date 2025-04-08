@@ -24,7 +24,7 @@ public:
 	bool ShouldDrawDebug() { return m_Debug; }
 	bool ShouldLogDisplay() { return m_LogDisplay; }
 
-
+	const sf::RenderWindow& GetWindow() { return m_GameWindow; }
 	const PlayerCharacter* GetPlayer();
 protected:
 	sf::RenderWindow m_GameWindow;
@@ -42,6 +42,6 @@ public:
 
 private:
 	bool m_Debug = true;
-	bool m_LogDisplay = false;
+	bool m_LogDisplay = true;
 };
 

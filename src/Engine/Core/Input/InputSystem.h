@@ -29,11 +29,20 @@ public:
 	void PollEvent();
 };
 
+class MouseInput
+{
+public:
+	MouseInput() {};
+	SinStr::Event<Math::Vector2> OnMouseInputUpdate;
+	sf::Vector2i MousePos = {0,0};
+	void PollEvent();
+};
+
 class InputEventHandler
 {
 private:
 
-	InputEventHandler() {}; //Prevent Direct Instantiate
+	InputEventHandler() {  }; //Prevent Direct Instantiate
 	InputEventHandler(const InputEventHandler&) = delete; //Prevent Copy Constructor
 	InputEventHandler& operator=(const InputEventHandler&) = delete; //Prevent Copy Assign
 	static InputEventHandler* m_InputSystemInstance;
@@ -46,14 +55,18 @@ public:
 		return m_InputSystemInstance;
 	};
 
+	sf::Vector2i GetMousePosition();
 private:
 	std::vector<BindableInput*> KeyEvents;
 	std::vector<AxisInput*> AxisEvents;
+	MouseInput* MouseEvents = nullptr;
+
 
 public:
 	BindableInput* CreateKeyInput(ActionMapping(Map));
 	BindableInput* CheckForExistingEvent(sf::Keyboard::Key CheckKey);
 	AxisInput* CreateAxisInput(AxisActionMapping(Map));
+	MouseInput* CreateMouseInput();
 
 	void RemoveMappings();
 

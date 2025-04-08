@@ -12,6 +12,7 @@ public:
 public:
 	HealthComponent();
 	HealthComponent(float Health);
+	virtual void BeginPlay() override;
 
 	void Handle_OnHeathChanged(float Damage, GameObject* Instigator);
 protected:

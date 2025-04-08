@@ -2,14 +2,16 @@
 #include "Engine/Core/Libs/GameFunctionLib.h"
 #include "Engine/Core/GameInstance.h"
 #include "Engine/Core/ObjectPooler.h"
-#include "PlayerCharacter.h"
 #include <Game/Scenes/GameLevel.h>
+#include "PlayerCharacter.h"
+
 
 PlayerCharacter::PlayerCharacter()
 {
 	m_Health = new HealthComponent();
 	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 106,14 }, { 2,42 }, 8, 1);
 	m_SpriteRenderer->SetSpriteScale(3, 3);
+
 	m_Collider = new Collider(false, { 32,32 });
 	m_RigidBody = new Rigidbody(0.5f);
 
@@ -45,7 +47,12 @@ void PlayerCharacter::FireWeapon(CallbackContext Context)
 		Projectile* Bullet = BulletObejctPooler->GetFreeObject();
 		Bullet->m_Transform = m_Transform;
 		Bullet->Activate();
-		Bullet->OnFired(this,Math::Vector2::Up());
+
+		//Get Mouse Direction 
+		sf::Vector2i MousePos =  InputEventHandler::GetInstance()->GetMousePosition();
+		Math::Vector2 Dir = Math::Vector2(MousePos.x, MousePos.y) - m_Transform.Location;
+		Math::Vector2::Normalise(Dir);
+		Bullet->OnFired(this,Dir);
 	}
 	else if (Context.Cancelled) 
 	{
@@ -74,16 +81,15 @@ void PlayerCharacter::Init(Object* OwningObject)
 	RegisterComponent(m_Collider, Math::Vector2(-10, -10), true, "Circle Collider");
 	RegisterComponent(m_RigidBody, true, "Rigid Body");
 
-
+	m_SpriteRenderer->GetLocalTransform().SetRotation(1.5708);
 	m_Collider->OnCollisionEvent += std::bind(&PlayerCharacter::OnCollisionEventCallback, this, std::placeholders::_1, std::placeholders::_2);
 
 	AxisActionMapping MoveKeys = AxisActionMapping(sf::Keyboard::Key::W, sf::Keyboard::Key::S, sf::Keyboard::Key::A, sf::Keyboard::Key::D);
 	AxisInput* MoveInput = InputEventHandler::GetInstance()->CreateAxisInput(MoveKeys);
 	BindableInput* FireKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::Space);
-
+	MouseInput* MouseInputs = InputEventHandler::GetInstance()->CreateMouseInput();
 	if (FireKey) { FireKey->OnInputUpdate += std::bind(&PlayerCharacter::FireWeapon, this, std::placeholders::_1);}
 	if (MoveInput) { MoveInput->OnAxisInputUpdate += std::bind(&PlayerCharacter::MovePlayer, this, std::placeholders::_1, std::placeholders::_2); }
-
 }
 
 void PlayerCharacter::BeginPlay()
@@ -99,12 +105,25 @@ void PlayerCharacter::Update()
 void PlayerCharacter::Render(sf::RenderWindow& Renderer)
 {
 	GameObject::Render(Renderer);
+	//Get Mouse Direction 
+
 }
 
 void PlayerCharacter::FixedUpdate(float DeltaTime)
 {
 	GameObject::FixedUpdate(DeltaTime);
-	m_RigidBody->AddVelocity(MoveDirection*m_MoveSpeed);
+
+	sf::Vector2i MousePos = InputEventHandler::GetInstance()->GetMousePosition();
+	Math::Vector2 Dir = Math::Vector2(MousePos.x, MousePos.y) - m_Transform.Location;
+	m_Transform.SetRotation(Dir.Normalised().GetRadians());
+
+	if (MoveDirection != Math::Vector2::Zero() && Dir.Length() > 0.1f) //P  revent NaN Error 
+	{
+		m_RigidBody->AddVelocity(Math::Vector2::GetDirectionFromRadians(m_Transform.Rotation)*m_MoveSpeed);
+	}
+
 	m_Transform.Location += m_RigidBody->m_Velocity * DeltaTime;
 	m_Transform.Rotation += m_RigidBody->m_AngluarVelocity * DeltaTime;
+	//Debug::Log(this, Warning, m_Transform.Location.ToString());
+	
 }

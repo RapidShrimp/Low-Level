@@ -1,5 +1,5 @@
-#include "Projectile.h"
 #pragma once
+#include "Engine/Core/Libs/GameFunctionLib.h"
 #include "Projectile.h"
 
 Projectile::Projectile()
@@ -22,6 +22,14 @@ void Projectile::Init(Object* OwningObject)
 	RegisterComponent(m_SpriteRender, true, "Projectile Sprite");
 	RegisterComponent(m_Collider, true, "Projectile Collider");
 	RegisterComponent(m_RigidBody, true, "Projectile RB");
+
+	m_Collider->OnCollisionEvent += std::bind(&Projectile::OnCollisionHit, this, std::placeholders::_1,std::placeholders::_2);
+}
+
+void Projectile::OnDeactivate()
+{
+	m_RigidBody->SetVelocity({ 0,0 });
+	m_Transform.SetPosition(0, 0);
 }
 
 void Projectile::FixedUpdate(float deltaTime)
@@ -39,4 +47,17 @@ void Projectile::FixedUpdate(float deltaTime)
 		Deactivate();
 		
 	}
+}
+
+void Projectile::OnCollisionHit(Collider* OtherCollider, E_CollisionEvent ColliderEvent)
+{
+	if (ColliderEvent != TriggerEnter) { return; }
+	
+	GameObject* OtherObject = OtherCollider->GetOwner();
+	
+	if (OtherObject == GetOwner()) {return;}
+
+
+  	GameFucntionLib::ApplyDamage(OtherObject, 10, dynamic_cast<GameObject*>(GetOwner()));
+	//if(OtherCollider == GetOwner()->)
 }

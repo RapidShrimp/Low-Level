@@ -83,6 +83,11 @@ void Math::Vector2::Abs()
 }
 
 
+Math::Vector2 Math::Vector2::GetDirectionFromRadians(float Radians)
+{
+	return Vector2(std::cos(Radians),std::sin(Radians));
+}
+
 float Math::Vector2::GetRadians()
 {
 	return std::atan2(y, x);

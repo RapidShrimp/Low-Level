@@ -7,9 +7,6 @@ HealthComponent::HealthComponent()
 {
 	m_MaxHealth = 100.0f;
 	m_CurrentHealth = m_MaxHealth;
-	
-	if (GetOwner() == nullptr) { return; }
-	GetOwner()->OnTakeDamage += std::bind(&HealthComponent::Handle_OnHeathChanged, this, std::placeholders::_1, std::placeholders::_2);
 
 }
 
@@ -18,12 +15,17 @@ HealthComponent::HealthComponent(float Health)
 	m_MaxHealth = Health;
 	m_CurrentHealth = m_MaxHealth;
 
+}
+
+void HealthComponent::BeginPlay()
+{
 	if (GetOwner() == nullptr) { return; }
 	GetOwner()->OnTakeDamage += std::bind(&HealthComponent::Handle_OnHeathChanged, this, std::placeholders::_1, std::placeholders::_2);
 }
 
 void HealthComponent::Handle_OnHeathChanged(float Damage, GameObject* Instigator)
 {
+	Debug::Log(this, Display, "HealthChanged");
 	if (!isActive) { return; }
 
 	bool isPositive = Damage >= 0;

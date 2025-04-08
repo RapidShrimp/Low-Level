@@ -60,6 +60,7 @@ namespace Math {
 		static void Normalise(Vector2& InVector);
 		Vector2 Normalised();
 
+		static Vector2 GetDirectionFromRadians(float Radians);
 		float GetRadians();
 		float Rad2Deg(float Radians);
 		float Length();
