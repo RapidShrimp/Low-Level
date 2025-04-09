@@ -26,6 +26,25 @@ SpriteRenderer::SpriteRenderer(std::string SpriteSheetFilepath, Math::Vector2(Sh
 		m_Sprite = new sf::Sprite(m_Texture);
 	}
 }
+void SpriteRenderer::StartAnimation()
+{
+	bShouldAnimate = true;
+}
+
+void SpriteRenderer::NextAnimationFrame()
+{
+	m_Column++;
+	if (m_Column+1 * m_CellSize.x > m_Texture.getSize().x) 
+	{
+		m_Column = 0;
+		m_Row++;
+	}
+	if (m_Row * m_CellSize.y > m_Texture.getSize().y) {
+		m_Row = 0;
+	}
+
+}
+
 void SpriteRenderer::SetSprite(int Column, int Row)
 {
 	m_Column = Column;
@@ -49,6 +68,17 @@ void SpriteRenderer::OnActivate()
 
 void SpriteRenderer::OnDeactivate()
 {
+}
+
+void SpriteRenderer::FixedUpdate(float deltaTime)
+{
+	if(!bShouldAnimate) {return;}
+	LastAnimationFrameTime += deltaTime;
+	if (LastAnimationFrameTime > 1000 / FramesPerSecond) {return;}
+
+	LastAnimationFrameTime = 0;
+ 	NextAnimationFrame();
+	
 }
 
 void SpriteRenderer::Render(sf::RenderWindow& Renderer)

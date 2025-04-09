@@ -65,12 +65,13 @@ void GameInstance::Update()
 			}
 		}
 
-		if (timeSinceLastPhysics >= physicsTimeStep)
+		while (timeSinceLastPhysics >= physicsTimeStep)
 		{
 			//Convert from Micro to Miliseconds
-			FixedUpdate(deltaTime / 1000.f);
+			FixedUpdate(physicsTimeStep * 0.001f);
 			timeSinceLastPhysics -= physicsTimeStep;
 		}
+
 		m_CurrentScene->Update();
 		Render();
 		InputEventHandler::GetInstance()->PollInputEvents();

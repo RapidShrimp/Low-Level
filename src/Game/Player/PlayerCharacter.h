@@ -13,7 +13,7 @@ protected:
 	SpriteRenderer* m_SpriteRenderer;
 	Collider* m_Collider;
 	Rigidbody* m_RigidBody;
-	float m_MoveSpeed = 0.004f;
+	float m_MoveSpeed = 0.002f;
 
 	int m_SinibombsHeld = 0;
 

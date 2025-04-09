@@ -19,6 +19,11 @@ void Rigidbody::Init(Object* Owner)
 void Rigidbody::FixedUpdate(float deltaTime)
 {	
 	//Linear Damped
+
+	if (m_Velocity.Length() > m_MaxSpeed) {
+		m_Velocity = m_Velocity.Normalised() * m_MaxSpeed;
+	}
+
 	if (m_Velocity.Length() <= m_LinearDamp)
 	{
 		m_Velocity = { 0,0 };

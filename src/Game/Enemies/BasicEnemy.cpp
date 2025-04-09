@@ -1,11 +1,14 @@
 #pragma once
 #include "Engine/Core/Components/Collider.h"
-
+#include "Engine/Core/GameInstance.h"
 #include "Game/Enemies/BasicEnemy.h"
+#include "Game/Player/PlayerCharacter.h"
+#include <Engine/Core/Libs/GameFunctionLib.h>
 
 Enemy::Enemy()
 {
 	m_Health = new HealthComponent();
+	m_RigidBody = new Rigidbody(1);
 	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", {116,16}, {2,82},8,1);
 	m_SpriteRenderer->SetSpriteScale(2, 2);
 	m_Collider = new Collider(false, 16.0f);
@@ -23,6 +26,7 @@ void Enemy::Init(Object* OwningObject)
 
 void Enemy::BeginPlay()
 {
+
 }
 
 void Enemy::Update()
@@ -33,6 +37,21 @@ void Enemy::Update()
 void Enemy::FixedUpdate(float DeltaTime)
 {
 	GameObject::FixedUpdate(DeltaTime);
+	AI_Logic(DeltaTime);
+}
+
+void Enemy::AI_Logic(float DeltaTime)
+{
+	//Override Here
+}
+
+void Enemy::TargetPlayer()
+{
+	const PlayerCharacter* Player = GameInstance::GetGameInstance()->GetPlayer();
+	m_Target = const_cast<GameObject*>(static_cast<const GameObject*>(Player));
+	if (m_Target == nullptr) {
+		Debug::Log(this, Warning, "No Player Found");
+	}
 }
 
 void Enemy::Handle_EnemyDeath()

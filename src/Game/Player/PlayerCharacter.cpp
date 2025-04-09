@@ -94,7 +94,6 @@ void PlayerCharacter::Init(Object* OwningObject)
 
 void PlayerCharacter::BeginPlay()
 {
-	GameFucntionLib::ApplyDamage(this, 25.0f);
 }
 
 void PlayerCharacter::Update()
@@ -105,7 +104,6 @@ void PlayerCharacter::Update()
 void PlayerCharacter::Render(sf::RenderWindow& Renderer)
 {
 	GameObject::Render(Renderer);
-	//Get Mouse Direction 
 
 }
 
@@ -115,7 +113,6 @@ void PlayerCharacter::FixedUpdate(float DeltaTime)
 
 	sf::Vector2i MousePos = InputEventHandler::GetInstance()->GetMousePosition();
 	Math::Vector2 Dir = Math::Vector2(MousePos.x, MousePos.y) - m_Transform.Location;
-	m_Transform.SetRotation(Dir.Normalised().GetRadians());
 
 	if (MoveDirection != Math::Vector2::Zero() && Dir.Length() > 0.1f) //P  revent NaN Error 
 	{
@@ -124,6 +121,6 @@ void PlayerCharacter::FixedUpdate(float DeltaTime)
 
 	m_Transform.Location += m_RigidBody->m_Velocity * DeltaTime;
 	m_Transform.Rotation += m_RigidBody->m_AngluarVelocity * DeltaTime;
-	//Debug::Log(this, Warning, m_Transform.Location.ToString());
 	
+	m_Transform.SetRotation(Dir.Normalised().GetRadians());
 }

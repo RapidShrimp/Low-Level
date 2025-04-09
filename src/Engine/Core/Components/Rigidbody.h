@@ -21,7 +21,7 @@ public:
 	void SetVelocity(Math::Vector2(NewVelocity));
 	void AddVelocity(Math::Vector2(Velocity));
 
-	float m_MaxSpeed = 10.0f;
-	float m_LinearDamp = 0.001f; // 0.01 - 1 || 1 = No Dampen
+	float m_MaxSpeed = 1.0f;
+	float m_LinearDamp = 0.001f; // 0.01 - 1 || 1 = No Dampen  Default Value = 0.001f;
 	float m_AngularDamp = 0.1f;
 };
