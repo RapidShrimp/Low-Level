@@ -27,9 +27,9 @@ public:
 	virtual void FixedUpdate(float DeltaTime) override;
 	//virtual void OnDestroy() override;
 protected:
+	virtual void Handle_EnemyDeath();
 	virtual void AI_Logic(float DeltaTime);
 	void TargetPlayer();
 private:
-	void Handle_EnemyDeath();
 
 };

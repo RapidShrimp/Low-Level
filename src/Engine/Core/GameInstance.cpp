@@ -2,10 +2,12 @@
 #include "Game/Scenes/GameLevel.h"
 #include "Game/Scenes/MainMenu.h"
 #include "GameInstance.h"
+#include "Engine/Core/AudioManager.h"
 #include "Engine/Core/Input/InputSystem.h"
 #include "Engine/Core/Libs/GameFunctionLib.h"
 
 InputEventHandler* InputEventHandler::m_InputSystemInstance = nullptr;
+AudioManger* AudioManger::m_AudioManger = nullptr;
 
 GameInstance::~GameInstance()
 {
@@ -36,6 +38,7 @@ void GameInstance::Init(/*TODO - Game Scene ClassType To Load Into*/)
 {
 	m_GameWindow = sf::RenderWindow(sf::VideoMode({ 720,960}), "Sinistar 2025 Remake");
 	InputEventHandler::GetInstance();
+	AudioManger::GetGameInstance();
 	m_CurrentScene = new MainMenu();
 	//m_CurrentScene = new GameLevel();
 	m_CurrentScene->OnLoadScene();

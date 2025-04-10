@@ -11,6 +11,12 @@ void GameFucntionLib::ApplyDamage(GameObject* DamageObject, float Damage, GameOb
 	DamageObject->OnTakeDamage.Invoke(Damage, Instigator);
 }
 
+void GameFucntionLib::SpawnParticleSystem(Math::Vector2(Location), VFX_Particle* ParticleSystem, float Lifetime)
+{
+	if (ParticleSystem == nullptr) { return; }
+
+}
+
 void Debug::Log(Object* CallingObject, E_LogType LogType, std::string LogMessage) 
 {
 	if (!GameInstance::GetGameInstance()->ShouldLogDisplay() && LogType == Display) { return; }

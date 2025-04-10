@@ -3,6 +3,7 @@
 #include "Engine/Core/GameInstance.h"
 #include "Engine/Core/ObjectPooler.h"
 #include <Game/Scenes/GameLevel.h>
+#include "Game/Projectiles/Projectile.h"
 #include "PlayerCharacter.h"
 
 
@@ -38,7 +39,6 @@ void PlayerCharacter::MovePlayer(CallbackContext Context, Math::Vector2 MoveVect
 void PlayerCharacter::FireWeapon(CallbackContext Context)
 {
 	if (Context.Started) {
-		Debug::Log(this, Display, "Fire Started");
 
 		GameLevel* CurrGameScene = dynamic_cast<GameLevel*>(GameInstance::GetGameInstance()->GetWorld());
 		if (CurrGameScene == nullptr) { return; }
@@ -56,7 +56,6 @@ void PlayerCharacter::FireWeapon(CallbackContext Context)
 	}
 	else if (Context.Cancelled) 
 	{
-		Debug::Log(this, Display, "Fire Cancelled");
 	}
 }
 
@@ -84,8 +83,9 @@ void PlayerCharacter::Init(Object* OwningObject)
 	m_SpriteRenderer->GetLocalTransform().SetRotation(1.5708);
 	m_Collider->OnCollisionEvent += std::bind(&PlayerCharacter::OnCollisionEventCallback, this, std::placeholders::_1, std::placeholders::_2);
 
-	AxisActionMapping MoveKeys = AxisActionMapping(sf::Keyboard::Key::W, sf::Keyboard::Key::S, sf::Keyboard::Key::A, sf::Keyboard::Key::D);
+	AxisActionMapping MoveKeys = AxisActionMapping(sf::Keyboard::Key::W, sf::Keyboard::Key::Unknown, sf::Keyboard::Key::Unknown, sf::Keyboard::Key::Unknown);
 	AxisInput* MoveInput = InputEventHandler::GetInstance()->CreateAxisInput(MoveKeys);
+	BindableInput* MoveKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::W);
 	BindableInput* FireKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::Space);
 	MouseInput* MouseInputs = InputEventHandler::GetInstance()->CreateMouseInput();
 	if (FireKey) { FireKey->OnInputUpdate += std::bind(&PlayerCharacter::FireWeapon, this, std::placeholders::_1);}

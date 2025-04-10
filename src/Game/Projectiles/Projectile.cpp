@@ -59,5 +59,6 @@ void Projectile::OnCollisionHit(Collider* OtherCollider, E_CollisionEvent Collid
 
 
   	GameFucntionLib::ApplyDamage(OtherObject, 10, dynamic_cast<GameObject*>(GetOwner()));
+	Deactivate();
 	//if(OtherCollider == GetOwner()->)
 }

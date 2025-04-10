@@ -94,8 +94,10 @@ void SpriteRenderer::Render(sf::RenderWindow& Renderer)
 	}
 
 	UpdateSpriteBounds();
-
 	m_Sprite->setOrigin({ m_CellSize.x / 2,m_CellSize.y / 2 });
+	m_Sprite->setScale((GetOwner()->m_Transform.Scale + m_LocalTransform.Scale).ToSF());
+	
+	//Rotation
 	if (GetOwner() != nullptr) {
 		m_Sprite->setRotation(sf::Angle(sf::radians(GetOwner()->m_Transform.Rotation + m_LocalTransform.Rotation)));
 	}

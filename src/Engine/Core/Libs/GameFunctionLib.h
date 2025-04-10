@@ -1,11 +1,12 @@
 #pragma once
 #include "Engine/Core/GameObject.h"
+#include "Engine/Core/VFX/Particle.h"
 
 class GameFucntionLib {
 public:
 
 	static void ApplyDamage(GameObject* DamageObject, float Damage, GameObject* Instigator = nullptr);
-
+	static void SpawnParticleSystem(Math::Vector2(Location), VFX_Particle* ParticleSystem, float Lifetime);
 };
 
 enum E_LogType {

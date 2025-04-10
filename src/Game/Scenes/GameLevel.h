@@ -1,11 +1,13 @@
 #pragma once
 #include "Engine/Core/GameScene.h"
 #include "Engine/Core/ObjectPooler.h"
-#include "Game/Projectiles/Projectile.h"
-#include "Game/Misc/Asteroid.h"
+
 
 
 class PlayerCharacter;
+class CollectorEnemy;
+class Projectile;
+class AsteroidManager;
 
 class GameLevel : public GameScene 
 {
@@ -16,8 +18,9 @@ public:
 	GameLevel();
 	void OnLoadScene() override;
 
+	ObjectPooler<CollectorEnemy>* m_CollectorPooler = nullptr;
 	ObjectPooler<Projectile>* m_BulletPooler = nullptr;
-	ObjectPooler<Asteroid>* m_AsteroidPooler = nullptr;
+	AsteroidManager* m_AsteroidManager = nullptr;
 
 	virtual const PlayerCharacter* GetPlayerCharacter() override { return m_Player; }
 };

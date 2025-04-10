@@ -124,14 +124,12 @@ Math::Vector2 Math::Vector2::Normalised()
 
 int Math::Random::Range(int Min, int Max)
 {
-	//seeding
-	//srand(time(NULL)); 
-		
-	return 0;
-	//Min + rand() % ((Max + 1) - Min);
+	int random = rand() / RAND_MAX;
+	return Min + random * (Max - Min);
 }
 
 float Math::Random::Range(float Min, float Max)
 {
-	return 0;
+	float random = (float)rand() / (float)RAND_MAX;
+	return Min + random * (Max - Min);
 }

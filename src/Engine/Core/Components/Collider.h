@@ -32,7 +32,7 @@ public:
 	~Collider() {};
 
 
-
+	
 	void Init(Object* Owner) override;
 	virtual void Update() override;
 	virtual void Render(sf::RenderWindow& Renderer) override;

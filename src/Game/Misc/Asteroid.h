@@ -19,7 +19,7 @@ public:
 	~Asteroid();
 
 	virtual void Init(Object* OwningObject) override;
-	//virtual void OnActivate() override;
+	virtual void OnActivate() override;
 	//virtual void OnDeactivate() override;
 	virtual void BeginPlay() override;
 	virtual void Update() override;

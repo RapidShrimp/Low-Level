@@ -25,7 +25,7 @@ public:
 	void StartAnimation();
 
 	//Sprite Specifics
-	void SetSprite(int Row, int Column);
+	void SetSprite(int Column, int Row);
 	void SetSpriteScale(float Width, float Height);
 
 	//Get the current row and column the sprite is on

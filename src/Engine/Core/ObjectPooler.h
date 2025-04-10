@@ -12,7 +12,7 @@ public:
 
 	ObjectPooler<T>(int PoolCount, bool StartEnabled);
 	T* GetFreeObject();
-	
+	vector<Object*> GetAllObjects() { return m_PooledObjects; }
 
 protected:
 	void AddObjectToPooler(Object* InObject);
@@ -20,6 +20,7 @@ protected:
 	
 	vector<Object*> m_PooledObjects;
 };
+
 
 template<typename T>
 inline T* ObjectPooler<T>::GetFreeObject()
@@ -51,7 +52,7 @@ inline void ObjectPooler<T>::AddObjectToPooler(Object* InObject)
 template<typename T>
 inline void ObjectPooler<T>::RemovePooledObject(Object* InObject)
 {
-	//Remove Pooled Object Here?
+	//TODO - Remove Pooled Object Here?
 }
 
 template<typename T>

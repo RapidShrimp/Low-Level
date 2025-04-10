@@ -7,7 +7,7 @@
 
 Enemy::Enemy()
 {
-	m_Health = new HealthComponent();
+	m_Health = new HealthComponent(10);
 	m_RigidBody = new Rigidbody(1);
 	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", {116,16}, {2,82},8,1);
 	m_SpriteRenderer->SetSpriteScale(2, 2);
@@ -56,5 +56,5 @@ void Enemy::TargetPlayer()
 
 void Enemy::Handle_EnemyDeath()
 {
-	GameObject::OnDestroy();
+	Deactivate();
 }

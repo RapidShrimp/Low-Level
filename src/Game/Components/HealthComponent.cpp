@@ -25,7 +25,6 @@ void HealthComponent::BeginPlay()
 
 void HealthComponent::Handle_OnHeathChanged(float Damage, GameObject* Instigator)
 {
-	Debug::Log(this, Display, "HealthChanged");
 	if (!isActive) { return; }
 
 	bool isPositive = Damage >= 0;

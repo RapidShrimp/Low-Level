@@ -14,6 +14,8 @@ void CollectorEnemy::AI_Logic(float Deltatime)
 	//	return;
 	//}
 	
+
+	//Movement
 	Math::Vector2 Dir = m_Target->m_Transform.Location - m_Transform.Location;
 
 	if (Dir.Length() > m_KeepDistance) {
@@ -24,4 +26,14 @@ void CollectorEnemy::AI_Logic(float Deltatime)
 		m_CurrentDelayTime = 0;
 	}
 	m_Transform.Location += m_RigidBody->m_Velocity * Deltatime;
+	
+	//Orient towards Movement Direction
+	m_Transform.SetRotation(m_RigidBody->m_Velocity.Normalised().GetRadians());
+
+}
+
+void CollectorEnemy::Handle_EnemyDeath()
+{
+	
+	Enemy::Handle_EnemyDeath();
 }

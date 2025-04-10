@@ -81,7 +81,7 @@ void Collider::Update()
 			if (!Collided) 
 			{ 
 				//Exit Event
-				Debug::Log(this, Display, "Collision Exit");
+				//Debug::Log(this, Display, "Collision Exit");
 				ColliderEvent = m_IsTrigger ? TriggerExit : CollisionExit;
 				OnCollisionEvent(OtherCollider, ColliderEvent);
 				Overlapping.erase(Overlapping.begin()+Index);
@@ -97,7 +97,7 @@ void Collider::Update()
 			ColliderEvent = m_IsTrigger ? TriggerEnter : CollisionEnter;
 			Overlapping.push_back(OtherCollider);
 			OnCollisionEvent(OtherCollider, ColliderEvent);
-			Debug::Log(this, Display, "Collision Added");
+			//Debug::Log(this, Display, "Collision Added");
 		}
 	}
 }

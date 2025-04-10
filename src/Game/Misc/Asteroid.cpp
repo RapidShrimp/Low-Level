@@ -27,6 +27,15 @@ void Asteroid::Init(Object* OwningObject)
 
 }
 
+void Asteroid::OnActivate()
+{
+	if (m_SpriteRenderer == nullptr) { return; }
+	float size = Math::Random::Range(1.0f, 4.0f);
+	m_Transform.SetScale(size,size);
+	m_Collider->GetLocalTransform().Scale = { size,size };
+	m_SpriteRenderer->SetSprite((int)Math::Random::Range(0.0f, 4.0f),0);
+}
+
 void Asteroid::BeginPlay()
 {
 }
@@ -46,7 +55,6 @@ void Asteroid::Handle_OnAsteroidHit(float InDamage)
 
 void Asteroid::Handle_OnAsteroidDestroyed(float InDamage)
 {
-
 	Debug::Log(this, Error, "Asteroid Destroyed");
-	m_Collider->Deactivate();
+	Deactivate();
 }
