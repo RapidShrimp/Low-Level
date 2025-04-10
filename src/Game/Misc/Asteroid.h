@@ -14,7 +14,7 @@ protected:
 	Rigidbody* m_RigidBody;
 
 	int Hits = 0;
-	int CrystalRequireHits = 5;
+	int CrystalRequireHits = 3;
 
 public:
 

@@ -31,9 +31,9 @@ void Crystal::Init(Object* OwningObject)
 {
 	Object::Init(OwningObject);
 
-	RegisterComponent(m_SpriteRenderer, true, "CrystalSprite");
-	RegisterComponent(m_RigidBody, true, "RigidBody");
-	RegisterComponent(m_Collider, true, "Collider");
+	RegisterComponent(m_SpriteRenderer, false, "CrystalSprite");
+	RegisterComponent(m_RigidBody, false, "RigidBody");
+	RegisterComponent(m_Collider, false, "Collider");
 
 	m_Collider->OnCollisionEvent += std::bind(&Crystal::OnCollisionEvent, this, std::placeholders::_1, std::placeholders::_2);
 	Debug::Log(this, Display, "Bound Event");
@@ -43,15 +43,23 @@ void Crystal::Init(Object* OwningObject)
 
 void Crystal::OnActivate()
 {
-	 const PlayerCharacter* Player = GameInstance::GetGameInstance()->GetPlayer();
+	GameObject::OnActivate();
+	const PlayerCharacter* Player = GameInstance::GetGameInstance()->GetPlayer();
 
-	 Math::Vector2 DesiredVector;
+	Math::Vector2 DesiredVector = Player->m_Transform.Location;
 	 
-	 if (Player != nullptr) {
+	if (Player != nullptr) {
 		
-		 Math::Vector2 PlayerVec = m_Transform.Location - Player->m_Transform.Location;
-		 PlayerVec.Normalise(PlayerVec);
-		 PlayerVec *= Math::Random::Range(m_CrystalSpeedRange.x, m_CrystalSpeedRange.y); //Random Speed
-		 m_RigidBody->AddVelocity(PlayerVec * 2);
-	 }
+		Math::Vector2 PlayerVec = DesiredVector - m_Transform.Location ;
+		PlayerVec.Normalise(PlayerVec);
+		PlayerVec *= Math::Random::Range(m_CrystalSpeedRange.x, m_CrystalSpeedRange.y); //Random Speed
+ 		m_RigidBody->AddVelocity(PlayerVec / 200);
+	}
+}
+
+void Crystal::FixedUpdate(float deltaTime)
+{
+	if (!isActive) { return; }
+	m_Transform.Location += m_RigidBody->m_Velocity * deltaTime;
+	m_Transform.Rotation += m_RigidBody->m_AngluarVelocity * deltaTime;
 }

@@ -5,7 +5,7 @@
 AsteroidManager::AsteroidManager()
 {
 	m_PooledAsteroids = new ObjectPooler<Asteroid>(30, true);
-	m_PooledCrystals = new ObjectPooler<Crystal>(10, true);
+	m_PooledCrystals = new ObjectPooler<Crystal>(10, false);
 
 }
 

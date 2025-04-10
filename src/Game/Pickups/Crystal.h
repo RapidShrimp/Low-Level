@@ -28,7 +28,7 @@ public:
 	//virtual void OnDeactivate() override;
 	//virtual void BeginPlay() override;
 	//virtual void Update() override;
-	//virtual void FixedUpdate(float deltaTime) override;
+	virtual void FixedUpdate(float deltaTime) override;
 	//virtual void Render(sf::RenderWindow& Renderer) override;
 	//virtual void OnDestroy() override;
 };

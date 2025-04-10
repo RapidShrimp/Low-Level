@@ -29,6 +29,12 @@ void HealthComponent::Handle_OnHeathChanged(float Damage, GameObject* Instigator
 
 	bool isPositive = Damage >= 0;
 	m_CurrentHealth = std::clamp(m_CurrentHealth - Damage,0.0f,m_MaxHealth);
+	if (m_CurrentHealth == 0) 
+	{
+		OnDeath();
+		return;
+	}
+
 	if (!isPositive) 
 	{
 		OnHealthRecieve(-Damage);
@@ -38,8 +44,4 @@ void HealthComponent::Handle_OnHeathChanged(float Damage, GameObject* Instigator
 		OnDamageTaken(Damage);
 	}
 
-	if (m_CurrentHealth == 0) 
-	{
-		OnDeath();
-	}
 }
