@@ -6,6 +6,7 @@
 #include "Game/Enemies/CollectorEnemy.h"
 #include "Game/Projectiles/Projectile.h"
 #include "Game/Misc/AsteroidManager.h"
+#include "Game/Enemies/Boss.h"
 
 GameLevel::GameLevel()
 {
@@ -17,13 +18,14 @@ void GameLevel::OnLoadScene()
 {
 	GameScene::OnLoadScene();
 	m_Player = new PlayerCharacter();
-	SpawnObject(m_Player, Math::Vector2(400,400),true,"Player");
-	SpawnObject(new CollectorEnemy(), Math::Vector2(50,50), true, "Enemy1");
 	m_AsteroidManager = new AsteroidManager();
+	SpawnObject(m_Player, Math::Vector2(400,400),true,"Player");
 	SpawnObject(m_AsteroidManager,Math::Vector2::Zero(),true,"AsteroidManager");
-	SpawnObject(new Asteroid(), Math::Vector2(400, 10), true, "AsteroidTest");
+	SpawnObject(new Boss(), Math::Vector2(500, 500), true, "Sinistar Boss");
+	//SpawnObject(new CollectorEnemy(), Math::Vector2(50,50), true, "Enemy1");
 	m_CollectorPooler = new ObjectPooler<CollectorEnemy>(1, false);
 	m_BulletPooler = new ObjectPooler<Projectile>(15, false);
+
 	//m_EnemyPooler = new ObjectPooler<Enemy>(3, false);
 
 }

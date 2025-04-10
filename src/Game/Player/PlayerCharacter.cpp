@@ -104,7 +104,6 @@ void PlayerCharacter::Update()
 void PlayerCharacter::Render(sf::RenderWindow& Renderer)
 {
 	GameObject::Render(Renderer);
-
 }
 
 void PlayerCharacter::FixedUpdate(float DeltaTime)

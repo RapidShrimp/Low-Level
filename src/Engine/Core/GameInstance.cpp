@@ -5,6 +5,7 @@
 #include "Engine/Core/AudioManager.h"
 #include "Engine/Core/Input/InputSystem.h"
 #include "Engine/Core/Libs/GameFunctionLib.h"
+#include "Game/Player/PlayerCharacter.h"
 
 InputEventHandler* InputEventHandler::m_InputSystemInstance = nullptr;
 AudioManger* AudioManger::m_AudioManger = nullptr;
@@ -37,6 +38,8 @@ const PlayerCharacter* GameInstance::GetPlayer()
 void GameInstance::Init(/*TODO - Game Scene ClassType To Load Into*/)
 {
 	m_GameWindow = sf::RenderWindow(sf::VideoMode({ 720,960}), "Sinistar 2025 Remake");
+	m_Camera = sf::View(sf::FloatRect{ {0,0},{720,960} });
+	m_Camera.setCenter({ 720 / 2, 960 / 2 });
 	InputEventHandler::GetInstance();
 	AudioManger::GetGameInstance();
 	m_CurrentScene = new MainMenu();
@@ -51,7 +54,6 @@ void GameInstance::Update()
 	float deltaTime = 0;
 	float timeSinceLastPhysics = 0.0f;
 	float physicsTimeStep = 2000;
-
 	while (m_GameWindow.isOpen())
 	{
 
@@ -59,6 +61,7 @@ void GameInstance::Update()
 		lastTime = std::chrono::steady_clock::now();
 		timeSinceLastPhysics += deltaTime;
 
+		
 		//Exit Game
 		while (const optional event = m_GameWindow.pollEvent()) {
 			if (event->is<sf::Event::Closed>())
@@ -67,6 +70,7 @@ void GameInstance::Update()
 				return;
 			}
 		}
+
 
 		while (timeSinceLastPhysics >= physicsTimeStep)
 		{
@@ -91,6 +95,10 @@ void GameInstance::Render()
 {
 	m_GameWindow.clear();
 	m_CurrentScene->RenderScene(m_GameWindow);
+	if (m_CurrentScene->GetPlayerCharacter() != nullptr) {
+		m_Camera.setCenter(m_CurrentScene->GetPlayerCharacter()->m_Transform.Location.ToSF());
+		m_GameWindow.setView(m_Camera);
+	}
 	m_GameWindow.display();
 }
 

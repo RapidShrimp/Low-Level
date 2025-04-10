@@ -20,7 +20,7 @@ public:
 	void Update();
 	virtual void OnLoadScene();
 	virtual void UnloadScene();
-	virtual const PlayerCharacter* GetPlayerCharacter() { return nullptr; } //Override this in Child Scene
+	virtual PlayerCharacter* GetPlayerCharacter() { return nullptr; } //Override this in Child Scene
 protected:
 	std::string m_SceneName = "Unassigned";
 	std::vector<GameObject*> SceneObjects;

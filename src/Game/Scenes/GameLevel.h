@@ -22,5 +22,5 @@ public:
 	ObjectPooler<Projectile>* m_BulletPooler = nullptr;
 	AsteroidManager* m_AsteroidManager = nullptr;
 
-	virtual const PlayerCharacter* GetPlayerCharacter() override { return m_Player; }
+	virtual PlayerCharacter* GetPlayerCharacter() override { return m_Player; }
 };

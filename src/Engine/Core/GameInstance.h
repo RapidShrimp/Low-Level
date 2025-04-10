@@ -24,10 +24,13 @@ public:
 	bool ShouldDrawDebug() { return m_Debug; }
 	bool ShouldLogDisplay() { return m_LogDisplay; }
 
+	sf::View& GetCamera() { return m_Camera; }
 	const sf::RenderWindow& GetWindow() { return m_GameWindow; }
 	const PlayerCharacter* GetPlayer();
 protected:
 	sf::RenderWindow m_GameWindow;
+	sf::View m_Camera;
+
 	GameScene* m_CurrentScene;
 	GameScene* m_NextScene;
 
