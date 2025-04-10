@@ -22,7 +22,7 @@ void Projectile::Init(Object* OwningObject)
 	RegisterComponent(m_SpriteRender, true, "Projectile Sprite");
 	RegisterComponent(m_Collider, true, "Projectile Collider");
 	RegisterComponent(m_RigidBody, true, "Projectile RB");
-
+	m_SpriteRender->GetLocalTransform().SetRotation(1.5708);
 	m_Collider->OnCollisionEvent += std::bind(&Projectile::OnCollisionHit, this, std::placeholders::_1,std::placeholders::_2);
 }
 

@@ -22,6 +22,7 @@ void Crystal::OnCollisionEvent(Collider* InCollider, E_CollisionEvent Event)
 	if (Player) 
 	{
 		Player->CollectSinibomb();
+		Deactivate();
 	}
 	OnCrystalCollided(InCollider->GetOwner()); //Pooler will have this bound
 }
@@ -42,7 +43,6 @@ void Crystal::Init(Object* OwningObject)
 
 void Crystal::OnActivate()
 {
-	return;
 	 const PlayerCharacter* Player = GameInstance::GetGameInstance()->GetPlayer();
 
 	 Math::Vector2 DesiredVector;
@@ -50,8 +50,8 @@ void Crystal::OnActivate()
 	 if (Player != nullptr) {
 		
 		 Math::Vector2 PlayerVec = m_Transform.Location - Player->m_Transform.Location;
-		 //TODO - Add Random Deviation Here
 		 PlayerVec.Normalise(PlayerVec);
 		 PlayerVec *= Math::Random::Range(m_CrystalSpeedRange.x, m_CrystalSpeedRange.y); //Random Speed
+		 m_RigidBody->AddVelocity(PlayerVec * 2);
 	 }
 }

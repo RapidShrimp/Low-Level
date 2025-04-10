@@ -123,8 +123,8 @@ void Collider::Render(sf::RenderWindow& Renderer)
 		Rect.setFillColor(sf::Color::Transparent);
 		Rect.setOutlineColor(sf::Color::Green);
 		Rect.setOutlineThickness(1.0f);
-		Rect.setSize(m_BoxBounds.ToSF());
-		Rect.setPosition((GetOwner()->m_Transform.Location - m_BoxBounds/2).ToSF());
+		Rect.setSize((m_BoxBounds * GetOwner()->m_Transform.Scale).ToSF());
+		Rect.setPosition((GetOwner()->m_Transform.Location - (m_BoxBounds * GetOwner()->m_Transform.Scale)/2).ToSF());
 		Renderer.draw(Rect);
 	}
 
@@ -138,18 +138,18 @@ bool Collider::CircleCollision(Collider* OtherCircle)
 		(GetOwner()->m_Transform.Location.x - OtherCircle->GetOwner()->m_Transform.Location.x),
 		(GetOwner()->m_Transform.Location.y - OtherCircle->GetOwner()->m_Transform.Location.y)).Length();
 
-	float CollisionDistance = GetRadius() + OtherCircle->GetRadius();
+	float CollisionDistance = GetRadius()*GetOwner()->m_Transform.Scale.x + OtherCircle->GetRadius();
 
 	return Distance < CollisionDistance;
 }
 
 bool Collider::BoxCollision(Collider* OtherBox)
 {
-	Math::Vector2 AMin = GetOwner()->m_Transform.Location - m_BoxBounds / 2;
-	Math::Vector2 AMax = GetOwner()->m_Transform.Location + m_BoxBounds / 2;
+	Math::Vector2 AMin = GetOwner()->m_Transform.Location - (m_BoxBounds + GetOwner()->m_Transform.Scale) / 2;
+	Math::Vector2 AMax = GetOwner()->m_Transform.Location + (m_BoxBounds + GetOwner()->m_Transform.Scale) / 2;
 
-	Math::Vector2 BMin = OtherBox->GetOwner()->m_Transform.Location - OtherBox->m_BoxBounds / 2;
-	Math::Vector2 BMax = OtherBox->GetOwner()->m_Transform.Location + OtherBox->m_BoxBounds / 2;
+	Math::Vector2 BMin = OtherBox->GetOwner()->m_Transform.Location - (OtherBox->m_BoxBounds * OtherBox->GetOwner()->m_Transform.Scale)/ 2;
+	Math::Vector2 BMax = OtherBox->GetOwner()->m_Transform.Location + (OtherBox->m_BoxBounds * OtherBox->GetOwner()->m_Transform.Scale)/ 2;
 
 	return (AMin.x < BMax.x && AMax.x > BMin.x && AMin.y < BMax.y && AMax.y > BMin.y);
 }
@@ -158,8 +158,8 @@ bool Collider::BoxCircleCollision(Collider* OtherCollider)
 {
 	Collider* ACircle = m_CollisionType == Circle ? this : OtherCollider;
 	Collider* BBox = m_CollisionType != Circle ? this : OtherCollider;
-	Math::Vector2 AMin = BBox->GetOwner()->m_Transform.Location - BBox->m_BoxBounds / 2;
-	Math::Vector2 AMax = BBox->GetOwner()->m_Transform.Location + BBox->m_BoxBounds / 2;
+	Math::Vector2 AMin = BBox->GetOwner()->m_Transform.Location - (BBox->m_BoxBounds * BBox->GetOwner()->m_Transform.Scale)/ 2;
+	Math::Vector2 AMax = BBox->GetOwner()->m_Transform.Location + (BBox->m_BoxBounds * BBox->GetOwner()->m_Transform.Scale)/ 2;
 
 	Math::Vector2 ClosestPoint = {
 		std::clamp(ACircle->GetOwner()->m_Transform.Location.x, AMin.x, AMax.x),

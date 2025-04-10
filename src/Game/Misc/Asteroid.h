@@ -13,8 +13,13 @@ protected:
 	Collider* m_Collider;
 	Rigidbody* m_RigidBody;
 
+	int Hits = 0;
+	int CrystalRequireHits = 5;
 
 public:
+
+	SinStr::Event<Math::Vector2> OnSpawnCrystal;
+
 	Asteroid();
 	~Asteroid();
 
@@ -25,6 +30,7 @@ public:
 	virtual void Update() override;
 	virtual void FixedUpdate(float DeltaTime) override;
 	//virtual void OnDestroy() override;
+
 
 private:
 	void Handle_OnAsteroidHit(float InDamage);

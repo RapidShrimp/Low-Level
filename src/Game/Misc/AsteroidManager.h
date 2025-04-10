@@ -12,7 +12,6 @@ protected:
 
 public:
 	AsteroidManager();
-
 	virtual void Init(Object* OwningObject) override;
 	//virtual void OnActivate() override;
 	//virtual void OnDeactivate() override;
@@ -22,4 +21,5 @@ public:
 	//virtual void Render(sf::RenderWindow& Renderer) override;
 	//virtual void OnDestroy() override;
 
+	void OnSpawnCrystal(Math::Vector2(Location));
 };
