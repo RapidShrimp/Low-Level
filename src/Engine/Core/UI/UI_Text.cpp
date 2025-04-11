@@ -28,7 +28,16 @@ UI_Text::UI_Text(std::string DisplayText, std::string FontFilepath, int TextScal
 void UI_Text::Render(sf::RenderWindow& Renderer)
 {
 	if (m_Text == nullptr || !isActive) { return; }
-	m_Text->setPosition(m_Transform.Location.ToSF());
+
+	Math::Vector2 RenderLoc;
+	if (GetOwner() != nullptr) 
+	{
+		RenderLoc = static_cast<GameObject*>(GetOwner())->m_Transform.Location + m_Transform.Location;
+	}
+	else {
+		RenderLoc = m_Transform.Location;
+	}
+	m_Text->setPosition(RenderLoc.ToSF());
 	Renderer.draw(*m_Text);
 }
 

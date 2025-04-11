@@ -54,6 +54,7 @@ void GameObject::RegisterComponent(Component* InRegisterComponent, bool Activate
 
 void GameObject::Init(Object* OwningObject)
 {
+	Object::Init(OwningObject);
 	//Create and Register All Components;
 }
 

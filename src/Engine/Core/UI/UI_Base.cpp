@@ -54,6 +54,7 @@ void UI_Base::Render(sf::RenderWindow& Renderer)
 
 void UI_Base::AddElement(UI_Element* Element)
 {
+	Element->Init(this);
 	Element->Activate();
 	m_Elements.push_back(Element);
 }

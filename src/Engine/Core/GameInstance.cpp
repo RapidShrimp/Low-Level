@@ -7,6 +7,8 @@
 #include "Engine/Core/Libs/GameFunctionLib.h"
 #include "Game/Player/PlayerCharacter.h"
 
+
+
 InputEventHandler* InputEventHandler::m_InputSystemInstance = nullptr;
 AudioManger* AudioManger::m_AudioManger = nullptr;
 
@@ -37,9 +39,9 @@ const PlayerCharacter* GameInstance::GetPlayer()
 
 void GameInstance::Init(/*TODO - Game Scene ClassType To Load Into*/)
 {
-	m_GameWindow = sf::RenderWindow(sf::VideoMode({ 720,960}), "Sinistar 2025 Remake");
-	m_Camera = sf::View(sf::FloatRect{ {0,0},{720,960} });
-	m_Camera.setCenter({ 720 / 2, 960 / 2 });
+	m_GameWindow = sf::RenderWindow(sf::VideoMode({ WINDOW_WIDTH,WINDOW_HEIGHT }), "Sinistar 2025 Remake");
+	m_Camera = sf::View(sf::FloatRect{ {0,0},{WINDOW_WIDTH,WINDOW_HEIGHT} });
+	m_Camera.setCenter({ WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 });
 	InputEventHandler::GetInstance();
 	AudioManger::GetGameInstance();
 	m_CurrentScene = new MainMenu();
@@ -94,11 +96,18 @@ void GameInstance::FixedUpdate(float deltaTime)
 void GameInstance::Render() 
 {
 	m_GameWindow.clear();
+	
+	//Gameplay
 	m_CurrentScene->RenderScene(m_GameWindow);
 	if (m_CurrentScene->GetPlayerCharacter() != nullptr) {
 		m_Camera.setCenter(m_CurrentScene->GetPlayerCharacter()->m_Transform.Location.ToSF());
 		m_GameWindow.setView(m_Camera);
 	}
+
+	//UI
+
+
+	//Final Draw
 	m_GameWindow.display();
 }
 

@@ -12,16 +12,14 @@ void MainMenu::OnLoadScene()
 	//The UI Logo
 	GameObject* MainMenu = new GameObject();
 	SpawnObject(MainMenu,Math::Vector2(720/2,18*4.5));
+	
+	//Renderer Component
 	SpriteRenderer* MenuLogoSprite = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 170,37 }, { 1,1 }, 1, 1);
-	MenuLogoSprite->SetSpriteScale(4.23, 4.23);
 	MainMenu->RegisterComponent(MenuLogoSprite,true,"MenuSprite");
-
+	MenuLogoSprite->GetLocalTransform().SetScale(3.23f, 3.23f);
 
 	//Spawn UI
 	UI_Base* MainMenuUI = new UI_MainMenu();
 	SpawnObject(MainMenuUI, { 0,0 });
-
-
-
 
 }

@@ -34,7 +34,7 @@ class MouseInput
 public:
 	MouseInput() {};
 	SinStr::Event<Math::Vector2> OnMouseInputUpdate;
-	sf::Vector2i MousePos = {0,0};
+	sf::Vector2f MousePos = {0,0};
 	void PollEvent();
 };
 
@@ -55,7 +55,7 @@ public:
 		return m_InputSystemInstance;
 	};
 
-	sf::Vector2i GetMousePosition();
+	sf::Vector2f GetMousePosition();
 private:
 	std::vector<BindableInput*> KeyEvents;
 	std::vector<AxisInput*> AxisEvents;

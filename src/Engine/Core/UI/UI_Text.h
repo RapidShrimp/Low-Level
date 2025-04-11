@@ -20,7 +20,6 @@ public:
 	void UpdateText(std::string NewString, sf::Text::Style InStyle = sf::Text::Regular);
 	void SetColour(sf::Color NewColour);
 	void SetAlignment(E_TextAlignment AlignText);
-
 	virtual void OnSetFocus() override;
 	virtual void OnRemoveFocus() override;
 

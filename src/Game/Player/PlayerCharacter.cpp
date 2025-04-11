@@ -4,6 +4,7 @@
 #include "Engine/Core/ObjectPooler.h"
 #include <Game/Scenes/GameLevel.h>
 #include "Game/Projectiles/Projectile.h"
+#include "Game/UI/UI_HUD.h"
 #include "PlayerCharacter.h"
 
 
@@ -49,7 +50,7 @@ void PlayerCharacter::FireWeapon(CallbackContext Context)
 		Bullet->Activate();
 
 		//Get Mouse Direction 
-		sf::Vector2i MousePos =  InputEventHandler::GetInstance()->GetMousePosition();
+		sf::Vector2f MousePos =  InputEventHandler::GetInstance()->GetMousePosition();
 		Math::Vector2 Dir = Math::Vector2(MousePos.x, MousePos.y) - m_Transform.Location;
 		Math::Vector2::Normalise(Dir);
 		Bullet->OnFired(this,Dir);
@@ -63,6 +64,7 @@ void PlayerCharacter::CollectSinibomb()
 {
 	m_SinibombsHeld++; 
 	Debug::Log(this, Display, "Sinibomb Collected");
+	OnSinibombUpdated(m_SinibombsHeld);
 
 }
 
@@ -90,6 +92,8 @@ void PlayerCharacter::Init(Object* OwningObject)
 	MouseInput* MouseInputs = InputEventHandler::GetInstance()->CreateMouseInput();
 	if (FireKey) { FireKey->OnInputUpdate += std::bind(&PlayerCharacter::FireWeapon, this, std::placeholders::_1);}
 	if (MoveInput) { MoveInput->OnAxisInputUpdate += std::bind(&PlayerCharacter::MovePlayer, this, std::placeholders::_1, std::placeholders::_2); }
+
+	GameInstance::GetGameInstance()->GetWorld()->SpawnObject(new UI_HUD(*this) , { 0,0 }, true, "Player HUD");
 }
 
 void PlayerCharacter::BeginPlay()
@@ -110,7 +114,7 @@ void PlayerCharacter::FixedUpdate(float DeltaTime)
 {
 	GameObject::FixedUpdate(DeltaTime);
 
-	sf::Vector2i MousePos = InputEventHandler::GetInstance()->GetMousePosition();
+	sf::Vector2f MousePos = InputEventHandler::GetInstance()->GetMousePosition();
 	Math::Vector2 Dir = Math::Vector2(MousePos.x, MousePos.y) - m_Transform.Location;
 
 	if (MoveDirection != Math::Vector2::Zero() && Dir.Length() > 0.1f) //P  revent NaN Error 

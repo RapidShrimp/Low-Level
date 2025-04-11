@@ -20,6 +20,10 @@ protected:
 	Math::Vector2 MoveDirection;
 
 public:
+
+	SinStr::Event<int>OnSinibombUpdated;//New Bombs Held
+	SinStr::Event<int>OnScoreUpdated; //New Score
+
 	PlayerCharacter();
 	~PlayerCharacter();
 	void MovePlayer(CallbackContext Context, Math::Vector2 MoveVector);

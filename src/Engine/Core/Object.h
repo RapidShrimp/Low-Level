@@ -36,6 +36,8 @@ public:
 	void SetName(std::string NewName) { m_DisplayName = NewName; }
 	std::string GetName() { return m_DisplayName; }
 	virtual Object* GetOwner() { return m_Owner; }
+	virtual void SetOwner(Object& NewOwner) { *m_Owner = NewOwner; }
+
 	virtual bool GetIsActive() { return isActive; }
 
 };

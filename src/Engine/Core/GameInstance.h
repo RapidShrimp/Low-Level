@@ -3,6 +3,9 @@
 #include "SFML/Graphics.hpp"
 #include "GameScene.h"
 
+#define WINDOW_HEIGHT 960
+#define WINDOW_WIDTH 720
+
 class GameInstance {
 
 private:
@@ -24,13 +27,14 @@ public:
 	bool ShouldDrawDebug() { return m_Debug; }
 	bool ShouldLogDisplay() { return m_LogDisplay; }
 
+	sf::View& GetUI() { return m_HUD; }
 	sf::View& GetCamera() { return m_Camera; }
 	const sf::RenderWindow& GetWindow() { return m_GameWindow; }
 	const PlayerCharacter* GetPlayer();
 protected:
 	sf::RenderWindow m_GameWindow;
 	sf::View m_Camera;
-
+	sf::View m_HUD;
 	GameScene* m_CurrentScene;
 	GameScene* m_NextScene;
 
