@@ -69,7 +69,7 @@ inline ObjectPooler<T>::ObjectPooler(int PoolCount, bool StartEnabled)
 			Debug::Log(this, Error, "No Type Default Constructor, Skipping");
 			return;
 		}
-		GameInstance::GetGameInstance()->GetWorld()->SpawnObject(CreatedObject, { 0,0 }, StartEnabled, "PooledObject_TypeName" + std::to_string(i));
+		GameInstance::GetGameInstance()->GetWorld()->SpawnObject(CreatedObject, { 0,0 }, StartEnabled, "PooledObject" + std::to_string(i));
 		AddObjectToPooler(CreatedObject);
 	}
 

@@ -31,6 +31,8 @@ void Debug::Log(Object* CallingObject, E_LogType LogType, std::string LogMessage
 		}
 		ObjectName = '[' + ParentName + CallingObject->GetName() + "] ";
 	}
+	
+	if (LogType == DebugNone) { return; }
 
 	std::string LogTypeStr;
 	HANDLE hConsole;
@@ -49,6 +51,7 @@ void Debug::Log(Object* CallingObject, E_LogType LogType, std::string LogMessage
 		LogTypeStr = "ERROR: ";
 		SetConsoleTextAttribute(hConsole, 4);
 		break;
+
 	}
 	cout << ObjectName << LogTypeStr << LogMessage << endl;
 	SetConsoleTextAttribute(hConsole, 15);

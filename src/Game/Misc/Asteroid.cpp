@@ -51,7 +51,7 @@ void Asteroid::FixedUpdate(float DeltaTime)
 
 void Asteroid::Handle_OnAsteroidHit(float InDamage)
 {
-	Debug::Log(this, Warning, "Hit");
+	Debug::Log(this, DebugNone, "Hit");
 	Hits++;
 	if (Hits == CrystalRequireHits) {
 		Hits = 0;
@@ -61,7 +61,8 @@ void Asteroid::Handle_OnAsteroidHit(float InDamage)
 
 void Asteroid::Handle_OnAsteroidDestroyed(float InDamage)
 {
-	Debug::Log(this, Error, "Asteroid Destroyed");
+	Debug::Log(this, Display, "Asteroid Destroyed");
 	OnSpawnCrystal(m_Transform.Location);
+	OnAsteroidDestroyed();
 	Deactivate();
 }

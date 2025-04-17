@@ -5,6 +5,6 @@
 class MainMenu : public GameScene {
 
 public:
-	MainMenu() {};
+	MainMenu();
 	virtual void OnLoadScene();
 };

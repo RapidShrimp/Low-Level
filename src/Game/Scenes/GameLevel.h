@@ -4,9 +4,11 @@
 
 
 
+
 class PlayerCharacter;
 class CollectorEnemy;
 class Projectile;
+class Sinibomb;
 class AsteroidManager;
 
 class GameLevel : public GameScene 
@@ -20,7 +22,9 @@ public:
 
 	ObjectPooler<CollectorEnemy>* m_CollectorPooler = nullptr;
 	ObjectPooler<Projectile>* m_BulletPooler = nullptr;
-	AsteroidManager* m_AsteroidManager = nullptr;
+	ObjectPooler<Sinibomb>* m_BombPooler = nullptr;
 
+	AsteroidManager* m_AsteroidManager = nullptr;
+	
 	virtual PlayerCharacter* GetPlayerCharacter() override { return m_Player; }
 };

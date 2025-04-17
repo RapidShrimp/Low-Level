@@ -19,6 +19,7 @@ protected:
 public:
 
 	SinStr::Event<Math::Vector2> OnSpawnCrystal;
+	SinStr::Event<>OnAsteroidDestroyed;
 
 	Asteroid();
 	~Asteroid();

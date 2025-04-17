@@ -21,7 +21,7 @@ public:
 	//virtual void Render(sf::RenderWindow& Renderer) override;
 	//virtual void OnDestroy() override;
 
-	void OnCollisionHit(Collider* OtherCollider, E_CollisionEvent ColliderEvent);
+	virtual void OnCollisionHit(Collider* OtherCollider, E_CollisionEvent ColliderEvent);
 
 
 protected:

@@ -39,9 +39,12 @@ const PlayerCharacter* GameInstance::GetPlayer()
 
 void GameInstance::Init(/*TODO - Game Scene ClassType To Load Into*/)
 {
-	m_GameWindow = sf::RenderWindow(sf::VideoMode({ WINDOW_WIDTH,WINDOW_HEIGHT }), "Sinistar 2025 Remake");
+ 	m_GameWindow = sf::RenderWindow(sf::VideoMode({ WINDOW_WIDTH,WINDOW_HEIGHT }), "Sinistar 2025 Remake");
 	m_Camera = sf::View(sf::FloatRect{ {0,0},{WINDOW_WIDTH,WINDOW_HEIGHT} });
 	m_Camera.setCenter({ WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 });
+	
+	m_HUD = sf::View(sf::FloatRect{ {0,0},{WINDOW_WIDTH,WINDOW_HEIGHT} });
+
 	InputEventHandler::GetInstance();
 	AudioManger::GetGameInstance();
 	m_CurrentScene = new MainMenu();
@@ -105,9 +108,13 @@ void GameInstance::Render()
 	}
 
 	//UI
+	m_GameWindow.setView(m_HUD);
+	m_CurrentScene->RenderUI(m_GameWindow);
+	// set the shape color to green
 
 
 	//Final Draw
+	m_GameWindow.setView(m_Camera);
 	m_GameWindow.display();
 }
 

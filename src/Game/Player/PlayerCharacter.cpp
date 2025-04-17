@@ -4,6 +4,7 @@
 #include "Engine/Core/ObjectPooler.h"
 #include <Game/Scenes/GameLevel.h>
 #include "Game/Projectiles/Projectile.h"
+#include "Game/Projectiles/Sinibomb.h"
 #include "Game/UI/UI_HUD.h"
 #include "PlayerCharacter.h"
 
@@ -55,17 +56,56 @@ void PlayerCharacter::FireWeapon(CallbackContext Context)
 		Math::Vector2::Normalise(Dir);
 		Bullet->OnFired(this,Dir);
 	}
-	else if (Context.Cancelled) 
-	{
+}
+
+void PlayerCharacter::FireSinibomb(CallbackContext Context)
+{
+	if (Context.Started) {
+
+		if (m_SinibombsHeld == 0) { return; }
+
+		GameLevel* CurrGameScene = dynamic_cast<GameLevel*>(GameInstance::GetGameInstance()->GetWorld());
+		if (CurrGameScene == nullptr) { return; }
+
+		
+		ObjectPooler<Sinibomb>* BombObejctPooler = CurrGameScene->m_BombPooler;
+		if (BombObejctPooler == nullptr) 
+		{ 
+			Debug::Log(this, Error, "No Sinibomb Object Pooler in scene");
+			return; 
+		}
+		Sinibomb* Bomb = BombObejctPooler->GetFreeObject();
+		Bomb->m_Transform = m_Transform;
+		Bomb->Activate();
+
+		//Get Mouse Direction 
+		sf::Vector2f MousePos = InputEventHandler::GetInstance()->GetMousePosition();
+		Math::Vector2 Dir = Math::Vector2(MousePos.x, MousePos.y) - m_Transform.Location;
+		Math::Vector2::Normalise(Dir);
+		m_SinibombsHeld--;
+		Bomb->OnFired(this, Dir);
 	}
 }
 
 void PlayerCharacter::CollectSinibomb()
 {
+	if (m_SinibombsHeld == 20) { return; }
 	m_SinibombsHeld++; 
-	Debug::Log(this, Display, "Sinibomb Collected");
+	Debug::Log(this, Display, "Sinibomb Collected:" + to_string(m_SinibombsHeld));
 	OnSinibombUpdated(m_SinibombsHeld);
 
+}
+
+void PlayerCharacter::AddScore(int AddedScore)
+{
+	Score += AddedScore;
+	OnScoreUpdated(Score);
+}
+
+void PlayerCharacter::RemoveScore(int RemovedScore)
+{
+	Score += RemovedScore;
+	OnScoreUpdated(Score);
 }
 
 void PlayerCharacter::OnCollisionEventCallback(Collider* OtherCollider, E_CollisionEvent Response)
@@ -89,11 +129,15 @@ void PlayerCharacter::Init(Object* OwningObject)
 	AxisInput* MoveInput = InputEventHandler::GetInstance()->CreateAxisInput(MoveKeys);
 	BindableInput* MoveKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::W);
 	BindableInput* FireKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::Space);
+	BindableInput* Sinibomb = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::LShift);
+
 	MouseInput* MouseInputs = InputEventHandler::GetInstance()->CreateMouseInput();
 	if (FireKey) { FireKey->OnInputUpdate += std::bind(&PlayerCharacter::FireWeapon, this, std::placeholders::_1);}
+	if (Sinibomb) { Sinibomb->OnInputUpdate += std::bind(&PlayerCharacter::FireSinibomb, this, std::placeholders::_1); }
+
 	if (MoveInput) { MoveInput->OnAxisInputUpdate += std::bind(&PlayerCharacter::MovePlayer, this, std::placeholders::_1, std::placeholders::_2); }
 
-	GameInstance::GetGameInstance()->GetWorld()->SpawnObject(new UI_HUD(*this) , { 0,0 }, true, "Player HUD");
+	GameInstance::GetGameInstance()->GetWorld()->SpawnUIElement(new UI_HUD(*this) , { 0,0 }, true);
 }
 
 void PlayerCharacter::BeginPlay()
@@ -122,8 +166,7 @@ void PlayerCharacter::FixedUpdate(float DeltaTime)
 		m_RigidBody->AddVelocity(Math::Vector2::GetDirectionFromRadians(m_Transform.Rotation)*m_MoveSpeed);
 	}
 
-	m_Transform.Location += m_RigidBody->m_Velocity * DeltaTime;
-	m_Transform.Rotation += m_RigidBody->m_AngluarVelocity * DeltaTime;
+
 	
 	m_Transform.SetRotation(Dir.Normalised().GetRadians());
 }

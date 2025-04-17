@@ -33,6 +33,32 @@ void GameScene::RegisterSpawnedObject(GameObject* RegisterObject, bool Activate)
 	else { RegisterObject->Deactivate(); }
 }
 
+UI_Base* GameScene::SpawnUIElement(UI_Base* Spawnable, SinStr::Transform UI_Transform, bool StartEnabled)
+{
+
+	if (std::find(UI_Elements.begin(), UI_Elements.end(), Spawnable) != UI_Elements.end())
+	{
+		cout << "Warning: UI Element Already Registered, avoid calling SpawnUIElement() more than once" << endl;
+		return nullptr;
+	}
+	UI_Elements.push_back(Spawnable);
+
+	//Initialise GameObject
+	Spawnable->Init(this);
+	Spawnable->BeginPlay();
+
+	if (StartEnabled) { Spawnable->Activate(); }
+	else { Spawnable->Deactivate(); }
+
+	return Spawnable;
+}
+
+UI_Base* GameScene::SpawnUIElement(UI_Base* Spawnable, Math::Vector2 UI_Location, bool StartEnabled)
+{
+	Spawnable->m_Transform.Location = UI_Location;
+	return SpawnUIElement(Spawnable,SinStr::Transform(UI_Location),StartEnabled);
+}
+
 GameObject* GameScene::SpawnObject(GameObject* Spawnable, SinStr::Transform SpawnTransform, bool StartActive, std::string DisplayName)
 {
 	Spawnable->m_Transform = SpawnTransform;
@@ -54,6 +80,14 @@ void GameScene::RenderScene(sf::RenderWindow& Renderer)
 		SceneObjects[Objects]->Render(Renderer);
 	}
 
+}
+
+void GameScene::RenderUI(sf::RenderWindow& Renderer)
+{
+	for (int Element = 0; Element < UI_Elements.size(); Element++) 
+	{
+		UI_Elements[Element]->Render(Renderer);
+	}
 }
 
 void GameScene::FixedUpdate(float DeltaTime)

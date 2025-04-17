@@ -4,6 +4,12 @@
 #include "Game/UI/UI_MainMenu.h"
 #include <iostream>
 
+MainMenu::MainMenu()
+{
+	m_SceneName = "Main Menu";
+	SetName("Main Menu");
+}
+
 void MainMenu::OnLoadScene()
 {
 	GameScene::OnLoadScene();

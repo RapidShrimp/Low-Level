@@ -30,7 +30,8 @@ void Rigidbody::FixedUpdate(float deltaTime)
 		return;
 	}
 	m_Velocity -= m_Velocity.Normalised() * m_LinearDamp;
-	
+	GetOwner()->m_Transform.Location += m_Velocity * deltaTime;
+	GetOwner()->m_Transform.Rotation  += m_AngluarVelocity * deltaTime;
 	//Angular Dampen
 	m_AngluarVelocity = (m_AngluarVelocity * -1) - m_AngularDamp;
 

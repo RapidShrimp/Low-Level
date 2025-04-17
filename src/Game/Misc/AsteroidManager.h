@@ -21,5 +21,6 @@ public:
 	//virtual void Render(sf::RenderWindow& Renderer) override;
 	//virtual void OnDestroy() override;
 
+	void OnAsteroidDestroyed();
 	void OnSpawnCrystal(Math::Vector2(Location));
 };

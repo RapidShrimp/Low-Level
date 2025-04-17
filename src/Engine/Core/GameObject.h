@@ -6,6 +6,8 @@
 
 class Component;
 class Collider;
+class Rigidbody;
+class SpriteRenderer;
 
 class GameObject : public Object
 {
@@ -27,7 +29,8 @@ public:
 	GameObject(SinStr::Transform SpawnTransform);
 	GameObject(Math::Vector2 SpawnLocation);
 	~GameObject();
-
+	template<typename U>
+	U* FindComponentOfType();
 	void RegisterComponent(Component* InRegisterComponent, SinStr::Transform(StartTransform) = SinStr::Transform(), bool Activate = true, std::string DisplayName = "");
 	void RegisterComponent(Component* InRegisterComponent, Math::Vector2(StartLocation) = Math::Vector2(0, 0),bool Activate = true, std::string DisplayName = "");
 	void RegisterComponent(Component* InRegisterComponent, bool Activate = true, std::string DisplayName = "");
@@ -46,3 +49,16 @@ public:
 		return m_Colliders[ColliderIndex]; }
 
 };
+
+template<typename U>
+inline U* GameObject::FindComponentOfType()
+{
+	for (int SearchComponent = 0; SearchComponent < m_Components.size(); SearchComponent++) 
+	{
+		if (m_Components[SearchComponent] == U) 
+		{
+			return m_Components[SearchComponent];
+		}
+	}
+	return nullptr;
+}

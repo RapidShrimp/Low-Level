@@ -15,7 +15,8 @@ protected:
 	Rigidbody* m_RigidBody;
 	float m_MoveSpeed = 0.002f;
 
-	int m_SinibombsHeld = 0;
+	unsigned int m_SinibombsHeld = 0;
+	unsigned int Score = 0;
 
 	Math::Vector2 MoveDirection;
 
@@ -28,8 +29,12 @@ public:
 	~PlayerCharacter();
 	void MovePlayer(CallbackContext Context, Math::Vector2 MoveVector);
 	void FireWeapon(CallbackContext Context);
+	void FireSinibomb(CallbackContext Context);
+
 
 	void CollectSinibomb(); 
+	void AddScore(int AddedScore);
+	void RemoveScore(int RemovedScore);
 	
 	void OnCollisionEventCallback(Collider* OtherCollider, E_CollisionEvent Response);
 
@@ -41,5 +46,7 @@ public:
 	virtual void Render(sf::RenderWindow& Renderer) override;
 	virtual void FixedUpdate(float DeltaTime) override;
 	//virtual void OnDestroy() override;
+
+private:
 
 };

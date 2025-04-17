@@ -12,7 +12,8 @@ public:
 enum E_LogType {
 	Display = 0,
 	Warning = 1,
-	Error = 2
+	Error = 2,
+	DebugNone = 3
 };
 
 class Debug{
