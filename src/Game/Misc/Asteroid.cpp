@@ -7,8 +7,11 @@ Asteroid::Asteroid()
 {
 	m_Health = new HealthComponent();
 	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 152,32 }, {1,144},5,1);
-	m_Collider = new Collider(false, { 48,48 });
+	m_Collider = new Collider(false, 24);
 	m_RigidBody = new Rigidbody(0.4f);
+
+	m_MinimapDraw = Planetoid;
+
 }
 
 Asteroid::~Asteroid()

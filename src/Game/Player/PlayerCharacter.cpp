@@ -19,6 +19,8 @@ PlayerCharacter::PlayerCharacter()
 	m_RigidBody = new Rigidbody(0.5f);
 
 	MoveDirection = Math::Vector2::Zero();
+
+	m_MinimapDraw = Player;
 }
 
 PlayerCharacter::~PlayerCharacter()
@@ -83,7 +85,8 @@ void PlayerCharacter::FireSinibomb(CallbackContext Context)
 		Math::Vector2 Dir = Math::Vector2(MousePos.x, MousePos.y) - m_Transform.Location;
 		Math::Vector2::Normalise(Dir);
 		m_SinibombsHeld--;
-		Bomb->OnFired(this, Dir);
+		Bomb->OnFired(this, Dir/2.5);
+		OnSinibombUpdated(m_SinibombsHeld);
 	}
 }
 

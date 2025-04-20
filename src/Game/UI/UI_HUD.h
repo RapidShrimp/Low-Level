@@ -3,6 +3,7 @@
 #include "Engine/Core/UI/UI_Base.h"
 #include "Engine/Core/UI/UI_Text.h"
 #include "Game/Player/PlayerCharacter.h"
+#include "SFML/Graphics.hpp"
 
 enum E_SinistarAction {
 	Building,
@@ -21,10 +22,12 @@ protected:
 
 	UI_Text* m_ScoreRenderer;
 	UI_Text* m_ActionRenderer;
-	SpriteRenderer* m_BombsRenderer;
+	UI_Text* m_BombCountRenderer;
 
+
+	sf::RectangleShape UI_Backing;
 	//Minimap Tracker
-	// 
+	sf::View m_Minimap;
 public:
 	virtual void Init(Object* OwningObject) override;
 	//virtual void OnActivate() override;

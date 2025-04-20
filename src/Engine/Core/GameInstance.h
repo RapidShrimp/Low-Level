@@ -6,6 +6,9 @@
 #define WINDOW_HEIGHT 960
 #define WINDOW_WIDTH 720
 
+#define MINIMAP_SIZE 2300
+#define MINIMAP_SCREENSIZE 140
+
 class GameInstance {
 
 private:
@@ -48,7 +51,7 @@ public:
 	void CloseGame();
 
 private:
-	bool m_Debug = true;
+	bool m_Debug = false;
 	bool m_LogDisplay = true;
 };
 

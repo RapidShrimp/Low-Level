@@ -68,7 +68,7 @@ void Rigidbody::OnCollisionEventCallback(Collider* OtherCollider, E_CollisionEve
 		return;
 	}
 
-	Debug::Log(this, Error, "Colliding");
+	Debug::Log(this, DebugNone, "Colliding");
 	m_Velocity *= -0.8;
 	
 }

@@ -1,10 +1,12 @@
-#pragma once
+ #pragma once
 #include "GameLevel.h"
 #include "Engine/Core/ObjectPooler.h"
 #include "Game/Player/PlayerCharacter.h"
 #include "Game/Pickups/Crystal.h"
 #include "Game/Enemies/CollectorEnemy.h"
 #include "Game/Projectiles/Projectile.h"
+#include "Game/Projectiles/Sinibomb.h"
+
 #include "Game/Misc/AsteroidManager.h"
 #include "Game/Enemies/Boss.h"
 
@@ -25,7 +27,7 @@ void GameLevel::OnLoadScene()
 	//TODO - SpawnObject(new CollectorEnemy(), Math::Vector2(50,50), true, "Enemy1");
 	//m_CollectorPooler = new ObjectPooler<CollectorEnemy>(1, false);
 	m_BulletPooler = new ObjectPooler<Projectile>(15, false);
-	//TODO - m_BombPooler = new ObjectPooler<Sinibomb>(5, false);
+	m_BombPooler = new ObjectPooler<Sinibomb>(5, false);
 	//TODO - m_EnemyPooler = new ObjectPooler<Enemy>(3, false);
 
 }

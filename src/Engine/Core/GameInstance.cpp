@@ -103,7 +103,7 @@ void GameInstance::Render()
 	//Gameplay
 	m_CurrentScene->RenderScene(m_GameWindow);
 	if (m_CurrentScene->GetPlayerCharacter() != nullptr) {
-		m_Camera.setCenter(m_CurrentScene->GetPlayerCharacter()->m_Transform.Location.ToSF());
+		m_Camera.setCenter((m_CurrentScene->GetPlayerCharacter()->m_Transform.Location).ToSF() - sf::Vector2f(0,70));
 		m_GameWindow.setView(m_Camera);
 	}
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/Core/Libs/GameFunctionLib.h"
+#include "Engine/Core/GameInstance.h"
 #include "Projectile.h"
 
 Projectile::Projectile()
@@ -38,7 +39,7 @@ void Projectile::FixedUpdate(float deltaTime)
 
 	if (GameObject* GameOwner = dynamic_cast<GameObject*>(GetOwner()))
 	{
-		bool CanDeactivate = (m_Transform.Location - GameOwner->m_Transform.Location).Length() > 1000;
+		bool CanDeactivate = (m_Transform.Location - GameOwner->m_Transform.Location).Length() > MINIMAP_SIZE/2;
 		if (!CanDeactivate) { return; }
 		Deactivate();
 	}

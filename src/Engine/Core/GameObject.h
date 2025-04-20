@@ -9,6 +9,15 @@ class Collider;
 class Rigidbody;
 class SpriteRenderer;
 
+enum E_MinimapType {
+	DontDraw,
+	Special,
+	Player,
+	Planetoid,
+	Enemy,
+	SINISTAR
+};
+
 class GameObject : public Object
 {
 public:
@@ -23,7 +32,6 @@ public:
 protected:
 	vector<Component*> m_Components;
 	vector<Collider*> m_Colliders;
-
 public:
 	GameObject();
 	GameObject(SinStr::Transform SpawnTransform);
@@ -34,6 +42,9 @@ public:
 	void RegisterComponent(Component* InRegisterComponent, SinStr::Transform(StartTransform) = SinStr::Transform(), bool Activate = true, std::string DisplayName = "");
 	void RegisterComponent(Component* InRegisterComponent, Math::Vector2(StartLocation) = Math::Vector2(0, 0),bool Activate = true, std::string DisplayName = "");
 	void RegisterComponent(Component* InRegisterComponent, bool Activate = true, std::string DisplayName = "");
+
+	E_MinimapType m_MinimapDraw = DontDraw;
+
 
 	virtual void Init(Object* OwningObject) override;
 	virtual void OnActivate() override;

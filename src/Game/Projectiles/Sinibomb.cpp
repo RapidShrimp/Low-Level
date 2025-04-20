@@ -8,6 +8,8 @@ Sinibomb::Sinibomb()
 	m_Collider = new Collider(true,5.0f);
 	m_RigidBody = new Rigidbody(10.0f);
 	m_RigidBody->m_LinearDamp = 0;
+
+	m_MinimapDraw = Special;
 }
 
 
