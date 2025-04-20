@@ -13,6 +13,14 @@ void Rigidbody::Init(Object* Owner)
 	if(m_Owner == nullptr) 
 	{
 		Debug::Log(this, Error, "No Owner for Rigid Body");
+		return;
+	}
+	if (!GetOwner()->GetCollider()) {
+		Debug::Log(this, Warning, "No Collider found");
+		return;
+	}
+	else {
+		GetOwner()->GetCollider()->OnCollisionEvent += std::bind(&Rigidbody::OnCollisionEventCallback, this, std::placeholders::_1, std::placeholders::_2);
 	}
 }
 
@@ -52,4 +60,15 @@ void Rigidbody::AddVelocity(Math::Vector2(Velocity))
 		Math::Vector2::Normalise(m_Velocity);
 		m_Velocity = m_Velocity * m_MaxSpeed ;
 	}
+}
+
+void Rigidbody::OnCollisionEventCallback(Collider* OtherCollider, E_CollisionEvent Response)
+{
+	if (Response != E_CollisionEvent::CollisionEnter) {
+		return;
+	}
+
+	Debug::Log(this, Error, "Colliding");
+	m_Velocity *= -0.8;
+	
 }

@@ -23,7 +23,6 @@ void Collider::Init(Object* Owner)
 {
 	Object::Init(Owner);
 
-	
 	m_LocalTransform.Location += m_CollisionType == Box ? m_BoxBounds / 2 : Math::Vector2(m_Radius,m_Radius);
 }
 
@@ -48,7 +47,7 @@ void Collider::Update()
 		//If the collider does not exist
 		if (OtherCollider == nullptr) { continue; }
 
-		//If the other Collider is Active
+		//If the other Collider is not Active
 		if (!OtherCollider->isActive) { continue; }
 
 		//Are Both Triggers?
@@ -94,10 +93,15 @@ void Collider::Update()
 
 		}
 		else if (Collided) {
-			ColliderEvent = m_IsTrigger ? TriggerEnter : CollisionEnter;
+			if (!m_IsTrigger) {
+				ColliderEvent = OtherCollider->m_IsTrigger ? TriggerEnter : CollisionEnter;
+			}
+			else {
+				ColliderEvent = TriggerEnter;
+			}
 			Overlapping.push_back(OtherCollider);
 			OnCollisionEvent(OtherCollider, ColliderEvent);
-			//Debug::Log(this, Display, "Collision Added");
+			Debug::Log(this, Display, "Collision Added:" + std::to_string(ColliderEvent));
 		}
 	}
 }
@@ -107,13 +111,15 @@ void Collider::Render(sf::RenderWindow& Renderer)
 	if (!isActive) { return; }
 
 	if (!GameInstance::GetGameInstance()->ShouldDrawDebug()) { return; }
+
+	sf::Color Colour = Overlapping.size() > 0 ? sf::Color::Red : sf::Color::Green;
 	//Debugging
 	if (m_CollisionType == Circle) 
 	{
 		sf::CircleShape circle;
 		circle.setRadius(m_Radius);
 		circle.setFillColor(sf::Color::Transparent);
-		circle.setOutlineColor(sf::Color::Green);
+		circle.setOutlineColor(Colour);
 		circle.setOutlineThickness(1.0f);
 		circle.setPosition((GetOwner()->m_Transform.Location + Math::Vector2(-m_Radius,-m_Radius)).ToSF());
 		Renderer.draw(circle);
@@ -121,7 +127,7 @@ void Collider::Render(sf::RenderWindow& Renderer)
 	else if (m_CollisionType == Box) {
 		sf::RectangleShape Rect;
 		Rect.setFillColor(sf::Color::Transparent);
-		Rect.setOutlineColor(sf::Color::Green);
+		Rect.setOutlineColor(Colour);
 		Rect.setOutlineThickness(1.0f);
 		Rect.setSize((m_BoxBounds * GetOwner()->m_Transform.Scale).ToSF());
 		Rect.setPosition((GetOwner()->m_Transform.Location - (m_BoxBounds * GetOwner()->m_Transform.Scale)/2).ToSF());

@@ -36,7 +36,7 @@ public:
 	void Init(Object* Owner) override;
 	virtual void Update() override;
 	virtual void Render(sf::RenderWindow& Renderer) override;
-
+	const bool IsOverlapping() { return Overlapping.size() != 0; }
 	const float GetRadius() { return m_Radius * GetOwner()->m_Transform.Scale.x; }
 	const Math::Vector2 GetBoxBounds() { return m_BoxBounds; }
 protected:

@@ -55,10 +55,8 @@ inline U* GameObject::FindComponentOfType()
 {
 	for (int SearchComponent = 0; SearchComponent < m_Components.size(); SearchComponent++) 
 	{
-		if (m_Components[SearchComponent] == U) 
-		{
-			return m_Components[SearchComponent];
-		}
+		U* FoundComponent = dynamic_cast<U*>(m_Components[SearchComponent]);
+		if (FoundComponent != nullptr) { return FoundComponent; }
 	}
 	return nullptr;
 }

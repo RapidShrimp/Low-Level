@@ -12,13 +12,13 @@ public:
 
 	ObjectPooler<T>(int PoolCount, bool StartEnabled);
 	T* GetFreeObject();
-	vector<Object*> GetAllObjects() { return m_PooledObjects; }
+	vector<GameObject*> GetAllObjects() { return m_PooledObjects; }
 
 protected:
-	void AddObjectToPooler(Object* InObject);
-	void RemovePooledObject(Object* InObject);
+	void AddObjectToPooler(GameObject* InObject);
+	void RemovePooledObject(GameObject* InObject);
 	
-	vector<Object*> m_PooledObjects;
+	vector<GameObject*> m_PooledObjects;
 };
 
 
@@ -44,13 +44,13 @@ inline T* ObjectPooler<T>::GetFreeObject()
 }
 
 template<typename T>
-inline void ObjectPooler<T>::AddObjectToPooler(Object* InObject)
+inline void ObjectPooler<T>::AddObjectToPooler(GameObject* InObject)
 {
 	m_PooledObjects.push_back(InObject);
 }
 
 template<typename T>
-inline void ObjectPooler<T>::RemovePooledObject(Object* InObject)
+inline void ObjectPooler<T>::RemovePooledObject(GameObject* InObject)
 {
 	//TODO - Remove Pooled Object Here?
 }
@@ -59,7 +59,7 @@ template<typename T>
 inline ObjectPooler<T>::ObjectPooler(int PoolCount, bool StartEnabled)
 {
 	//Check if class inherits from Object
-	static_assert(std::is_base_of<Object, T>::value, "Class is not derived from Object Class");
+	static_assert(std::is_base_of<GameObject, T>::value, "Class is not derived from Object Class");
 
 	//Create Objects
 	T* CreatedObject;

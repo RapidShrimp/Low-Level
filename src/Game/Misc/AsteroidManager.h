@@ -3,6 +3,9 @@
 #include "Engine/Core/ObjectPooler.h"
 #include "Game/Pickups/Crystal.h"
 #include "Game/Misc/Asteroid.h"
+
+class PlayerCharacter;
+
 class AsteroidManager : public GameObject {
 
 
@@ -20,6 +23,12 @@ public:
 	virtual void FixedUpdate(float deltaTime) override;
 	//virtual void Render(sf::RenderWindow& Renderer) override;
 	//virtual void OnDestroy() override;
+
+	PlayerCharacter* playerRef;
+protected:
+	//Spawn an asteroid in a place not colliding
+	void InitialPlaceAsteroid(GameObject* Asteroid);
+	void PlaceAsteroid(GameObject* Asteroid);
 
 	void OnAsteroidDestroyed();
 	void OnSpawnCrystal(Math::Vector2(Location));

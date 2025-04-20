@@ -23,7 +23,6 @@ void Asteroid::Init(Object* OwningObject)
 	RegisterComponent(m_Collider, true, "Circle Collider");
 	RegisterComponent(m_RigidBody, true, "Rigid Body");
 
-	m_RigidBody->SetVelocity({10,10});
 	m_Health->OnDamageTaken += std::bind(&Asteroid::Handle_OnAsteroidHit, this, std::placeholders::_1);
 	m_Health->OnDeath += std::bind(&Asteroid::Handle_OnAsteroidDestroyed, this,0);
 

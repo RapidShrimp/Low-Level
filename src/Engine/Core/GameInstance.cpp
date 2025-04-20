@@ -39,7 +39,7 @@ const PlayerCharacter* GameInstance::GetPlayer()
 
 void GameInstance::Init(/*TODO - Game Scene ClassType To Load Into*/)
 {
- 	m_GameWindow = sf::RenderWindow(sf::VideoMode({ WINDOW_WIDTH,WINDOW_HEIGHT }), "Sinistar 2025 Remake");
+  	m_GameWindow = sf::RenderWindow(sf::VideoMode({ WINDOW_WIDTH,WINDOW_HEIGHT }), "Sinistar 2025 Remake");
 	m_Camera = sf::View(sf::FloatRect{ {0,0},{WINDOW_WIDTH,WINDOW_HEIGHT} });
 	m_Camera.setCenter({ WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 });
 	
