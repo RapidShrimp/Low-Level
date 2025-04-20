@@ -59,7 +59,7 @@ template<typename T>
 inline ObjectPooler<T>::ObjectPooler(int PoolCount, bool StartEnabled)
 {
 	//Check if class inherits from Object
-	//static_assert(std::is_base_of<GameObject, T>::value, "Class is not derived from Object Class");
+	static_assert(std::is_base_of<GameObject, T>::value, "Class is not derived from Object Class");
 
 	//Create Objects
 	T* CreatedObject;

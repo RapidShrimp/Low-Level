@@ -60,7 +60,7 @@ void UI_HUD::Render(sf::RenderWindow& Renderer)
 	//Minimap Draw Functionality
 	sf::RectangleShape MinimapOutline({ 140,140 });
 	MinimapOutline.setPosition({ (WINDOW_WIDTH/2)-70,0 });
-	MinimapOutline.setFillColor(sf::Color::Transparent);
+	MinimapOutline.setFillColor(sf::Color::Black);
 	MinimapOutline.setOutlineColor(sf::Color::Blue);
 	MinimapOutline.setOutlineThickness(2);
 	Renderer.draw(MinimapOutline);

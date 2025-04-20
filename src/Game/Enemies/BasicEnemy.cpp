@@ -12,6 +12,8 @@ Enemy::Enemy()
 	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", {116,16}, {2,82},8,1);
 	m_SpriteRenderer->SetSpriteScale(2, 2);
 	m_Collider = new Collider(false, 16.0f);
+
+	m_MinimapDraw = E_MinimapType::Enemy;
 }
 
 void Enemy::Init(Object* OwningObject)

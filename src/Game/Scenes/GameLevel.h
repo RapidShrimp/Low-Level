@@ -20,7 +20,6 @@ public:
 	GameLevel();
 	void OnLoadScene() override;
 
-	ObjectPooler<CollectorEnemy>* m_CollectorPooler = nullptr;
 	ObjectPooler<Projectile>* m_BulletPooler = nullptr;
 	ObjectPooler<Sinibomb>* m_BombPooler = nullptr;
 

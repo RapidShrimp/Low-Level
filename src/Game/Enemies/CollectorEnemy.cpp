@@ -16,7 +16,7 @@ void CollectorEnemy::AI_Logic(float Deltatime)
 	
 
 	//Movement
-	Math::Vector2 Dir = m_Target->m_Transform.Location - m_Transform.Location;
+ 	Math::Vector2 Dir = m_Target->m_Transform.Location - m_Transform.Location;
 
 	if (Dir.Length() > m_KeepDistance) {
 		m_RigidBody->AddVelocity(Dir.Normalised() * m_MoveSpeed);
@@ -34,6 +34,5 @@ void CollectorEnemy::AI_Logic(float Deltatime)
 
 void CollectorEnemy::Handle_EnemyDeath()
 {
-	
 	Enemy::Handle_EnemyDeath();
 }
