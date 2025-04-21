@@ -7,8 +7,6 @@
 #include "Engine/Core/Libs/GameFunctionLib.h"
 #include "Game/Player/PlayerCharacter.h"
 
-
-
 InputEventHandler* InputEventHandler::m_InputSystemInstance = nullptr;
 AudioManger* AudioManger::m_AudioManger = nullptr;
 
@@ -45,10 +43,12 @@ void GameInstance::Init(/*TODO - Game Scene ClassType To Load Into*/)
 	
 	m_HUD = sf::View(sf::FloatRect{ {0,0},{WINDOW_WIDTH,WINDOW_HEIGHT} });
 
+	//Subsystem Singletons
 	InputEventHandler::GetInstance();
-	AudioManger::GetGameInstance();
+	AudioManger::GetAudioInstance();
+
+	//Load Main Menu
 	m_CurrentScene = new MainMenu();
-	//m_CurrentScene = new GameLevel();
 	m_CurrentScene->OnLoadScene();
 }
 

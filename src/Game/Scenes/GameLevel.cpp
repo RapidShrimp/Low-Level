@@ -1,5 +1,6 @@
 #pragma once
 #include "GameLevel.h"
+#include "Engine/Core/AudioManager.h"
 #include "Engine/Core/ObjectPooler.h"
 #include "Game/Player/PlayerCharacter.h"
 #include "Game/Pickups/Crystal.h"
@@ -30,4 +31,5 @@ void GameLevel::OnLoadScene()
 	m_BombPooler = new ObjectPooler<Sinibomb>(5, false);
 	//TODO - m_EnemyPooler = new ObjectPooler<Enemy>(3, false);
 
+ 	AudioManger::PlayMusic("sinistar_BuildingTheme.mp3",true);
 }

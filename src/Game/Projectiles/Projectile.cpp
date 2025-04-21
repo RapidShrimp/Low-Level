@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/Core/Libs/GameFunctionLib.h"
 #include "Engine/Core/GameInstance.h"
+#include "Engine/Core/AudioManager.h"
 #include "Projectile.h"
 
 Projectile::Projectile()
@@ -13,8 +14,8 @@ Projectile::Projectile()
 
 void Projectile::OnFired(GameObject* Owner, Math::Vector2 FireDirection)
 {
+	AudioManger::PlaySound("laserShoot.wav");
 	m_RigidBody->m_Velocity = FireDirection;
-
 	m_Owner = Owner;
 }
 

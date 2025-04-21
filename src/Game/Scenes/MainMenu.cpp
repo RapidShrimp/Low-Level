@@ -1,5 +1,6 @@
 #pragma once
 #include "MainMenu.h"
+#include "Engine/Core/AudioManager.h"
 #include "Engine/Core/Components/SpriteRenderer.h"
 #include "Game/UI/UI_MainMenu.h"
 #include <iostream>
@@ -27,5 +28,6 @@ void MainMenu::OnLoadScene()
 	//Spawn UI
 	UI_Base* MainMenuUI = new UI_MainMenu();
 	SpawnObject(MainMenuUI, { 0,0 });
+	AudioManger::PlayMusic("sinistarHomeMusic.mp3", true);
 
 }

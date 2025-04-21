@@ -13,7 +13,8 @@ enum E_LogType {
 	Display = 0,
 	Warning = 1,
 	Error = 2,
-	DebugNone = 3
+	DebugNone = 3,
+	Confirm = 4
 };
 
 class Debug{

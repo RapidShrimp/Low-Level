@@ -101,7 +101,7 @@ void Collider::Update()
 			}
 			Overlapping.push_back(OtherCollider);
 			OnCollisionEvent(OtherCollider, ColliderEvent);
-			Debug::Log(this, Display, "Collision Added:" + std::to_string(ColliderEvent));
+			Debug::Log(this, DebugNone, "Collision Added:" + std::to_string(ColliderEvent));
 		}
 	}
 }

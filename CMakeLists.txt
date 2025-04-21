@@ -18,7 +18,7 @@ file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/
 target_sources(Low-Level PRIVATE ${MY_SOURCES})
 target_include_directories(Low-Level PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
 file(COPY "src/Game/Assets/" DESTINATION "Assets")
-target_link_libraries(Low-Level PRIVATE SFML::Graphics)
+target_link_libraries(Low-Level PRIVATE SFML::Graphics SFML::Audio)
 
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)

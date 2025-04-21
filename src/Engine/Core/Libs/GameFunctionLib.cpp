@@ -51,7 +51,9 @@ void Debug::Log(Object* CallingObject, E_LogType LogType, std::string LogMessage
 		LogTypeStr = "ERROR: ";
 		SetConsoleTextAttribute(hConsole, 4);
 		break;
-
+	case Confirm:
+		LogTypeStr = "Success: ";
+		SetConsoleTextAttribute(hConsole, 10);
 	}
 	cout << ObjectName << LogTypeStr << LogMessage << endl;
 	SetConsoleTextAttribute(hConsole, 15);

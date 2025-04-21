@@ -94,7 +94,7 @@ void PlayerCharacter::CollectSinibomb()
 {
 	if (m_SinibombsHeld == 20) { return; }
 	m_SinibombsHeld++; 
-	Debug::Log(this, Display, "Sinibomb Collected:" + to_string(m_SinibombsHeld));
+	Debug::Log(this, DebugNone, "Sinibomb Collected:" + to_string(m_SinibombsHeld));
 	OnSinibombUpdated(m_SinibombsHeld);
 
 }
