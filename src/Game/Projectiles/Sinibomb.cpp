@@ -21,8 +21,7 @@ void Sinibomb::OnCollisionHit(Collider* OtherCollider, E_CollisionEvent Collider
 	
 	if (OtherObject == GetOwner()) {return;}
 
-
-  	GameFucntionLib::ApplyDamage(OtherObject, 10, dynamic_cast<GameObject*>(GetOwner()));
+  	GameFucntionLib::ApplyDamage(OtherObject, 100, dynamic_cast<GameObject*>(GetOwner()));
 	Deactivate();
 	//if(OtherCollider == GetOwner()->)
 }

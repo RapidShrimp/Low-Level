@@ -1,5 +1,7 @@
 #pragma once
 #include "BasicEnemy.h"
+class Crystal;
+
 
 class CollectorEnemy : public Enemy {
 
@@ -10,4 +12,5 @@ public:
 
 	virtual void AI_Logic(float DeltaTime) override;
 	virtual void Handle_EnemyDeath() override; 
+	void CollectCrystal(Crystal* InCrystal);
 };

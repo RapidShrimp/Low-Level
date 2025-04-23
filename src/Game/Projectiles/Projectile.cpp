@@ -2,6 +2,7 @@
 #include "Engine/Core/Libs/GameFunctionLib.h"
 #include "Engine/Core/GameInstance.h"
 #include "Engine/Core/AudioManager.h"
+#include "Game/Enemies/Boss.h"
 #include "Projectile.h"
 
 Projectile::Projectile()
@@ -58,7 +59,7 @@ void Projectile::OnCollisionHit(Collider* OtherCollider, E_CollisionEvent Collid
 	GameObject* OtherObject = OtherCollider->GetOwner();
 	
 	if (OtherObject == GetOwner()) {return;}
-
+	if (dynamic_cast<Boss*>(OtherObject)) { return; }
 
   	GameFucntionLib::ApplyDamage(OtherObject, 10, dynamic_cast<GameObject*>(GetOwner()));
 	Deactivate();

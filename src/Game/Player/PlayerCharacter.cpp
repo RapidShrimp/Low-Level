@@ -60,35 +60,54 @@ void PlayerCharacter::FireWeapon(CallbackContext Context)
 	}
 }
 
-void PlayerCharacter::FireSinibomb(CallbackContext Context)
+void PlayerCharacter::FireSinibombForward(CallbackContext Context)
 {
-	if (Context.Started) {
-
-		if (m_SinibombsHeld == 0) { return; }
-
-		GameLevel* CurrGameScene = dynamic_cast<GameLevel*>(GameInstance::GetGameInstance()->GetWorld());
-		if (CurrGameScene == nullptr) { return; }
-
-		
-		ObjectPooler<Sinibomb>* BombObejctPooler = CurrGameScene->m_BombPooler;
-		if (BombObejctPooler == nullptr) 
-		{ 
-			Debug::Log(this, Error, "No Sinibomb Object Pooler in scene");
-			return; 
-		}
-		Sinibomb* Bomb = BombObejctPooler->GetFreeObject();
-		Bomb->m_Transform = m_Transform;
-		Bomb->Activate();
-
-		//Get Mouse Direction 
+	if (Context.Started) 
+	{
 		sf::Vector2f MousePos = InputEventHandler::GetInstance()->GetMousePosition();
 		Math::Vector2 Dir = Math::Vector2(MousePos.x, MousePos.y) - m_Transform.Location;
 		Math::Vector2::Normalise(Dir);
-		m_SinibombsHeld--;
-		Bomb->OnFired(this, Dir/2.5);
-		OnSinibombUpdated(m_SinibombsHeld);
+		OnFireSinibomb(Dir / 2.5);
 	}
 }
+
+void PlayerCharacter::FireSinibombRear(CallbackContext Context)
+{
+	if (Context.Started) 
+	{
+		sf::Vector2f MousePos = InputEventHandler::GetInstance()->GetMousePosition();
+		Math::Vector2 Dir = Math::Vector2(MousePos.x, MousePos.y) - m_Transform.Location;
+		Math::Vector2::Normalise(Dir);
+		OnFireSinibomb((Dir * -1) / 2.5);
+	}
+}
+
+void PlayerCharacter::OnFireSinibomb(Math::Vector2 Dir)
+{
+
+	if (m_SinibombsHeld == 0) { return; }
+
+	GameLevel* CurrGameScene = dynamic_cast<GameLevel*>(GameInstance::GetGameInstance()->GetWorld());
+	if (CurrGameScene == nullptr) { return; }
+
+
+	ObjectPooler<Sinibomb>* BombObejctPooler = CurrGameScene->m_BombPooler;
+	if (BombObejctPooler == nullptr)
+	{
+		Debug::Log(this, Error, "No Sinibomb Object Pooler in scene");
+		return;
+	}
+	Sinibomb* Bomb = BombObejctPooler->GetFreeObject();
+	Bomb->m_Transform = m_Transform;
+	Bomb->Activate();
+
+	//Get Mouse Direction 
+	Bomb->OnFired(this, Dir);
+	m_SinibombsHeld--;
+	OnSinibombUpdated(m_SinibombsHeld);
+}
+
+
 
 void PlayerCharacter::CollectSinibomb()
 {
@@ -133,11 +152,13 @@ void PlayerCharacter::Init(Object* OwningObject)
 	BindableInput* MoveKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::W);
 	BindableInput* FireKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::Space);
 	BindableInput* Sinibomb = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::LShift);
+	BindableInput* SinibombRear = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::LControl);
+
 
 	MouseInput* MouseInputs = InputEventHandler::GetInstance()->CreateMouseInput();
 	if (FireKey) { FireKey->OnInputUpdate += std::bind(&PlayerCharacter::FireWeapon, this, std::placeholders::_1);}
-	if (Sinibomb) { Sinibomb->OnInputUpdate += std::bind(&PlayerCharacter::FireSinibomb, this, std::placeholders::_1); }
-
+	if (Sinibomb) { Sinibomb->OnInputUpdate += std::bind(&PlayerCharacter::FireSinibombForward, this, std::placeholders::_1); }
+	if (SinibombRear) { SinibombRear->OnInputUpdate += std::bind(&PlayerCharacter::FireSinibombRear, this, std::placeholders::_1); }
 	if (MoveInput) { MoveInput->OnAxisInputUpdate += std::bind(&PlayerCharacter::MovePlayer, this, std::placeholders::_1, std::placeholders::_2); }
 
 	GameInstance::GetGameInstance()->GetWorld()->SpawnUIElement(new UI_HUD(*this) , { 0,0 }, true);

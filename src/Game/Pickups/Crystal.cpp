@@ -4,6 +4,7 @@
 #include "Engine/Core/GameInstance.h"
 #include "Game/Player/PlayerCharacter.h"
 #include "Engine/Core/Libs/GameFunctionLib.h"
+#include "Game/Enemies/CollectorEnemy.h"
 
 Crystal::Crystal()
 {
@@ -25,8 +26,15 @@ void Crystal::OnCollisionEvent(Collider* InCollider, E_CollisionEvent Event)
 	{
 		Player->CollectSinibomb();
 		Deactivate();
+		OnCrystalCollided(InCollider->GetOwner()); //Pooler will have this bound
+		return;
 	}
-	OnCrystalCollided(InCollider->GetOwner()); //Pooler will have this bound
+
+	CollectorEnemy* Collector = dynamic_cast<CollectorEnemy*>(InCollider->GetOwner());
+	if(Collector != nullptr)
+	{
+		Collector->CollectCrystal(this);
+	}
 }
 
 void Crystal::Init(Object* OwningObject)

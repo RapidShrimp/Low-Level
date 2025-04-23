@@ -29,7 +29,9 @@ public:
 	~PlayerCharacter();
 	void MovePlayer(CallbackContext Context, Math::Vector2 MoveVector);
 	void FireWeapon(CallbackContext Context);
-	void FireSinibomb(CallbackContext Context);
+	void FireSinibombForward(CallbackContext Context);
+	void FireSinibombRear(CallbackContext Context);
+	void OnFireSinibomb(Math::Vector2 Dir);
 
 
 	void CollectSinibomb(); 

@@ -1,6 +1,7 @@
 #pragma once
 #include "CollectorEnemy.h"
 #include <iostream>
+#include "Game/Pickups/Crystal.h"
 void CollectorEnemy::AI_Logic(float Deltatime)
 {
 	TargetPlayer();
@@ -35,4 +36,10 @@ void CollectorEnemy::AI_Logic(float Deltatime)
 void CollectorEnemy::Handle_EnemyDeath()
 {
 	Enemy::Handle_EnemyDeath();
+}
+
+void CollectorEnemy::CollectCrystal(Crystal* InCrystal)
+{
+	InCrystal->m_RigidBody->m_Velocity = { 0,0 };
+
 }
