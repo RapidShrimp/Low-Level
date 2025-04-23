@@ -11,6 +11,7 @@ Boss::Boss()
 	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 298,174 }, { 299,127 }, 11, 4);
 	m_SpriteRenderer->SetSpriteScale(2, 2);
 	m_Collider = new Collider(false, 32.0f);
+	m_Pieces = 9;
 }
 
 void Boss::Init(Object* OwningObject)
@@ -38,11 +39,16 @@ void Boss::FixedUpdate(float DeltaTime)
 
 void Boss::GiveCrystal(Crystal* InPeice)
 {
+	Debug::Log(this, Display, "Boss Recieved Crystal" + std::to_string(m_Health->GetHealthPercent()));
+
+	
 	InPeice->Deactivate();
 	m_Pieces++;
 	m_Health->SetHealth(m_Pieces * 100);
 	if (m_Pieces == 10) {
 		m_Created = true;
+		Debug::Log(this, Error, ".....SINISTAR IS ACTIVE.....");
+
 	}
 }
 
@@ -55,12 +61,14 @@ void Boss::Handle_TakeDamage(float Damage)
 
 void Boss::Handle_EnemyDeath()
 {
-	if (m_Created == true) 
+	if (m_Created == true)
 	{
 		Debug::Log(this, Error, "Boss Dead");
+	}
+	else {
+		Debug::Log(this, Warning, "Boss Hasn't Been Created Yet");
 
 	}
-	Debug::Log(this, Warning, "Boss Hasn't Been Created Yet");
 
 }
 

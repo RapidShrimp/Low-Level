@@ -2,9 +2,10 @@
 #include "Engine/Core/Libs/GameFunctionLib.h"
 #include "Rigidbody.h"
 
-Rigidbody::Rigidbody(float MaxSpeed)
+Rigidbody::Rigidbody(float MaxSpeed, bool PhaseCollisions)
 {
 	m_MaxSpeed = MaxSpeed;
+	m_PhaseCollisions = PhaseCollisions;
 }
 
 void Rigidbody::Init(Object* Owner)
@@ -27,7 +28,7 @@ void Rigidbody::Init(Object* Owner)
 void Rigidbody::FixedUpdate(float deltaTime)
 {	
 	//Linear Damped
-
+	if (!isActive) { return; }
 	if (m_Velocity.Length() > m_MaxSpeed) {
 		m_Velocity = m_Velocity.Normalised() * m_MaxSpeed;
 	}
@@ -64,6 +65,8 @@ void Rigidbody::AddVelocity(Math::Vector2(Velocity))
 
 void Rigidbody::OnCollisionEventCallback(Collider* OtherCollider, E_CollisionEvent Response)
 {
+
+	if (m_PhaseCollisions) { return; }
 	if (Response != E_CollisionEvent::CollisionEnter) {
 		return;
 	}

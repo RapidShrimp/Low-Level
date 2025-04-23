@@ -21,7 +21,7 @@ public:
 
 
 protected:
-
+	void Handle_CrystalAppeared(GameObject* Crystal);
 	void TargetPlayer(Enemy* EnemyToTarget);
 	ObjectPooler<CollectorEnemy>* m_Collectors = nullptr;
 };

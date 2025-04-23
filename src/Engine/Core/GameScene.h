@@ -8,6 +8,7 @@
 
 class Object;
 class Transform;
+class AsteroidManager;
 class PlayerCharacter;
 
 class GameScene : public Object{
@@ -37,15 +38,50 @@ public:
 	GameObject* SpawnObject(GameObject* Spawnable, Math::Vector2 SpawnLocation, bool StartActive = true, std::string DisplayName = "Unassigned");
 	const std::vector<GameObject*> GetGameObjects() { return SceneObjects; }
 
+	/*
+	Finds the first registered Object of a specific type
+	returns nullptr if no object found
+	*/
 	template<typename U> 
-	U* GetRegisteredObjectOfType();
+	U* FindRegisteredObjectOfType();
+
+	/*
+	* Finds all registered objects of a specific type
+	* This is a slow operation, use sparingly
+	* Returns empty vector if no objects exist
+	*/
+	template<typename U>
+	vector<U*> FindAllRegisteredObjectsOfType();
+
 private:
 
 	void RegisterSpawnedObject(GameObject* RegisterObject, bool Activate);
 };
 
 template<typename U>
-inline U* GameScene::GetRegisteredObjectOfType()
+inline U* GameScene::FindRegisteredObjectOfType()
 {
+	for (int ObjectIndex = 0; ObjectIndex < SceneObjects.size(); ObjectIndex++)
+	{
+		U* FoundObject = dynamic_cast<U*>(SceneObjects[ObjectIndex]);
+		if (FoundObject != nullptr) { return FoundObject; }
+	}
 	return nullptr;
+}
+
+template<typename U>
+inline vector<U*> GameScene::FindAllRegisteredObjectsOfType()
+{
+	std::vector<U*> foundObjects;
+
+	for (int ObjectIndex = 0; ObjectIndex < SceneObjects.size(); ObjectIndex++)
+	{
+		U* FoundObject = dynamic_cast<U*>(SceneObjects[ObjectIndex]);
+		if (FoundObject != nullptr) 
+		{
+			foundObjects.push_back(FoundObject);
+		}
+	}
+
+	return foundObjects;
 }

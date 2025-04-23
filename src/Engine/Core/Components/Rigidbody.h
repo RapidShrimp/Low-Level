@@ -5,7 +5,7 @@
 class Rigidbody : public Component {
 
 public:
-	Rigidbody(float MaxSpeed);
+	Rigidbody(float MaxSpeed,bool PhaseCollisions = false);
 	~Rigidbody() {};
 
 	Math::Vector2 m_Velocity;
@@ -30,4 +30,7 @@ public:
 	float m_LinearDamp = 0.001f; // 0.01 - 1 || 1 = No Dampen  Default Value = 0.001f;
 	float m_AngularDamp = 0.1f;
 	float m_mass = 20; 
+
+protected:
+	bool m_PhaseCollisions = false;
 };

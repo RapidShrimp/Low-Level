@@ -46,7 +46,7 @@ void Crystal::Init(Object* OwningObject)
 	RegisterComponent(m_Collider, false, "Collider");
 
 	m_Collider->OnCollisionEvent += std::bind(&Crystal::OnCollisionEvent, this, std::placeholders::_1, std::placeholders::_2);
-	Debug::Log(this, Display, "Bound Event");
+	Debug::Log(this, DebugNone, "Bound Event");
 
 
 }
@@ -55,7 +55,7 @@ void Crystal::OnActivate()
 {
 	GameObject::OnActivate();
 	const PlayerCharacter* Player = GameInstance::GetGameInstance()->GetPlayer();
-
+	OnCrystalAvaliable(this);
 	Math::Vector2 DesiredVector = Player->m_Transform.Location;
 	 
 	if (Player != nullptr) {

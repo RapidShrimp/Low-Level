@@ -71,6 +71,7 @@ inline ObjectPooler<T>::ObjectPooler(int PoolCount, bool StartEnabled)
 		GameInstance::GetGameInstance()->GetWorld()->SpawnObject(CreatedObject, { 0,0 }, StartEnabled, "PooledObject" + std::to_string(i));
 		AddObjectToPooler(CreatedObject);
 	}
+	GameInstance::GetGameInstance()->GetWorld()->SpawnObject(this, { 0,0 }, true, "Object Pooler");
 
 
 }
