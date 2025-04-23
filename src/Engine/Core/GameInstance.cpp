@@ -19,6 +19,7 @@ void GameInstance::LoadScene(GameScene* NewScene)
 	m_CurrentScene->UnloadScene();
 	m_CurrentScene = NewScene;
 	m_CurrentScene->OnLoadScene();
+	m_CurrentScene->OnSceneLoaded();
 }
 
 const PlayerCharacter* GameInstance::GetPlayer()

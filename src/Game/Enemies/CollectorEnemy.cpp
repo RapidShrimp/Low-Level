@@ -7,6 +7,17 @@
 #include "Game/Misc/AsteroidManager.h"
 #include "Game/Enemies/Boss.h"
 
+CollectorEnemy::CollectorEnemy()
+{
+	m_Health = new HealthComponent(10);
+	m_RigidBody = new Rigidbody(1, true);
+	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 116,16 }, { 2,82 }, 8, 1);
+	m_SpriteRenderer->SetSpriteScale(2, 2);
+	m_Collider = new Collider(false, 16.0f);
+
+	m_MinimapDraw = E_MinimapType::E_Enemy;
+}
+
 void CollectorEnemy::AI_Logic(float Deltatime)
 {
 

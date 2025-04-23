@@ -7,6 +7,7 @@
 #include "Game/Projectiles/Sinibomb.h"
 #include "Game/UI/UI_HUD.h"
 #include "PlayerCharacter.h"
+#include "Engine/Core/AudioManager.h"
 
 
 PlayerCharacter::PlayerCharacter()
@@ -103,6 +104,8 @@ void PlayerCharacter::OnFireSinibomb(Math::Vector2 Dir)
 
 	//Get Mouse Direction 
 	Bomb->OnFired(this, Dir);
+	AudioManger::PlaySound("laserShoot.wav");
+
 	m_SinibombsHeld--;
 	OnSinibombUpdated(m_SinibombsHeld);
 }

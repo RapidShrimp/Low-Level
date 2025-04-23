@@ -3,7 +3,8 @@
 #include "Engine/Core/ObjectPooler.h"
 #include "Game/Enemies/BasicEnemy.h"
 
-#include "Game/Enemies/CollectorEnemy.h"
+#include "CollectorEnemy.h"
+#include "FiringEnemy.h"
 
 class AI_Manager : public GameObject {
 
@@ -13,7 +14,7 @@ public:
 	virtual void Init(Object* OwningObject) override;
 	//virtual void OnActivate() override;
 	//virtual void OnDeactivate() override;
-	//virtual void BeginPlay() override;
+	virtual void BeginPlay() override;
 	//virtual void Update() override;
 	virtual void FixedUpdate(float deltaTime) override;
 	//virtual void Render(sf::RenderWindow& Renderer) override;
@@ -23,5 +24,8 @@ public:
 protected:
 	void Handle_CrystalAppeared(GameObject* Crystal);
 	void TargetPlayer(Enemy* EnemyToTarget);
+	void Handle_ShooterDeath();
 	ObjectPooler<CollectorEnemy>* m_Collectors = nullptr;
+	ObjectPooler<FiringEnemy>* m_Shooters = nullptr;
+
 };

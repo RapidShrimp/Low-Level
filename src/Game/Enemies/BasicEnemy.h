@@ -17,6 +17,9 @@ protected:
 	float m_KeepDistance = 0.0f;
 
 public:
+
+	SinStr::Event<>OnEnemyDeath;
+
 	Enemy();
 	~Enemy() {};
 	virtual void Init(Object* OwningObject) override;

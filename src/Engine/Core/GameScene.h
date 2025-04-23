@@ -23,6 +23,7 @@ public:
 	void FixedUpdate(float DeltaTime);
 	void Update();
 	virtual void OnLoadScene();
+	virtual void OnSceneLoaded();
 	virtual void UnloadScene();
 	virtual PlayerCharacter* GetPlayerCharacter() { return nullptr; } //Override this in Child Scene
 protected:

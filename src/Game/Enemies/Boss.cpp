@@ -3,6 +3,7 @@
 #include "Engine/Core/Components/Collider.h"
 #include "Game/Pickups/Crystal.h"
 #include "Engine/Core/Libs/GameFunctionLib.h"
+#include <Engine/Core/AudioManager.h>
 
 Boss::Boss()
 {
@@ -39,23 +40,24 @@ void Boss::FixedUpdate(float DeltaTime)
 
 void Boss::GiveCrystal(Crystal* InPeice)
 {
-	Debug::Log(this, Display, "Boss Recieved Crystal" + std::to_string(m_Health->GetHealthPercent()));
+	Debug::Log(this, Display, "Boss Recieved Crystal: " + std::to_string((int)m_Health->GetHealthPercent()));
 
-	
 	InPeice->Deactivate();
+	if (m_Created) { return; }
 	m_Pieces++;
 	m_Health->SetHealth(m_Pieces * 100);
 	if (m_Pieces == 10) {
 		m_Created = true;
 		Debug::Log(this, Error, ".....SINISTAR IS ACTIVE.....");
+		AudioManger::PlaySound("Beware_i_Live.mp3");
 
 	}
 }
 
 void Boss::Handle_TakeDamage(float Damage)
 {
-	Debug::Log(this, Display, "Boss Took Damage" + std::to_string(m_Health->GetHealthPercent()));
-	
+	Debug::Log(this, Display, "Boss Took Damage");
+	m_Pieces = (int) m_Health->GetCurrentHealth() / 100;
 	//TODO - Update Sprite Composition
 }
 
@@ -63,6 +65,7 @@ void Boss::Handle_EnemyDeath()
 {
 	if (m_Created == true)
 	{
+
 		Debug::Log(this, Error, "Boss Dead");
 	}
 	else {

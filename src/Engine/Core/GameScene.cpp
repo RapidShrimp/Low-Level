@@ -27,7 +27,6 @@ void GameScene::RegisterSpawnedObject(GameObject* RegisterObject, bool Activate)
 
 	//Initialise GameObject
 	RegisterObject->Init(this);
-	RegisterObject->BeginPlay();
 
 	if (Activate) { RegisterObject->Activate(); }
 	else { RegisterObject->Deactivate(); }
@@ -45,7 +44,6 @@ UI_Base* GameScene::SpawnUIElement(UI_Base* Spawnable, SinStr::Transform UI_Tran
 
 	//Initialise GameObject
 	Spawnable->Init(this);
-	Spawnable->BeginPlay();
 
 	if (StartEnabled) { Spawnable->Activate(); }
 	else { Spawnable->Deactivate(); }
@@ -115,6 +113,14 @@ void GameScene::OnLoadScene()
 	GameObject* GreenCircle = new GameObject();
 	RegisterSpawnedObject(GreenCircle);
 	*/
+}
+
+void GameScene::OnSceneLoaded()
+{
+	for (int i = 0; i < SceneObjects.size(); i++)
+	{
+		SceneObjects[i]->BeginPlay();
+	}
 }
 
 void GameScene::UnloadScene()
