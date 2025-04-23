@@ -10,7 +10,7 @@ Asteroid::Asteroid()
 	m_Collider = new Collider(false, 24);
 	m_RigidBody = new Rigidbody(0.4f);
 
-	m_MinimapDraw = Planetoid;
+	m_MinimapDraw = E_Planetoid;
 
 }
 

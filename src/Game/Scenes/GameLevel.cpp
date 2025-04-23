@@ -20,15 +20,17 @@ void GameLevel::OnLoadScene()
 {
 	GameScene::OnLoadScene();
 	m_Player = new PlayerCharacter();
+	m_Boss = new Boss();
 	m_AsteroidManager = new AsteroidManager();
 	m_BulletPooler = new ObjectPooler<Projectile>(15, false);
+	m_BombPooler = new ObjectPooler<Sinibomb>(5, false);
 	
 	SpawnObject(m_Player, Math::Vector2(400,400),true,"Player");
 	SpawnObject(m_AsteroidManager,Math::Vector2::Zero(),true,"Asteroid Manager");
-	SpawnObject(new AI_Manager(), Math::Vector2(50,50), true, "Enemy Manager");
-	SpawnObject(new Boss(), Math::Vector2(500, 500), true, "Sinistar Boss");
 
-	m_BombPooler = new ObjectPooler<Sinibomb>(5, false);
+	SpawnObject(new AI_Manager(), Math::Vector2(50,50), true, "Enemy Manager");
+	SpawnObject(m_Boss, Math::Vector2(500, 500), true, "Sinistar Boss");
+
 	//TODO - m_EnemyPooler = new ObjectPooler<Enemy>(3, false);
 
  	AudioManger::PlayMusic("sinistar_BuildingTheme.mp3",true);

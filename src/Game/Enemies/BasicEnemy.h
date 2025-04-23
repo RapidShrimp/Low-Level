@@ -26,10 +26,11 @@ public:
 	virtual void Update() override;
 	virtual void FixedUpdate(float DeltaTime) override;
 	//virtual void OnDestroy() override;
+	void SetNewTarget(GameObject* NewTarget);
 protected:
 	virtual void Handle_EnemyDeath();
 	virtual void AI_Logic(float DeltaTime);
-	void TargetPlayer();
+
 private:
 
 };

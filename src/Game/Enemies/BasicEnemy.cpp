@@ -13,7 +13,7 @@ Enemy::Enemy()
 	m_SpriteRenderer->SetSpriteScale(2, 2);
 	m_Collider = new Collider(false, 16.0f);
 
-	m_MinimapDraw = E_MinimapType::Enemy;
+	m_MinimapDraw = E_MinimapType::E_Enemy;
 }
 
 void Enemy::Init(Object* OwningObject)
@@ -42,19 +42,18 @@ void Enemy::FixedUpdate(float DeltaTime)
 	AI_Logic(DeltaTime);
 }
 
+void Enemy::SetNewTarget(GameObject* NewTarget)
+{
+	if (NewTarget == nullptr) { return; }
+	m_Target = NewTarget;
+}
+
 void Enemy::AI_Logic(float DeltaTime)
 {
 	//Override Here
 }
 
-void Enemy::TargetPlayer()
-{
-	const PlayerCharacter* Player = GameInstance::GetGameInstance()->GetPlayer();
-	m_Target = const_cast<GameObject*>(static_cast<const GameObject*>(Player));
-	if (m_Target == nullptr) {
-		Debug::Log(this, Warning, "No Player Found");
-	}
-}
+
 
 void Enemy::Handle_EnemyDeath()
 {

@@ -88,24 +88,24 @@ void UI_HUD::Render(sf::RenderWindow& Renderer)
 		if (!Item->GetIsActive()) { continue; }
 		sf::CircleShape Dot(24);
 		Dot.setOrigin({ 12,12 });
-		if (Item->m_MinimapDraw == DontDraw) { continue; }
+		if (Item->m_MinimapDraw == E_DontDraw) { continue; }
 		Dot.setPosition(Item->m_Transform.Location.ToSF());
 
 		switch (Item->m_MinimapDraw) 
 		{
-		case Player:
+		case E_Player:
 			DrawColour = sf::Color::Blue;
 			break;
-		case Special:
+		case E_Special:
 			DrawColour = sf::Color::Yellow;
 			break;
-		case Planetoid:
+		case E_Planetoid:
 			DrawColour = sf::Color(144,144,160);
 			break;
-		case SINISTAR:
-			Dot.setRadius(40);
+		case E_SINISTAR:
+			Dot.setRadius(120);
 			Dot.setOrigin({ 20,20 });
-		case Enemy:
+		case E_Enemy:
 			DrawColour = sf::Color::Red;
 			break;
 		}

@@ -20,7 +20,7 @@ PlayerCharacter::PlayerCharacter()
 
 	MoveDirection = Math::Vector2::Zero();
 
-	m_MinimapDraw = Player;
+	m_MinimapDraw = E_Player;
 }
 
 PlayerCharacter::~PlayerCharacter()

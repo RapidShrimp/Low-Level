@@ -13,7 +13,7 @@ Crystal::Crystal()
 	m_RigidBody = new Rigidbody(10);
 	m_Collider = new Collider(true, 5.0f);
 
-	m_MinimapDraw = Special;
+	m_MinimapDraw = E_Special;
 }
 
 void Crystal::OnCollisionEvent(Collider* InCollider, E_CollisionEvent Event)

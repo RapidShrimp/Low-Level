@@ -10,11 +10,14 @@ class CollectorEnemy;
 class Projectile;
 class Sinibomb;
 class AsteroidManager;
+class Boss;
 
 class GameLevel : public GameScene 
 {
 protected:
 	PlayerCharacter* m_Player = nullptr;
+	Boss* m_Boss = nullptr;
+
 public:
 
 	GameLevel();
@@ -26,4 +29,6 @@ public:
 	AsteroidManager* m_AsteroidManager = nullptr;
 	
 	virtual PlayerCharacter* GetPlayerCharacter() override { return m_Player; }
+	virtual Boss* GetSinistarBoss() { return m_Boss; }
+
 };

@@ -9,7 +9,7 @@ class Crystal : public GameObject {
 
 
 public:
-
+	SinStr::Event<GameObject*> OnCrystalAvaliable;
 	SinStr::Event<GameObject*> OnCrystalCollided; //The Game Object Collided With
 
 	Crystal();

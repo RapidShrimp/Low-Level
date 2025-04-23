@@ -10,6 +10,9 @@ protected:
 	int m_Pieces = 0;
 
 public:
+
+	SinStr::Event<int> OnPeicesUpdated;
+
 	Boss();
 
 	virtual void Init(Object* OwningObject) override;
@@ -20,9 +23,10 @@ public:
 	virtual void FixedUpdate(float DeltaTime) override;
 	//virtual void OnDestroy() override;
 	bool IsCreated() { return m_Created; }
-	bool GiveCrystal(Crystal* InPeice);
+	void GiveCrystal(Crystal* InPeice);
 
 protected:
+	virtual void Handle_TakeDamage(float Damage);
 	virtual void Handle_EnemyDeath();
 	virtual void AI_Logic(float DeltaTime);
 

@@ -2,10 +2,11 @@
 #include "Boss.h"
 #include "Engine/Core/Components/Collider.h"
 #include "Game/Pickups/Crystal.h"
+#include "Engine/Core/Libs/GameFunctionLib.h"
 
 Boss::Boss()
 {
-	m_Health = new HealthComponent(1000);
+	m_Health = new HealthComponent(100);
 	m_RigidBody = new Rigidbody(1);
 	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 298,174 }, { 299,127 }, 11, 4);
 	m_SpriteRenderer->SetSpriteScale(2, 2);
@@ -15,7 +16,7 @@ Boss::Boss()
 void Boss::Init(Object* OwningObject)
 {
 	Enemy::Init(OwningObject);
-
+	m_Health->OnDamageTaken += std::bind(&Boss::Handle_TakeDamage, this, std::placeholders::_1);
 	//m_Collider->OnCollisionEvent += std::bind(&Boss::Handle_CollisionEvent, )
 }
 
@@ -35,14 +36,32 @@ void Boss::FixedUpdate(float DeltaTime)
 	GameObject::FixedUpdate(DeltaTime);
 }
 
-bool Boss::GiveCrystal(Crystal* InPeice)
+void Boss::GiveCrystal(Crystal* InPeice)
 {
-	return false;
+	InPeice->Deactivate();
+	m_Pieces++;
+	m_Health->SetHealth(m_Pieces * 100);
+	if (m_Pieces == 10) {
+		m_Created = true;
+	}
+}
+
+void Boss::Handle_TakeDamage(float Damage)
+{
+	Debug::Log(this, Display, "Boss Took Damage" + std::to_string(m_Health->GetHealthPercent()));
+	
+	//TODO - Update Sprite Composition
 }
 
 void Boss::Handle_EnemyDeath()
 {
-	//Call Event Here
+	if (m_Created == true) 
+	{
+		Debug::Log(this, Error, "Boss Dead");
+
+	}
+	Debug::Log(this, Warning, "Boss Hasn't Been Created Yet");
+
 }
 
 void Boss::AI_Logic(float DeltaTime)

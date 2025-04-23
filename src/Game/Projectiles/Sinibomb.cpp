@@ -9,7 +9,7 @@ Sinibomb::Sinibomb()
 	m_RigidBody = new Rigidbody(10.0f);
 	m_RigidBody->m_LinearDamp = 0;
 
-	m_MinimapDraw = Special;
+	m_MinimapDraw = E_Special;
 }
 
 

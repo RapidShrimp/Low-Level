@@ -14,7 +14,7 @@ void AsteroidManager::Init(Object* OwningObject)
 {
 	playerRef = GameInstance::GetGameInstance()->GetWorld()->GetPlayerCharacter();
 
-	vector<GameObject*> Asteroids = m_PooledAsteroids->GetAllObjects();
+	vector<Asteroid*> Asteroids = m_PooledAsteroids->GetAllObjects();
 
 	for (int i = 0; i < Asteroids.size(); i++) {
 
@@ -35,15 +35,14 @@ void AsteroidManager::Init(Object* OwningObject)
 
 void AsteroidManager::FixedUpdate(float deltaTime)
 {
-	//vector<GameObject*> Asteroids = m_PooledAsteroids->GetAllObjects();
+	vector<Crystal*> Crystals = m_PooledCrystals->GetAllObjects();
 
-	//for (int i = 0; i < Asteroids.size(); i++) 
+	//for (Crystal* Cryst : Crystals.begin(), Crystals.end()) 
 	//{
-	//	if ((Asteroids[i]->m_Transform.Location - playerRef->m_Transform.Location).Length() > 1000.0f ) {
-	//		PlaceAsteroid(Asteroids[i]);
+	//	if (Cryst->GetIsActive() && !Cryst->isAttached) {
+	//		
 	//	}
 	//}
-
 }
 
 void AsteroidManager::InitialPlaceAsteroid(GameObject* Asteroid)

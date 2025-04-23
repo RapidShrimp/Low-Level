@@ -36,7 +36,16 @@ public:
 	GameObject* SpawnObject(GameObject* Spawnable, SinStr::Transform SpawnTransform, bool StartActive = true, std::string DisplayName = "Unassigned");
 	GameObject* SpawnObject(GameObject* Spawnable, Math::Vector2 SpawnLocation, bool StartActive = true, std::string DisplayName = "Unassigned");
 	const std::vector<GameObject*> GetGameObjects() { return SceneObjects; }
+
+	template<typename U> 
+	U* GetRegisteredObjectOfType();
 private:
 
 	void RegisterSpawnedObject(GameObject* RegisterObject, bool Activate);
 };
+
+template<typename U>
+inline U* GameScene::GetRegisteredObjectOfType()
+{
+	return nullptr;
+}

@@ -10,12 +10,12 @@ class Rigidbody;
 class SpriteRenderer;
 
 enum E_MinimapType {
-	DontDraw,
-	Special,
-	Player,
-	Planetoid,
-	Enemy,
-	SINISTAR
+	E_DontDraw,
+	E_Special,
+	E_Player,
+	E_Planetoid,
+	E_Enemy,
+	E_SINISTAR
 };
 
 class GameObject : public Object
@@ -43,7 +43,8 @@ public:
 	void RegisterComponent(Component* InRegisterComponent, Math::Vector2(StartLocation) = Math::Vector2(0, 0),bool Activate = true, std::string DisplayName = "");
 	void RegisterComponent(Component* InRegisterComponent, bool Activate = true, std::string DisplayName = "");
 
-	E_MinimapType m_MinimapDraw = DontDraw;
+	E_MinimapType m_MinimapDraw = E_DontDraw;
+	bool isAttached = false;
 
 
 	virtual void Init(Object* OwningObject) override;
