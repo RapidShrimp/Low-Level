@@ -36,8 +36,9 @@ public:
 
 	//Animation Handling
 	float LastAnimationFrameTime = 0.0f;
+	
 	//Frame animation time in Miliseconds
-	float FramesPerSecond = 1;
+	float FramesPerSecond = 24;
 	virtual void FixedUpdate(float deltaTime) override;
 
 	//Render the sprite to the screen
@@ -47,5 +48,4 @@ public:
 	void UpdateSpriteBounds();
 protected:
 	void NextAnimationFrame();
-	sf::Texture LoadTextureFromFile(std::string Filename);
 };

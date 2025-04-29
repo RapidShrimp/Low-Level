@@ -9,7 +9,7 @@ Boss::Boss()
 {
 	m_Health = new HealthComponent(100);
 	m_RigidBody = new Rigidbody(1);
-	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 298,174 }, { 299,127 }, 11, 4);
+	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 297,126 }, { 298,174 }, 9, 3);
 	m_SpriteRenderer->SetSpriteScale(2, 2);
 	m_Collider = new Collider(false, 32.0f);
 	m_Pieces = 9;
@@ -26,7 +26,7 @@ void Boss::BeginPlay()
 {
 	//m_SpriteRenderer->StartAnimation();
 	m_SpriteRenderer->SetSprite(0, 0);
-
+	m_SpriteRenderer->StartAnimation();
 }
 
 void Boss::Update()
@@ -46,8 +46,10 @@ void Boss::GiveCrystal(Crystal* InPeice)
 	if (m_Created) { return; }
 	m_Pieces++;
 	m_Health->SetHealth(m_Pieces * 100);
-	if (m_Pieces == 10) {
+	if (m_Pieces == 10 && m_Created == false) {
 		m_Created = true;
+		m_Collider->SetRadius(50.0f);
+
 		Debug::Log(this, Error, ".....SINISTAR IS ACTIVE.....");
 		AudioManger::PlaySound("Beware_i_Live.mp3");
 

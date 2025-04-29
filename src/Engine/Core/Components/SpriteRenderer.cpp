@@ -26,6 +26,7 @@ SpriteRenderer::SpriteRenderer(std::string SpriteSheetFilepath, Math::Vector2(Sh
 		m_Sprite = new sf::Sprite(m_Texture);
 	}
 }
+
 void SpriteRenderer::StartAnimation()
 {
 	bShouldAnimate = true;
@@ -34,13 +35,15 @@ void SpriteRenderer::StartAnimation()
 void SpriteRenderer::NextAnimationFrame()
 {
 	m_Column++;
-	if (m_Column+1 * m_CellSize.x > m_Texture.getSize().x) 
+
+	
+	if (m_Column * m_CellSize.x > m_Texture.getSize().x) 
 	{
-		m_Column = 1;
+		m_Column = 0;
 		m_Row++;
 	}
 	if (m_Row * m_CellSize.y > m_Texture.getSize().y) {
-		m_Row = 1;
+		m_Row = 0;
 	}
 
 }
@@ -74,7 +77,7 @@ void SpriteRenderer::FixedUpdate(float deltaTime)
 {
 	if(!bShouldAnimate) {return;}
 	LastAnimationFrameTime += deltaTime;
-	if (LastAnimationFrameTime > FramesPerSecond * 5000) {return;}
+	if (LastAnimationFrameTime > (FramesPerSecond * 5000000)) {return;}
 
 	LastAnimationFrameTime = 0;
   	NextAnimationFrame();
@@ -94,7 +97,7 @@ void SpriteRenderer::Render(sf::RenderWindow& Renderer)
 	}
 
 	UpdateSpriteBounds();
-	m_Sprite->setOrigin({ m_CellSize.x / 2,m_CellSize.y / 2 });
+	m_Sprite->setOrigin(sf::Vector2f{ m_CellSize.x / 2,m_CellSize.y / 2});
 	m_Sprite->setScale((GetOwner()->m_Transform.Scale + m_LocalTransform.Scale).ToSF());
 	
 	//Rotation
@@ -145,16 +148,6 @@ void SpriteRenderer::UpdateSpriteBounds()
 	sf::IntRect NewRect = sf::IntRect({XLocation,YLocation}, { (int)m_CellSize.x,(int)m_CellSize.y });
 	m_Sprite->setTextureRect(NewRect);
 	
-}
-
-sf::Texture SpriteRenderer::LoadTextureFromFile(std::string Filename)
-{
-	sf::Texture texture;
-	if (!texture.loadFromFile(Filename, false, sf::IntRect({10, 10}, {32, 32})))
-	{
-		//Error Here
-	}
-	return texture;
 }
 
 
