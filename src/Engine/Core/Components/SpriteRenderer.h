@@ -38,7 +38,7 @@ public:
 	float LastAnimationFrameTime = 0.0f;
 	
 	//Frame animation time in Miliseconds
-	float FramesPerSecond = 24;
+	float FramesPerSecond = 5;
 	virtual void FixedUpdate(float deltaTime) override;
 
 	//Render the sprite to the screen

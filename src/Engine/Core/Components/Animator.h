@@ -13,7 +13,8 @@ protected:
 
 public:
 
-	Animator() {};
+	Animator(SpriteRenderer& SpriteRenderer);
+
 
 	//void AddSprite();
 	//void 

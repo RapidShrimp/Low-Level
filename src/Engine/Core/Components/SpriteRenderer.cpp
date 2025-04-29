@@ -44,6 +44,7 @@ void SpriteRenderer::NextAnimationFrame()
 	}
 	if (m_Row * m_CellSize.y > m_Texture.getSize().y) {
 		m_Row = 0;
+		m_Column = 0;
 	}
 
 }
@@ -76,8 +77,8 @@ void SpriteRenderer::OnDeactivate()
 void SpriteRenderer::FixedUpdate(float deltaTime)
 {
 	if(!bShouldAnimate) {return;}
-	LastAnimationFrameTime += deltaTime;
-	if (LastAnimationFrameTime > (FramesPerSecond * 5000000)) {return;}
+	LastAnimationFrameTime += deltaTime; //Add 2 milliseconds 
+	if (LastAnimationFrameTime < (1000/FramesPerSecond)) {return;} 
 
 	LastAnimationFrameTime = 0;
   	NextAnimationFrame();

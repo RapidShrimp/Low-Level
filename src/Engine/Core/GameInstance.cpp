@@ -59,11 +59,11 @@ void GameInstance::Update()
 	std::chrono::steady_clock::time_point lastTime = std::chrono::steady_clock::now();
 	float deltaTime = 0;
 	float timeSinceLastPhysics = 0.0f;
-	float physicsTimeStep = 2000;
+	float physicsTimeStep = 2; // 2 milliseconds
 	while (m_GameWindow.isOpen())
 	{
 
-		deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - lastTime).count();
+		deltaTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - lastTime).count();
 		lastTime = std::chrono::steady_clock::now();
 		timeSinceLastPhysics += deltaTime;
 
@@ -80,8 +80,7 @@ void GameInstance::Update()
 
 		while (timeSinceLastPhysics >= physicsTimeStep)
 		{
-			//Convert from Micro to Miliseconds
-			FixedUpdate(physicsTimeStep * 0.001f);
+			FixedUpdate(physicsTimeStep);
 			timeSinceLastPhysics -= physicsTimeStep;
 		}
 

@@ -5,7 +5,7 @@
 
 AsteroidManager::AsteroidManager()
 {
-	m_PooledAsteroids = new ObjectPooler<Asteroid>(30, true);
+	m_PooledAsteroids = new ObjectPooler<Asteroid>(60, true);
 	m_PooledCrystals = new ObjectPooler<Crystal>(10, false);
 
 }
@@ -50,8 +50,8 @@ void AsteroidManager::InitialPlaceAsteroid(GameObject* Asteroid)
 	do
 	{
 		const Math::Vector2 PlayerTrans = GameInstance::GetGameInstance()->GetPlayer()->m_Transform.Location;
-		float xPos = Math::Random::Range(PlayerTrans.x - WINDOW_WIDTH, PlayerTrans.x + WINDOW_WIDTH);
-		float yPos = Math::Random::Range(PlayerTrans.y - WINDOW_HEIGHT, PlayerTrans.y + WINDOW_HEIGHT);
+		float xPos = Math::Random::Range(PlayerTrans.x - MINIMAP_SIZE, PlayerTrans.x + MINIMAP_SIZE);
+		float yPos = Math::Random::Range(PlayerTrans.y - MINIMAP_SIZE, PlayerTrans.y + MINIMAP_SIZE);
 		Asteroid->m_Transform.Location = { xPos,yPos };
 		Asteroid->GetCollider()->Update();
 	} while (Asteroid->GetCollider()->IsOverlapping());

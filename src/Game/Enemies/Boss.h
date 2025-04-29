@@ -22,6 +22,7 @@ public:
 	virtual void Update() override;
 	virtual void FixedUpdate(float DeltaTime) override;
 	//virtual void OnDestroy() override;
+	virtual void Render(sf::RenderWindow& Renderer) override;
 	bool IsCreated() { return m_Created; }
 	void GiveCrystal(Crystal* InPeice);
 

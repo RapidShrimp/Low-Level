@@ -16,6 +16,7 @@ CollectorEnemy::CollectorEnemy()
 	m_Collider = new Collider(false, 16.0f);
 
 	m_MinimapDraw = E_MinimapType::E_Enemy;
+
 }
 
 void CollectorEnemy::AI_Logic(float Deltatime)

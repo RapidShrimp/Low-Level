@@ -38,6 +38,12 @@ void Boss::FixedUpdate(float DeltaTime)
 	GameObject::FixedUpdate(DeltaTime);
 }
 
+void Boss::Render(sf::RenderWindow& Renderer)
+{
+	GameObject::Render(Renderer);
+
+}
+
 void Boss::GiveCrystal(Crystal* InPeice)
 {
 	Debug::Log(this, Display, "Boss Recieved Crystal: " + std::to_string((int)m_Health->GetHealthPercent()));
