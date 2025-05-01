@@ -12,7 +12,7 @@ Enemy::Enemy()
 	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", {116,16}, {2,82},8,1);
 	m_SpriteRenderer->SetSpriteScale(2, 2);
 	m_Collider = new Collider(false, 16.0f);
-
+	m_SteeringManager = new SteeringManager();
 	m_MinimapDraw = E_MinimapType::E_Enemy;
 }
 
@@ -23,6 +23,10 @@ void Enemy::Init(Object* OwningObject)
 	RegisterComponent(m_SpriteRenderer, true, "EnemySpriteRenderer");
 	RegisterComponent(m_Collider, true, "EnemyCollider");
 	RegisterComponent(m_RigidBody,true,"Rigid Body");
+	RegisterComponent(m_SteeringManager, true, "Steering Manager");
+
+	Seek* SeekBehaviour = new Seek(m_Target);
+	m_SteeringManager->AddBehaviour(SeekBehaviour);
 
 	m_Health->OnDeath += std::bind(&Enemy::Handle_EnemyDeath, this);
 }
