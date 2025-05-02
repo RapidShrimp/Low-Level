@@ -19,6 +19,7 @@ void SteeringManager::AddBehaviour(BehaviourBase* Behaviour)
 	}
 	Behaviour->Init(GetOwner());
 	m_SteeringBehaviours.push_back(Behaviour);
+	Debug::Log(this, DebugNone, "Added Steering Behaviour");
 }
 
 void SteeringManager::RemoveBehaviour(BehaviourBase* Behaviour)
@@ -60,17 +61,22 @@ Math::Vector2 SteeringManager::CalculateDirection()
 	if (m_SteeringBehaviours.size() == 0) { return Math::Vector2().Zero(); }
 
 	Math::Vector2 DesiredDirection = Math::Vector2::Zero();
-
+	float RemainingWeight = 10;
 	for (int Behaviour = 0; Behaviour < m_SteeringBehaviours.size(); Behaviour++) 
 	{
 		if (m_SteeringBehaviours[Behaviour] == nullptr) 
 		{
-			//Remove nullptr Behaviour
+			//Remove nullptr Behaviour from vector
 			continue;
 		}
 
-		DesiredDirection += m_SteeringBehaviours[Behaviour]->CalculateBehaviour();
-
+		if (m_SteeringBehaviours[Behaviour]->m_Weight < RemainingWeight) {
+			DesiredDirection += m_SteeringBehaviours[Behaviour]->CalculateBehaviour();
+		}
+		else {
+			DesiredDirection += (m_SteeringBehaviours[Behaviour]->GetNormalisedDirection()) * RemainingWeight;
+			break;
+		}
 	}
 
 	return DesiredDirection;

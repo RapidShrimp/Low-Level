@@ -104,8 +104,12 @@ void UI_HUD::Render(sf::RenderWindow& Renderer)
 			break;
 		case E_SINISTAR:
 			Dot.setRadius(120);
-			Dot.setOrigin({ 20,20 });
+			Dot.setOrigin({ 60,60 });
+			DrawColour = sf::Color::Red;
+			break;
 		case E_Enemy:
+			Dot.setRadius(20);
+			Dot.setOrigin({ 10,10 });
 			DrawColour = sf::Color::Red;
 			break;
 		}
@@ -125,6 +129,5 @@ void UI_HUD::Handle_OnUpdateScore(int NewScore)
 	std::ostringstream oss;
 	oss << std::setfill('0') << std::setw(7) << NewScore;
 	std::string formatted = oss.str();
-
 	m_ScoreRenderer->UpdateText(formatted);
 }

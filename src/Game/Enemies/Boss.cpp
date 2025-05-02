@@ -10,6 +10,7 @@ Boss::Boss()
 	m_Health = new HealthComponent(100);
 	m_RigidBody = new Rigidbody(1);
 	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 297,126 }, { 298,174 }, 9, 3);
+	m_SteeringManager = new SteeringManager();
 	m_SpriteRenderer->SetSpriteScale(2, 2);
 	m_Collider = new Collider(false, 32.0f);
 	m_Pieces = 9;

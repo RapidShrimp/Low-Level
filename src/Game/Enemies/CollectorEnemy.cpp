@@ -29,17 +29,22 @@ void CollectorEnemy::AI_Logic(float Deltatime)
 		return; 
 	}
 
+	/*Moved to steering behaviours*/
 	//Direction Towards Target
- 	Math::Vector2 Dir = m_Target->m_Transform.Location - m_Transform.Location;
+	//Math::Vector2 Dir = m_Target->m_Transform.Location - m_Transform.Location;
 
-	if (Dir.Length() > m_KeepDistance) {
-		m_RigidBody->AddVelocity(Dir.Normalised() * m_MoveSpeed);
-	}
-	else 
-	{
-		m_RigidBody->AddVelocity(Dir.Normalised() * m_MoveSpeed);
+	//if (Dir.Length() > m_KeepDistance) {
+	//	m_RigidBody->AddVelocity(Dir.Normalised() * m_MoveSpeed);
+	//}
+	//else 
+	//{
+	//	m_RigidBody->AddVelocity(Dir.Normalised() * m_MoveSpeed);
 
-	}
+	//}
+
+
+
+	m_RigidBody->AddVelocity(m_SteeringManager->GetDirection().Normalised());
 
 	//Orient towards Movement Direction
 	m_Transform.SetRotation(m_RigidBody->m_Velocity.Normalised().GetRadians());

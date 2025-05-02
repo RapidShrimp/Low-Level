@@ -6,9 +6,6 @@
 
 class SteeringManager : public Component {
 
-
-
-
 public:
 	
 	//SteeringManager();
@@ -25,12 +22,12 @@ public:
 	void FixedUpdate(float deltaTime) override;
 	//virtual void OnDestroy() override;*/
 
+	Math::Vector2 GetDirection() { return m_Direction; };
 
 protected:
 	std::vector<BehaviourBase*> m_SteeringBehaviours;
 	Math::Vector2 m_Direction;
 	Math::Vector2 CalculateDirection();
-
 private:
 
 };

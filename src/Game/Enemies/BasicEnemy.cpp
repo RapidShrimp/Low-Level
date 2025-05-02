@@ -23,10 +23,11 @@ void Enemy::Init(Object* OwningObject)
 	RegisterComponent(m_SpriteRenderer, true, "EnemySpriteRenderer");
 	RegisterComponent(m_Collider, true, "EnemyCollider");
 	RegisterComponent(m_RigidBody,true,"Rigid Body");
-	RegisterComponent(m_SteeringManager, true, "Steering Manager");
+	//RegisterComponent(m_SteeringManager, true, "Steering Manager");
 
-	Seek* SeekBehaviour = new Seek(m_Target);
-	m_SteeringManager->AddBehaviour(SeekBehaviour);
+	//Seek* SeekBehaviour = new Seek(m_Target);
+	//SeekBehaviour->Init(this);
+	//m_SteeringManager->AddBehaviour(SeekBehaviour);
 
 	m_Health->OnDeath += std::bind(&Enemy::Handle_EnemyDeath, this);
 }

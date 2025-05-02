@@ -12,12 +12,12 @@ public:
 		m_OwningAgent = dynamic_cast<GameObject*>(Owner);
 	}
 	virtual Math::Vector2 CalculateBehaviour() { return Math::Vector2::Zero();/*Override In Child*/ };
-	void GetNormalisedDirection() { CalculateBehaviour().Normalised(); }
+	Math::Vector2 GetNormalisedDirection() { return CalculateBehaviour().Normalised(); }
+	float m_Weight = 1; //This is what the normalised direction is multiplied by
 
 protected:
-	float m_Strength = 1;
-	GameObject* m_OwningAgent = nullptr;
-	Math::Vector2 m_ForceDirection;
+	GameObject* m_OwningAgent = nullptr; //The Owner to the Steering Manager
+	Math::Vector2 m_ForceDirection; //Resulting calculation Direction - This value should only be used for debug purposes
 };
 
 
@@ -40,7 +40,7 @@ public:
 		}
 
 		m_ForceDirection =  m_SeekTarget->m_Transform.Location - m_OwningAgent->m_Transform.Location;
-		return m_ForceDirection;
+		return m_ForceDirection.Normalised() * m_Weight;
 	}
 
 protected:
@@ -65,12 +65,16 @@ public:
 		}
 
 		m_ForceDirection = m_OwningAgent->m_Transform.Location - m_FleeTarget->m_Transform.Location;
-		return m_ForceDirection;
+		return m_ForceDirection.Normalised() * m_Weight;
 	}
 
 protected:
 	GameObject* m_FleeTarget = nullptr;
 };
+
+
+
+
 
 class Seperation : public BehaviourBase {
 
