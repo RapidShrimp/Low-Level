@@ -31,7 +31,7 @@ public:
 	virtual void Update() override;
 	virtual void FixedUpdate(float DeltaTime) override;
 	//virtual void OnDestroy() override;
-	void SetNewTarget(GameObject* NewTarget);
+	virtual void SetNewTarget(GameObject* NewTarget);
 
 
 protected:

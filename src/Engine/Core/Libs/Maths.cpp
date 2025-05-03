@@ -119,6 +119,7 @@ void Math::Vector2::Normalise(Math::Vector2& InVector)
 
 Math::Vector2 Math::Vector2::Normalised()
 {
+	if (x == 0 && y == 0) { return Math::Vector2(0, 0); }
 	return Math::Vector2(x, y) / std::sqrt(x * x + y * y);
 }
 

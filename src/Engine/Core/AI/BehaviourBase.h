@@ -32,6 +32,8 @@ public:
 		m_SeekTarget = Target;
 	};
 	
+
+	void SetTarget(GameObject* Target) { m_SeekTarget = Target; }
 	virtual Math::Vector2 CalculateBehaviour() override 
 	{
 		if (m_OwningAgent ==nullptr || m_SeekTarget == nullptr) {
@@ -56,6 +58,7 @@ public:
 	{
 		m_FleeTarget = Target;
 	};
+	void SetTarget(GameObject* Target) { m_FleeTarget = Target; }
 
 	virtual Math::Vector2 CalculateBehaviour() override
 	{

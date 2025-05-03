@@ -24,6 +24,10 @@ public:
 
 	Math::Vector2 GetDirection() { return m_Direction; };
 
+
+
+	template<typename U> 
+	U* GetBehaviour();
 protected:
 	std::vector<BehaviourBase*> m_SteeringBehaviours;
 	Math::Vector2 m_Direction;
@@ -31,3 +35,14 @@ protected:
 private:
 
 };
+
+template<typename U>
+inline U* SteeringManager::GetBehaviour()
+{
+	for (int Behaviour = 0; Behaviour < m_SteeringBehaviours.size(); Behaviour++)
+	{
+		U* FoundObject = dynamic_cast<U*>(m_SteeringBehaviours[Behaviour]);
+		if (FoundObject != nullptr) { return FoundObject; }
+	}
+	return nullptr;
+}

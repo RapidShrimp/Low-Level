@@ -20,7 +20,8 @@ public:
 	virtual void Handle_EnemyDeath() override; 
 	void CollectCrystal(Crystal* InCrystal);
 	void TargetCrystal(Crystal* InCrystal);
-	
+	virtual void SetNewTarget(GameObject* NewTarget) override;
+
 protected:
 	void Handle_CrystalLost(GameObject* Collided);
 };

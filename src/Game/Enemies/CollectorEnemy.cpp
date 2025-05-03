@@ -13,6 +13,7 @@ CollectorEnemy::CollectorEnemy()
 	m_RigidBody = new Rigidbody(1, true);
 	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 116,16 }, { 2,82 }, 8, 1);
 	m_SpriteRenderer->SetSpriteScale(2, 2);
+	m_SteeringManager = new SteeringManager();
 	m_Collider = new Collider(false, 16.0f);
 
 	m_MinimapDraw = E_MinimapType::E_Enemy;
@@ -43,8 +44,7 @@ void CollectorEnemy::AI_Logic(float Deltatime)
 	//}
 
 
-
-	m_RigidBody->AddVelocity(m_SteeringManager->GetDirection().Normalised());
+	m_RigidBody->AddVelocity(m_SteeringManager->GetDirection().Normalised() * m_MoveSpeed);
 
 	//Orient towards Movement Direction
 	m_Transform.SetRotation(m_RigidBody->m_Velocity.Normalised().GetRadians());
@@ -94,6 +94,13 @@ void CollectorEnemy::TargetCrystal(Crystal* InCrystal)
 
 	m_Target = InCrystal;
  	InCrystal->OnCrystalCollided += std::bind(&CollectorEnemy::Handle_CrystalLost, this, std::placeholders::_1);
+}
+
+void CollectorEnemy::SetNewTarget(GameObject* NewTarget)
+{
+	if (NewTarget == nullptr) { return; }
+	m_Target = NewTarget;
+	m_SteeringManager->GetBehaviour<Seek>()->SetTarget(m_Target);
 }
 
 void CollectorEnemy::Handle_CrystalLost(GameObject* Collided)
