@@ -21,6 +21,9 @@ void AI_Manager::Init(Object* OwningObject)
 		if (Steering == nullptr) { continue; }
 
 		//Assign Separation Targets
+
+		
+
 		Separation* SeparationBehaviour = Steering->GetBehaviour<Separation>();
 		std::vector<CollectorEnemy*> Enemies = m_Collectors->GetAllObjects();
 		SeparationBehaviour->SetTargets(m_Collectors->GetObjectsAs<GameObject>());
@@ -58,6 +61,7 @@ void AI_Manager::BeginPlay()
 	}
 
 	for (CollectorEnemy* Collector : m_Collectors->GetAllObjects()) {
+		Collector->GetSteering()->GetBehaviour<Flee>()->SetTarget(GameInstance::GetGameInstance()->GetWorld()->GetPlayerCharacter());
 		TargetPlayer(Collector);
 	}
 }

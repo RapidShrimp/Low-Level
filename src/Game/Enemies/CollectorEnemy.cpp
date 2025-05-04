@@ -112,7 +112,6 @@ void CollectorEnemy::SetNewTarget(GameObject* NewTarget)
 {
 	if (NewTarget == nullptr) { return; }
 	m_Target = NewTarget;
-	m_SteeringManager->GetBehaviour<Flee>()->SetTarget(m_Target);
 	m_SteeringManager->GetBehaviour<Seek>()->SetTarget(m_Target);
 
 }
