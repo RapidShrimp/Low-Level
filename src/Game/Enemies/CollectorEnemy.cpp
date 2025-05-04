@@ -18,6 +18,16 @@ CollectorEnemy::CollectorEnemy()
 
 	m_MinimapDraw = E_MinimapType::E_Enemy;
 
+
+
+}
+
+void CollectorEnemy::Init(Object* OwningObject)
+{
+	Enemy::Init(OwningObject);
+	m_SteeringManager->AddBehaviour(new Flee(175), 0.2f);
+	m_SteeringManager->AddBehaviour(new Seek(), 4);
+	m_SteeringManager->AddBehaviour(new Separation(50), 0.5f);
 }
 
 void CollectorEnemy::AI_Logic(float Deltatime)
@@ -32,19 +42,21 @@ void CollectorEnemy::AI_Logic(float Deltatime)
 
 	/*Moved to steering behaviours*/
 	//Direction Towards Target
-	//Math::Vector2 Dir = m_Target->m_Transform.Location - m_Transform.Location;
+	Math::Vector2 Dir = m_Target->m_Transform.Location - m_Transform.Location;
 
-	//if (Dir.Length() > m_KeepDistance) {
-	//	m_RigidBody->AddVelocity(Dir.Normalised() * m_MoveSpeed);
-	//}
-	//else 
-	//{
-	//	m_RigidBody->AddVelocity(Dir.Normalised() * m_MoveSpeed);
+	if (Dir.Length() > m_KeepDistance && m_Target==GameInstance::GetGameInstance()->GetPlayer()) {
 
-	//}
+		m_SteeringManager->SetBehaviourActive<Seek>(false);
+		m_RigidBody->AddVelocity(m_RigidBody->m_Velocity.Normalised() * m_MoveSpeed);
+	}
+	else 
+	{
+		m_SteeringManager->SetBehaviourActive<Seek>(true);
 
+	}
 
-	m_RigidBody->AddVelocity(m_SteeringManager->GetDirection().Normalised() * m_MoveSpeed);
+	Math::Vector2 SteerDirection = m_SteeringManager->GetDirection();
+	m_RigidBody->AddVelocity(SteerDirection.Normalised() * m_MoveSpeed);
 
 	//Orient towards Movement Direction
 	m_Transform.SetRotation(m_RigidBody->m_Velocity.Normalised().GetRadians());
@@ -100,7 +112,9 @@ void CollectorEnemy::SetNewTarget(GameObject* NewTarget)
 {
 	if (NewTarget == nullptr) { return; }
 	m_Target = NewTarget;
+	m_SteeringManager->GetBehaviour<Flee>()->SetTarget(m_Target);
 	m_SteeringManager->GetBehaviour<Seek>()->SetTarget(m_Target);
+
 }
 
 void CollectorEnemy::Handle_CrystalLost(GameObject* Collided)

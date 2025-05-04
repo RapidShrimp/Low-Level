@@ -4,7 +4,7 @@
 #include "Engine/Core/Object.h"
 #include "Engine/Core/GameInstance.h"
 
-void SteeringManager::AddBehaviour(BehaviourBase* Behaviour)
+void SteeringManager::AddBehaviour(BehaviourBase* Behaviour,float Weight,bool IsActive)
 {
 
 	if (Behaviour == nullptr) {
@@ -18,6 +18,9 @@ void SteeringManager::AddBehaviour(BehaviourBase* Behaviour)
 		return; 
 	}
 	Behaviour->Init(GetOwner());
+	Behaviour->m_Weight = Weight;
+	if (IsActive) { Behaviour->Activate();}
+
 	m_SteeringBehaviours.push_back(Behaviour);
 	Debug::Log(this, DebugNone, "Added Steering Behaviour");
 }
@@ -66,9 +69,10 @@ Math::Vector2 SteeringManager::CalculateDirection()
 	{
 		if (m_SteeringBehaviours[Behaviour] == nullptr) 
 		{
-			//Remove nullptr Behaviour from vector
+			//Remove nullptr Behaviour from vector here
 			continue;
 		}
+		if (m_SteeringBehaviours[Behaviour]->GetIsActive() == false) { continue; }
 
 		if (m_SteeringBehaviours[Behaviour]->m_Weight < RemainingWeight) {
 			DesiredDirection += m_SteeringBehaviours[Behaviour]->CalculateBehaviour();

@@ -13,11 +13,13 @@ Object::~Object()
 void Object::Init(Object* OwningObject) { m_Owner = OwningObject; }
 void Object::Activate()
 {
+	if (isActive) { return; }
 	isActive = true;
 	OnActivate();
 }
 void Object::Deactivate()
 {
+	if (!isActive) { return; }
 	isActive = false;
 	OnDeactivate();
 }
