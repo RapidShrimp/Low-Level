@@ -22,7 +22,7 @@ FiringEnemy::FiringEnemy()
 void FiringEnemy::Init(Object* OwningObject) 
 {
 	Enemy::Init(OwningObject);
-	m_SteeringManager->AddBehaviour(new Separation(300),10);
+	m_SteeringManager->AddBehaviour(new Separation(300),5);
 }
 
 void FiringEnemy::BeginPlay()
@@ -46,10 +46,10 @@ void FiringEnemy::AI_Logic(float DeltaTime)
 	}
 
 	Math::Vector2 Dir = m_Target->m_Transform.Location - m_Transform.Location;
-	m_Transform.Location += m_SteeringManager->GetDirection();
 	if (Dir.Length() > m_KeepDistance) {
 		m_Transform.Location += Dir.Normalised() * m_MoveSpeed;
 	}
+	m_Transform.Location += m_SteeringManager->GetDirection();
 
 
 	//TODO - Get Velocity and fire
