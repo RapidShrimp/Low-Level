@@ -22,7 +22,7 @@ FiringEnemy::FiringEnemy()
 void FiringEnemy::Init(Object* OwningObject) 
 {
 	Enemy::Init(OwningObject);
-	m_SteeringManager->AddBehaviour(new Separation(100),5);
+	m_SteeringManager->AddBehaviour(new Separation(300),10);
 }
 
 void FiringEnemy::BeginPlay()

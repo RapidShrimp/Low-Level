@@ -5,6 +5,7 @@
 #include "Engine/Core/Events/Event.h"
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "UI/UI_Base.h"
+#include "Engine/Core/Timer.h"
 
 class Object;
 class Transform;
@@ -26,7 +27,9 @@ public:
 	virtual void OnSceneLoaded();
 	virtual void UnloadScene();
 	virtual PlayerCharacter* GetPlayerCharacter() { return nullptr; } //Override this in Child Scene
+
 protected:
+
 	std::string m_SceneName = "Unassigned";
 	std::vector<GameObject*> SceneObjects;
 	std::vector<UI_Base*> UI_Elements;

@@ -126,9 +126,13 @@ void GameScene::OnSceneLoaded()
 void GameScene::UnloadScene()
 {
 	cout << "Unloading Scene: " + m_SceneName << endl;
+	
 	for (int i = 0; i < SceneObjects.size(); i++) 
 	{
 		SceneObjects[i]->OnDestroy();
 		delete SceneObjects[i];
 	}
+
+
 }
+
