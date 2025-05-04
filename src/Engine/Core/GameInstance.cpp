@@ -62,7 +62,6 @@ void GameInstance::Update()
 	float physicsTimeStep = 2; // 2 milliseconds
 	while (m_GameWindow.isOpen())
 	{
-
 		deltaTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - lastTime).count();
 		lastTime = std::chrono::steady_clock::now();
 		timeSinceLastPhysics += deltaTime;
@@ -80,10 +79,13 @@ void GameInstance::Update()
 
 		while (timeSinceLastPhysics >= physicsTimeStep)
 		{
+			OnFixedUpdate.Invoke(physicsTimeStep);
 			FixedUpdate(physicsTimeStep);
 			timeSinceLastPhysics -= physicsTimeStep;
+
 		}
 
+		OnUpdate.Invoke();
 		m_CurrentScene->Update();
 		Render();
 		InputEventHandler::GetInstance()->PollInputEvents();

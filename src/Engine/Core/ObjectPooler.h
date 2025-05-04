@@ -13,6 +13,10 @@ public:
 	ObjectPooler<T>(int PoolCount, bool StartEnabled);
 	T* GetFreeObject();
 	vector<T*> GetAllObjects() { return m_PooledObjects; }
+	
+	template<typename U>
+	vector<U*> GetObjectsAs();
+
 protected:
 	void AddObjectToPooler(T* InObject);
 	void RemovePooledObject(T* InObject);
@@ -74,4 +78,19 @@ inline ObjectPooler<T>::ObjectPooler(int PoolCount, bool StartEnabled)
 	GameInstance::GetGameInstance()->GetWorld()->SpawnObject(this, { 0,0 }, true, "Object Pooler");
 
 
+}
+
+template<typename T>
+template<typename U>
+inline vector<U*> ObjectPooler<T>::GetObjectsAs()
+{
+	std::vector<U*> TypePool;
+	for (T* Object : m_PooledObjects) 
+	{
+		U* CastedObject = dynamic_cast<U*>(Object);
+		if (CastedObject == nullptr) { continue; }
+		TypePool.push_back(CastedObject);
+	}
+
+	return TypePool;
 }

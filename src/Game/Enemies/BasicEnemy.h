@@ -16,7 +16,7 @@ protected:
 	float m_MoveSpeed = 0.003f;
 
 	GameObject* m_Target = nullptr;
-	float m_KeepDistance = 0.0f;
+	float m_KeepDistance = 10.0f;
 
 public:
 
@@ -31,13 +31,13 @@ public:
 	virtual void Update() override;
 	virtual void FixedUpdate(float DeltaTime) override;
 	//virtual void OnDestroy() override;
-	void SetNewTarget(GameObject* NewTarget);
+	virtual void SetNewTarget(GameObject* NewTarget);
+	SteeringManager* GetSteering() { return m_SteeringManager; }
 
 
 protected:
 	virtual void Handle_EnemyDeath();
 	virtual void AI_Logic(float DeltaTime);
-
 private:
 
 };

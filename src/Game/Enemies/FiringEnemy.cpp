@@ -12,10 +12,17 @@ FiringEnemy::FiringEnemy()
 	m_RigidBody = new Rigidbody(1, true);
 	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png",{ 15,15 }, { 37,101 });
 	m_SpriteRenderer->SetSpriteScale(2, 2);
+	m_SteeringManager = new SteeringManager();
 	m_Collider = new Collider(false, 16.0f);
 	m_MinimapDraw = E_MinimapType::E_Enemy;
 	m_MoveSpeed = 0.5f;
 	m_KeepDistance = 200;
+}
+
+void FiringEnemy::Init(Object* OwningObject) 
+{
+	Enemy::Init(OwningObject);
+	m_SteeringManager->AddBehaviour(new Separation(300),5);
 }
 
 void FiringEnemy::BeginPlay()
@@ -42,6 +49,7 @@ void FiringEnemy::AI_Logic(float DeltaTime)
 	if (Dir.Length() > m_KeepDistance) {
 		m_Transform.Location += Dir.Normalised() * m_MoveSpeed;
 	}
+	m_Transform.Location += m_SteeringManager->GetDirection();
 
 
 	//TODO - Get Velocity and fire

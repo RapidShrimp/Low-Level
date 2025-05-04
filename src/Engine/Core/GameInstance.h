@@ -1,7 +1,9 @@
 #pragma once
 #include "Object.h"
 #include "SFML/Graphics.hpp"
+#include "Events/Event.h"
 #include "GameScene.h"
+
 
 #define WINDOW_HEIGHT 960
 #define WINDOW_WIDTH 720
@@ -19,6 +21,13 @@ private:
 	~GameInstance();
 
 public:
+
+	//Called Just before primary Update loop, should only be used for timers or other subsystems
+	SinStr::Event<> OnUpdate;
+	//Called Just before primary Update loop, should only be used for timers or other subsystems
+	//float - PhysicsTimeStep
+	SinStr::Event<float> OnFixedUpdate; 
+
 	static inline GameInstance* GetGameInstance() /*Create / Get;*/
 	{
 		if (m_GameInstance == nullptr) { m_GameInstance = new GameInstance(); }

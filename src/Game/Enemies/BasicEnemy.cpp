@@ -25,14 +25,14 @@ void Enemy::Init(Object* OwningObject)
 	RegisterComponent(m_RigidBody,true,"Rigid Body");
 	RegisterComponent(m_SteeringManager, true, "Steering Manager");
 
-	Seek* SeekBehaviour = new Seek(m_Target);
-	m_SteeringManager->AddBehaviour(SeekBehaviour);
+
 
 	m_Health->OnDeath += std::bind(&Enemy::Handle_EnemyDeath, this);
 }
 
 void Enemy::BeginPlay()
 {
+	//Steering behaviours initialised on begin play, needs references;
 
 }
 
@@ -43,7 +43,7 @@ void Enemy::Update()
 
 void Enemy::FixedUpdate(float DeltaTime)
 {
-	GameObject::FixedUpdate(DeltaTime);
+   	GameObject::FixedUpdate(DeltaTime);
 	AI_Logic(DeltaTime);
 }
 

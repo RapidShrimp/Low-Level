@@ -13,10 +13,21 @@ CollectorEnemy::CollectorEnemy()
 	m_RigidBody = new Rigidbody(1, true);
 	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 116,16 }, { 2,82 }, 8, 1);
 	m_SpriteRenderer->SetSpriteScale(2, 2);
+	m_SteeringManager = new SteeringManager();
 	m_Collider = new Collider(false, 16.0f);
 
 	m_MinimapDraw = E_MinimapType::E_Enemy;
 
+
+
+}
+
+void CollectorEnemy::Init(Object* OwningObject)
+{
+	Enemy::Init(OwningObject);
+	m_SteeringManager->AddBehaviour(new Flee(175), 0.2f);
+	m_SteeringManager->AddBehaviour(new Seek(), 4);
+	m_SteeringManager->AddBehaviour(new Separation(50), 0.5f);
 }
 
 void CollectorEnemy::AI_Logic(float Deltatime)
@@ -29,17 +40,23 @@ void CollectorEnemy::AI_Logic(float Deltatime)
 		return; 
 	}
 
+	/*Moved to steering behaviours*/
 	//Direction Towards Target
- 	Math::Vector2 Dir = m_Target->m_Transform.Location - m_Transform.Location;
+	Math::Vector2 Dir = m_Target->m_Transform.Location - m_Transform.Location;
 
-	if (Dir.Length() > m_KeepDistance) {
-		m_RigidBody->AddVelocity(Dir.Normalised() * m_MoveSpeed);
+	if (Dir.Length() > m_KeepDistance && m_Target==GameInstance::GetGameInstance()->GetPlayer()) {
+
+		m_SteeringManager->SetBehaviourActive<Seek>(false);
+		m_RigidBody->AddVelocity(m_RigidBody->m_Velocity.Normalised() * m_MoveSpeed);
 	}
 	else 
 	{
-		m_RigidBody->AddVelocity(Dir.Normalised() * m_MoveSpeed);
+		m_SteeringManager->SetBehaviourActive<Seek>(true);
 
 	}
+
+	Math::Vector2 SteerDirection = m_SteeringManager->GetDirection();
+	m_RigidBody->AddVelocity(SteerDirection.Normalised() * m_MoveSpeed);
 
 	//Orient towards Movement Direction
 	m_Transform.SetRotation(m_RigidBody->m_Velocity.Normalised().GetRadians());
@@ -89,6 +106,14 @@ void CollectorEnemy::TargetCrystal(Crystal* InCrystal)
 
 	m_Target = InCrystal;
  	InCrystal->OnCrystalCollided += std::bind(&CollectorEnemy::Handle_CrystalLost, this, std::placeholders::_1);
+}
+
+void CollectorEnemy::SetNewTarget(GameObject* NewTarget)
+{
+	if (NewTarget == nullptr) { return; }
+	m_Target = NewTarget;
+	m_SteeringManager->GetBehaviour<Seek>()->SetTarget(m_Target);
+
 }
 
 void CollectorEnemy::Handle_CrystalLost(GameObject* Collided)

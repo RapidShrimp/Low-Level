@@ -76,7 +76,14 @@ namespace Math {
 		static Vector2 Down() { return Vector2(0, -1); }
 		std::string ToString();
 		sf::Vector2f ToSF() { return sf::Vector2f(x, y); }
+		static Vector2 Lerp(Vector2& lhs, Vector2& rhs, float Value, float LerpMin = 0, float LerpMax = 1) 
+		{
+			if (lhs == rhs) { return lhs; }
 
+			float x = std::lerp(lhs.x, rhs.x, Value);
+			float y = std::lerp(lhs.y, rhs.y, Value);
+			return Vector2(x, y);
+		}
 	};
 
 }

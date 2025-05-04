@@ -28,6 +28,35 @@ PlayerCharacter::~PlayerCharacter()
 {
 }
 
+
+void PlayerCharacter::Init(Object* OwningObject)
+{
+	Object::Init(OwningObject);
+	RegisterComponent(m_Health, true, "Health Component");
+	RegisterComponent(m_SpriteRenderer, true, "SpriteRenderer");
+	RegisterComponent(m_Collider, Math::Vector2(-10, -10), true, "Circle Collider");
+	RegisterComponent(m_RigidBody, true, "Rigid Body");
+
+	m_SpriteRenderer->GetLocalTransform().SetRotation(1.5708);
+	m_Collider->OnCollisionEvent += std::bind(&PlayerCharacter::OnCollisionEventCallback, this, std::placeholders::_1, std::placeholders::_2);
+
+	AxisActionMapping MoveKeys = AxisActionMapping(sf::Keyboard::Key::W, sf::Keyboard::Key::Unknown, sf::Keyboard::Key::Unknown, sf::Keyboard::Key::Unknown);
+	AxisInput* MoveInput = InputEventHandler::GetInstance()->CreateAxisInput(MoveKeys);
+	BindableInput* MoveKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::W);
+	BindableInput* FireKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::Space);
+	BindableInput* Sinibomb = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::LShift);
+	BindableInput* SinibombRear = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::LControl);
+
+
+	MouseInput* MouseInputs = InputEventHandler::GetInstance()->CreateMouseInput();
+	if (FireKey) { FireKey->OnInputUpdate += std::bind(&PlayerCharacter::FireWeapon, this, std::placeholders::_1); }
+	if (Sinibomb) { Sinibomb->OnInputUpdate += std::bind(&PlayerCharacter::FireSinibombForward, this, std::placeholders::_1); }
+	if (SinibombRear) { SinibombRear->OnInputUpdate += std::bind(&PlayerCharacter::FireSinibombRear, this, std::placeholders::_1); }
+	if (MoveInput) { MoveInput->OnAxisInputUpdate += std::bind(&PlayerCharacter::MovePlayer, this, std::placeholders::_1, std::placeholders::_2); }
+
+	GameInstance::GetGameInstance()->GetWorld()->SpawnUIElement(new UI_HUD(*this), { 0,0 }, true);
+}
+
 void PlayerCharacter::MovePlayer(CallbackContext Context, Math::Vector2 MoveVector)
 {
 	if (Context.Triggering) 
@@ -137,34 +166,6 @@ void PlayerCharacter::OnCollisionEventCallback(Collider* OtherCollider, E_Collis
 {
 	//Debug::Log(this, Display, "Collision Event Callback");
 
-}
-
-void PlayerCharacter::Init(Object* OwningObject)
-{
-	Object::Init(OwningObject);
-	RegisterComponent(m_Health,true,"Health Component");
-	RegisterComponent(m_SpriteRenderer, true, "SpriteRenderer");
-	RegisterComponent(m_Collider, Math::Vector2(-10, -10), true, "Circle Collider");
-	RegisterComponent(m_RigidBody, true, "Rigid Body");
-
-	m_SpriteRenderer->GetLocalTransform().SetRotation(1.5708);
-	m_Collider->OnCollisionEvent += std::bind(&PlayerCharacter::OnCollisionEventCallback, this, std::placeholders::_1, std::placeholders::_2);
-
-	AxisActionMapping MoveKeys = AxisActionMapping(sf::Keyboard::Key::W, sf::Keyboard::Key::Unknown, sf::Keyboard::Key::Unknown, sf::Keyboard::Key::Unknown);
-	AxisInput* MoveInput = InputEventHandler::GetInstance()->CreateAxisInput(MoveKeys);
-	BindableInput* MoveKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::W);
-	BindableInput* FireKey = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::Space);
-	BindableInput* Sinibomb = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::LShift);
-	BindableInput* SinibombRear = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::LControl);
-
-
-	MouseInput* MouseInputs = InputEventHandler::GetInstance()->CreateMouseInput();
-	if (FireKey) { FireKey->OnInputUpdate += std::bind(&PlayerCharacter::FireWeapon, this, std::placeholders::_1);}
-	if (Sinibomb) { Sinibomb->OnInputUpdate += std::bind(&PlayerCharacter::FireSinibombForward, this, std::placeholders::_1); }
-	if (SinibombRear) { SinibombRear->OnInputUpdate += std::bind(&PlayerCharacter::FireSinibombRear, this, std::placeholders::_1); }
-	if (MoveInput) { MoveInput->OnAxisInputUpdate += std::bind(&PlayerCharacter::MovePlayer, this, std::placeholders::_1, std::placeholders::_2); }
-
-	GameInstance::GetGameInstance()->GetWorld()->SpawnUIElement(new UI_HUD(*this) , { 0,0 }, true);
 }
 
 void PlayerCharacter::BeginPlay()

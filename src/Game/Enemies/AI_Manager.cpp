@@ -1,6 +1,7 @@
 #pragma once
 #include "Game/Player/PlayerCharacter.h"
 #include "Game/Misc/AsteroidManager.h"
+#include "Game/Enemies/CollectorEnemy.h"
 #include "AI_Manager.h"
 
 AI_Manager::AI_Manager()
@@ -13,26 +14,43 @@ AI_Manager::AI_Manager()
 
 void AI_Manager::Init(Object* OwningObject)
 {
-	//Setting AI Locations
-	for (GameObject* Enemy : m_Collectors->GetAllObjects()) {
+	//Collectors
+	for (CollectorEnemy* Enemy : m_Collectors->GetAllObjects()) {
 		Enemy->m_Transform.Location = { Math::Random::Range(-600.0f,600.0f),Math::Random::Range(-600.0f,600.0f) };
-	}
-	for (GameObject* Enemys : m_Shooters->GetAllObjects()) {
-		Enemys->m_Transform.Location = { Math::Random::Range(-600.0f,600.0f),Math::Random::Range(-600.0f,600.0f) };
-	}
+		SteeringManager* Steering = Enemy->GetSteering();
+		if (Steering == nullptr) { continue; }
 
+		//Assign Separation Targets
 
-	//Collector Drone Bindings
-	AsteroidManager* Manager = GameInstance::GetGameInstance()->GetWorld()->FindRegisteredObjectOfType<AsteroidManager>();
-	for (Crystal* Cryst : Manager->GetPooledCrystals()->GetAllObjects()) {
-		Cryst->OnCrystalAvaliable += std::bind(&AI_Manager::Handle_CrystalAppeared, this, std::placeholders::_1);
+		
+
+		Separation* SeparationBehaviour = Steering->GetBehaviour<Separation>();
+		std::vector<CollectorEnemy*> Enemies = m_Collectors->GetAllObjects();
+		SeparationBehaviour->SetTargets(m_Collectors->GetObjectsAs<GameObject>());
 	}
 
 	//Shooter Drone Death Bindings
 	for (FiringEnemy* Shooter : m_Shooters->GetAllObjects()) 
 	{
+		Shooter->m_Transform.Location = { Math::Random::Range(-600.0f,600.0f),Math::Random::Range(-600.0f,600.0f) };
 		Shooter->OnEnemyDeath += std::bind(&AI_Manager::Handle_ShooterDeath, this);
+
+		//Assign Separation Targets
+
+		SteeringManager* Steering = Shooter->GetSteering();
+		if (Steering == nullptr) { continue; }
+
+		Separation* SeparationBehaviour = Steering->GetBehaviour<Separation>();
+		std::vector<FiringEnemy*> Enemies = m_Shooters->GetAllObjects();
+		SeparationBehaviour->SetTargets(m_Shooters->GetObjectsAs<GameObject>());
 	}
+
+	//Crystal Bindings
+	AsteroidManager* Manager = GameInstance::GetGameInstance()->GetWorld()->FindRegisteredObjectOfType<AsteroidManager>();
+	for (Crystal* Cryst : Manager->GetPooledCrystals()->GetAllObjects()) {
+		Cryst->OnCrystalAvaliable += std::bind(&AI_Manager::Handle_CrystalAppeared, this, std::placeholders::_1);
+	}
+
 
 }
 
@@ -43,6 +61,7 @@ void AI_Manager::BeginPlay()
 	}
 
 	for (CollectorEnemy* Collector : m_Collectors->GetAllObjects()) {
+		Collector->GetSteering()->GetBehaviour<Flee>()->SetTarget(GameInstance::GetGameInstance()->GetWorld()->GetPlayerCharacter());
 		TargetPlayer(Collector);
 	}
 }
