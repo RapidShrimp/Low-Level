@@ -5,7 +5,6 @@
 #include "Engine/Core/Events/Event.h"
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "UI/UI_Base.h"
-#include "Engine/Core/Timer.h"
 
 class Object;
 class Transform;

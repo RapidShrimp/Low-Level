@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/Core/Libs/GameFunctionLib.h"
+#include "Engine/Core/GameInstance.h"
 
 class Timer {
 
@@ -20,9 +21,9 @@ public:
 	//Duration in Seconds
 	Timer(float Duration, bool Looping)
 	{
-		//GameInstance::GetGameInstance()->OnFixedUpdate += std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1);
+		GameInstance::GetGameInstance()->OnFixedUpdate += std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1);
 		m_Looping = Looping;
-		m_MaxTime = Duration * 500.0f;
+		m_MaxTime = Duration * 500.0f; 
 
 		Debug::Log(nullptr, Confirm, "Timer-Started");
 
@@ -40,7 +41,7 @@ public:
 	void DestroyTimer()
 	{
 		PauseTimer();
-		//GameInstance::GetGameInstance()->OnFixedUpdate -= std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1);
+		GameInstance::GetGameInstance()->OnFixedUpdate -= std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1);
 		OnTimerUpdated.Empty();
 	};
 
