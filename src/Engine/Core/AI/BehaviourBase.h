@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine/Core/Libs/GameFunctionLib.h"
+#include "Engine/Core/Components/Rigidbody.h"
 
 class BehaviourBase : public Object {
 
@@ -34,8 +35,6 @@ public:
 	{
 		m_SeekTarget = Target;
 	};
-
-
 
 	void SetTarget(GameObject* Target) { m_SeekTarget = Target; }
 
@@ -97,7 +96,42 @@ protected:
 };
 
 
+class Pursuit : public Seek
+{
+public:
+	Pursuit(GameObject* Target) {
+		m_SeekTarget = Target;
+	}
 
+	virtual Math::Vector2 CalculateBehaviour() override
+	{
+		if (m_OwningAgent == nullptr || m_SeekTarget == nullptr) {
+
+			return Math::Vector2::Zero();
+		}
+
+		
+
+		Rigidbody* OwnerVel = m_SeekTarget->FindComponentOfType<Rigidbody>();
+		Rigidbody* TargetVel = m_SeekTarget->FindComponentOfType<Rigidbody>();
+		if (OwnerVel == nullptr || TargetVel == nullptr) 
+		{
+			Debug::Log(this, Error, "No Rigid Body on either Target or Owner");
+			return Math::Vector2::Zero(); 
+		}
+		
+		m_ForceDirection = m_SeekTarget->m_Transform.Location - m_OwningAgent->m_Transform.Location;
+		float CombinedSpeed = OwnerVel->m_Velocity.Length() + TargetVel->m_Velocity.Length();
+		float Prediction = m_ForceDirection.Length() / CombinedSpeed;
+
+		Math::Vector2 SeekTarget = m_SeekTarget->m_Transform.Location + m_OwningAgent->m_Transform.Location * Prediction;
+		m_ForceDirection = SeekTarget - m_OwningAgent->m_Transform.Location;
+
+		return m_ForceDirection.Normalised() * m_Weight;
+	}
+
+protected:
+};
 
 
 class Separation : public BehaviourBase {

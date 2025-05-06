@@ -17,12 +17,18 @@ FiringEnemy::FiringEnemy()
 	m_MinimapDraw = E_MinimapType::E_Enemy;
 	m_MoveSpeed = 0.5f;
 	m_KeepDistance = 200;
+
+	m_FiringTimer = new Timer(0.5f, true);
+
 }
 
 void FiringEnemy::Init(Object* OwningObject) 
 {
 	Enemy::Init(OwningObject);
 	m_SteeringManager->AddBehaviour(new Separation(300),5);
+
+	m_FiringTimer->OnTimerCompleted += std::bind(&FiringEnemy::FireWeapon, this);
+	m_FiringTimer->StartTimer();
 }
 
 void FiringEnemy::BeginPlay()
@@ -49,6 +55,16 @@ void FiringEnemy::AI_Logic(float DeltaTime)
 	if (Dir.Length() > m_KeepDistance) {
 		m_Transform.Location += Dir.Normalised() * m_MoveSpeed;
 	}
+	
+	if (Dir.Length() < 400) //Temp fire distance value 
+	{
+		m_FiringTimer->ResumeTimer();
+	}
+	else {
+		m_FiringTimer->PauseTimer();
+	}
+
+	m_Transform.SetRotation(Dir.Normalised().GetRadians());
 	m_Transform.Location += m_SteeringManager->GetDirection();
 
 

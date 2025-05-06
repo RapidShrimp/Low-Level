@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/Core/Libs/GameFunctionLib.h"
+#include "Engine/Core/Events/Event.h"
 #include "Engine/Core/GameInstance.h"
 
 class Timer {
@@ -21,16 +22,18 @@ public:
 	//Duration in Seconds
 	Timer(float Duration, bool Looping)
 	{
-		GameInstance::GetGameInstance()->OnFixedUpdate += std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1);
 		m_Looping = Looping;
 		m_MaxTime = Duration * 500.0f; 
-
-		Debug::Log(nullptr, Confirm, "Timer-Started");
+		m_CurrentTime = 0;
+		isActive = false;
+		Debug::Log(nullptr, DebugNone, "Timer-Created");
 
 	}
-
 	void PauseTimer() { isActive = false; }
 	void ResumeTimer() { isActive = true; }
+	void StartTimer() { 
+		GameInstance::GetGameInstance()->OnFixedUpdate += std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1);
+		isActive = true; }
 
 	//This will set the timer current step to 0
 	//*Note* If a timer is running it will not stop
@@ -41,23 +44,25 @@ public:
 	void DestroyTimer()
 	{
 		PauseTimer();
-		GameInstance::GetGameInstance()->OnFixedUpdate -= std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1);
+		//GameInstance::GetGameInstance()->OnFixedUpdate -= std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1);
 		OnTimerUpdated.Empty();
 	};
 
 private:
 	void Handle_OnFixedUpdate(float TimeStep)
 	{
-		//OnTimerUpdated();
+		if (!isActive) { return; }
+
+		OnTimerUpdated();
 		m_CurrentTime += TimeStep;
 		if (m_CurrentTime < m_MaxTime) { return; }
 
-		OnTimerCompleted.Invoke();
-		Debug::Log(nullptr, Confirm, "Timer-Complete");
+		OnTimerCompleted();
+		Debug::Log(nullptr, DebugNone, "Timer-Complete");
 
 		if (m_Looping)
 		{
-			Debug::Log(nullptr, Confirm, "Timer-Looped");
+			Debug::Log(nullptr, DebugNone, "Timer-Looped");
 			ResetTimer();
 		}
 		else

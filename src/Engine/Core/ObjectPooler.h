@@ -31,6 +31,7 @@ inline T* ObjectPooler<T>::GetFreeObject()
 	//Check for a free object, return the casted type
 	for (int i = 0; i < m_PooledObjects.size(); i++) 
 	{
+		if (m_PooledObjects[i] == nullptr) { continue; }
 		if (!m_PooledObjects[i]->GetIsActive()) 
 		{ 
 			return dynamic_cast<T*>(m_PooledObjects[i]); 

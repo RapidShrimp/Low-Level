@@ -1,10 +1,11 @@
 #pragma once
 
 #include "BasicEnemy.h"
-
+#include "Engine/Core/Timer.h"
 class FiringEnemy : public Enemy 
 {
-
+protected:
+	Timer* m_FiringTimer;
 public:
 	FiringEnemy();
 	void Init(Object* OwningObject) override;
