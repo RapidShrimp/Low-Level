@@ -26,7 +26,7 @@ void Crystal::OnCollisionEvent(Collider* InCollider, E_CollisionEvent Event)
 	{
 		Player->CollectSinibomb();
 		Deactivate();
-		OnCrystalCollided(InCollider->GetOwner()); //Pooler will have this bound
+		OnCrystalCollided.Invoke(InCollider->GetOwner()); //Pooler will have this bound
 		return;
 	}
 
@@ -55,7 +55,7 @@ void Crystal::OnActivate()
 {
 	GameObject::OnActivate();
 	const PlayerCharacter* Player = GameInstance::GetGameInstance()->GetPlayer();
-	OnCrystalAvaliable(this);
+	OnCrystalAvaliable.Invoke(this);
 	Math::Vector2 DesiredVector = Player->m_Transform.Location;
 	 
 	if (Player != nullptr) {

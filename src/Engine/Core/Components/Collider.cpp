@@ -82,14 +82,14 @@ void Collider::Update()
 				//Exit Event
 				//Debug::Log(this, Display, "Collision Exit");
 				ColliderEvent = m_IsTrigger ? TriggerExit : CollisionExit;
-				OnCollisionEvent(OtherCollider, ColliderEvent);
+				OnCollisionEvent.Invoke(OtherCollider, ColliderEvent);
 				Overlapping.erase(Overlapping.begin()+Index);
 				continue; 
 			}
 
 			//Continuous Event
 			ColliderEvent = m_IsTrigger ? TriggerColliding : CollisionColliding;
-			OnCollisionEvent(OtherCollider,ColliderEvent);
+			OnCollisionEvent.Invoke(OtherCollider,ColliderEvent);
 
 		}
 		else if (Collided) {
@@ -100,7 +100,7 @@ void Collider::Update()
 				ColliderEvent = TriggerEnter;
 			}
 			Overlapping.push_back(OtherCollider);
-			OnCollisionEvent(OtherCollider, ColliderEvent);
+			OnCollisionEvent.Invoke(OtherCollider, ColliderEvent);
 			Debug::Log(this, DebugNone, "Collision Added:" + std::to_string(ColliderEvent));
 		}
 	}

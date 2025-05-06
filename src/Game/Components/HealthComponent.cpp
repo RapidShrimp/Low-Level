@@ -31,17 +31,17 @@ void HealthComponent::Handle_OnHeathChanged(float Damage, GameObject* Instigator
 	m_CurrentHealth = std::clamp(m_CurrentHealth - Damage,0.0f,m_MaxHealth);
 	if (m_CurrentHealth == 0) 
 	{
-		OnDeath();
+		OnDeath.Invoke();
 		return;
 	}
 
 	if (!isPositive) 
 	{
-		OnHealthRecieve(-Damage);
+		OnHealthRecieve.Invoke(-Damage);
 	}
 	else 
 	{
-		OnDamageTaken(Damage);
+		OnDamageTaken.Invoke(Damage);
 	}
 
 }

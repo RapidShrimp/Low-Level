@@ -63,5 +63,5 @@ void Enemy::AI_Logic(float DeltaTime)
 void Enemy::Handle_EnemyDeath()
 {
 	Deactivate();
-	OnEnemyDeath();
+	OnEnemyDeath.Invoke();
 }

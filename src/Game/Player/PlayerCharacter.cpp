@@ -151,7 +151,7 @@ void PlayerCharacter::OnFireSinibomb(Math::Vector2 Dir)
 	AudioManger::PlaySound("laserShoot.wav");
 
 	m_SinibombsHeld--;
-	OnSinibombUpdated(m_SinibombsHeld);
+	OnSinibombUpdated.Invoke(m_SinibombsHeld);
 }
 
 
@@ -161,20 +161,20 @@ void PlayerCharacter::CollectSinibomb()
 	if (m_SinibombsHeld == 20) { return; }
 	m_SinibombsHeld++; 
 	Debug::Log(this, DebugNone, "Sinibomb Collected:" + to_string(m_SinibombsHeld));
-	OnSinibombUpdated(m_SinibombsHeld);
+	OnSinibombUpdated.Invoke(m_SinibombsHeld);
 
 }
 
 void PlayerCharacter::AddScore(int AddedScore)
 {
 	Score += AddedScore;
-	OnScoreUpdated(Score);
+	OnScoreUpdated.Invoke(Score);
 }
 
 void PlayerCharacter::RemoveScore(int RemovedScore)
 {
 	Score += RemovedScore;
-	OnScoreUpdated(Score);
+	OnScoreUpdated.Invoke(Score);
 }
 
 void PlayerCharacter::OnCollisionEventCallback(Collider* OtherCollider, E_CollisionEvent Response)
@@ -217,7 +217,7 @@ void PlayerCharacter::FixedUpdate(float DeltaTime)
 
 void PlayerCharacter::Handle_PlayerDead()
 {
-	OnPlayerDied();
+	OnPlayerDied.Invoke();
 }
 
 void PlayerCharacter::Handle_PlayerDamaged(float InDamage)

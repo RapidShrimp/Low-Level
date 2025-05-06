@@ -18,10 +18,9 @@ Boss::Boss()
 	m_Collider = new Collider(false, 32.0f);
 
 	m_AttackTimer = new Timer(5, true);
-	m_AttackTimer->OnTimerCompleted += std::bind(&Boss::ChargePlayer, this);
+
 	
 	m_MovePause = new Timer(3.4f, false);
-	m_MovePause->OnTimerCompleted += std::bind(&Boss::StopMoving, this);
 	
 	m_Pieces = 8;
 }
@@ -30,6 +29,8 @@ void Boss::Init(Object* OwningObject)
 {
 	Enemy::Init(OwningObject);
 	m_Health->OnDamageTaken += std::bind(&Boss::Handle_TakeDamage, this, std::placeholders::_1);
+	m_AttackTimer->OnTimerCompleted += std::bind(&Boss::ChargePlayer, this);
+	m_MovePause->OnTimerCompleted += std::bind(&Boss::StopMoving, this);
 	//m_Collider->OnCollisionEvent += std::bind(&Boss::Handle_CollisionEvent, )
 }
 
@@ -37,7 +38,7 @@ void Boss::BeginPlay()
 {
 	//m_SpriteRenderer->StartAnimation();
 	m_SpriteRenderer->SetSprite(0, 0);
-	m_SpriteRenderer->StartAnimation();
+	//m_SpriteRenderer->StartAnimation();
 
 	GiveCrystal(new Crystal());
 }

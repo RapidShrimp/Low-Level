@@ -57,14 +57,14 @@ void Asteroid::Handle_OnAsteroidHit(float InDamage)
 	Hits++;
 	if (Hits == CrystalRequireHits) {
 		Hits = 0;
-		OnSpawnCrystal(m_Transform.Location);
+		OnSpawnCrystal.Invoke(m_Transform.Location);
 	}
 }
 
 void Asteroid::Handle_OnAsteroidDestroyed(float InDamage)
 {
 	Debug::Log(this, Display, "Asteroid Destroyed");
-	OnSpawnCrystal(m_Transform.Location);
-	OnAsteroidDestroyed();
+	OnSpawnCrystal.Invoke(m_Transform.Location);
+	OnAsteroidDestroyed.Invoke();
 	Deactivate();
 }

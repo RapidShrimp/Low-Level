@@ -57,11 +57,11 @@ private:
 		if (GameInstance::GetGameInstance()->GetWorld()->IsGamePaused() && !m_TickPaused) { return; } //Dont Tick timer if paused
 		if (!isActive) { return; }
 
-		OnTimerUpdated();
+		OnTimerUpdated.Invoke();
 		m_CurrentTime += TimeStep;
 		if (m_CurrentTime < m_MaxTime) { return; }
 
-		OnTimerCompleted();
+ 		OnTimerCompleted.Invoke();
 		Debug::Log(nullptr, DebugNone, "Timer-Complete");
 
 		if (m_Looping)

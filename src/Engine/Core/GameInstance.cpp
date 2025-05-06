@@ -79,13 +79,13 @@ void GameInstance::Update()
 
 		while (timeSinceLastPhysics >= physicsTimeStep)
 		{
-			OnFixedUpdate(physicsTimeStep);
+			OnFixedUpdate.Invoke(physicsTimeStep);
 			FixedUpdate(physicsTimeStep);
 			timeSinceLastPhysics -= physicsTimeStep;
 
 		}
 
-		OnUpdate();
+		OnUpdate.Invoke();
 		m_CurrentScene->Update();
 		Render();
 		InputEventHandler::GetInstance()->PollInputEvents();

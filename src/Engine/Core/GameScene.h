@@ -31,7 +31,7 @@ public:
 
 	//Pauses All core Game loop Elements && Independant Timers will not tick
 	//*Note* UI Will still update when the game is paused
-	void SetGamePaused(bool isPaused) {  m_GamePaused = isPaused; OnPausedChanged(m_GamePaused);}
+	void SetGamePaused(bool isPaused) {  m_GamePaused = isPaused; OnPausedChanged.Invoke(m_GamePaused);}
 	bool IsGamePaused() { return m_GamePaused; }
 protected:
 

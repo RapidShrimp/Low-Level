@@ -100,7 +100,7 @@ void BindableInput::PollEvent()
 	}
 	Action.IsTriggered = sf::Keyboard::isKeyPressed(Action.KeyEvent);
 	CallbackData.Triggering = Action.IsTriggered;
-	OnInputUpdate(CallbackData);
+	OnInputUpdate.Invoke(CallbackData);
 	CallbackData.Cancelled = false;
 	CallbackData.Started = false;
 }
@@ -128,7 +128,7 @@ void AxisInput::PollEvent()
 	
 	Math::Vector2::Normalise(Direction);
 	CurrentVector = Direction;
-	OnAxisInputUpdate(Data, CurrentVector);
+	OnAxisInputUpdate.Invoke(Data, CurrentVector);
 }
 
 void MouseInput::PollEvent()

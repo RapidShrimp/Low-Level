@@ -26,7 +26,6 @@ void UI_PauseMenu::Init(Object* OwningObject)
 	AddElement(m_PausePrompt, false);
 
 	m_BlinkTimer->OnTimerCompleted += std::bind(&UI_PauseMenu::Handle_BlinkTimerTrigger, this);
-	m_BlinkTimer->StartTimer();
 }
 
 void UI_PauseMenu::OnActivate()
@@ -59,7 +58,7 @@ void UI_PauseMenu::Handle_BlinkTimerTrigger()
 
 void UI_PauseMenu::ShowPauseMenu()
 {
-	m_BlinkTimer->ResumeTimer();
+	m_BlinkTimer->StartTimer();
 	m_PauseText->Activate();
 	m_PausePrompt->Activate();
 }
