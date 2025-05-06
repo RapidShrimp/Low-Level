@@ -38,10 +38,11 @@ namespace SinStr {
 
 		void AddListener(const Binding<T...> listener)
 		{
-			if (std::find_if(listeners.begin(), listeners.end(), [listener](Binding<T...> b) {return listener.hash_code() == b.hash_code(); }) == listeners.end())
-			{
-				listeners.push_back(listener);
-			}
+			listeners.push_back(listener);
+			//if (std::find_if(listeners.begin(), listeners.end(), [listener](Binding<T...> b) {return listener.hash_code() == b.hash_code(); }) == listeners.end())
+			//{
+			//	listeners.push_back(listener);
+			//}
 		}
 		void RemoveListener(const Binding<T...> listener) 
 		{ 
