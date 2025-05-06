@@ -29,14 +29,16 @@ public:
 		m_CurrentTime = 0;
 		m_Deviation = RandomDeviation;
 		isActive = false;
-		Debug::Log(nullptr, DebugNone, "Timer-Created");
+		Debug::Log(nullptr, Display, "Timer-Created");
 
 	}
 	void PauseTimer() { isActive = false; }
 	void ResumeTimer() { isActive = true; }
-	void StartTimer() { 
+	void StartTimer() 
+	{ 
 		GameInstance::GetGameInstance()->OnFixedUpdate += std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1);
-		isActive = true; }
+		isActive = true; 
+	}
 
 	//This will set the timer current step to 0
 	//*Note* If a timer is running it will not stop
@@ -47,7 +49,7 @@ public:
 	void DestroyTimer()
 	{
 		PauseTimer();
-		//GameInstance::GetGameInstance()->OnFixedUpdate -= std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1);
+		GameInstance::GetGameInstance()->OnFixedUpdate -= std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1);
 		OnTimerUpdated.Empty();
 	};
 
@@ -62,7 +64,7 @@ private:
 		if (m_CurrentTime < m_MaxTime) { return; }
 
  		OnTimerCompleted.Invoke();
-		Debug::Log(nullptr, DebugNone, "Timer-Complete");
+		Debug::Log(nullptr, Display, "Timer-Complete");
 
 		if (m_Looping)
 		{

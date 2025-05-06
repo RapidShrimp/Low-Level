@@ -28,7 +28,7 @@ void FiringEnemy::Init(Object* OwningObject)
 	m_SteeringManager->AddBehaviour(new Separation(300),5);
 
 	m_FiringTimer->OnTimerCompleted += std::bind(&FiringEnemy::FireWeapon, this);
-	m_FiringTimer->StartTimer();
+ 	m_FiringTimer->StartTimer();
 }
 
 void FiringEnemy::BeginPlay()
@@ -56,13 +56,7 @@ void FiringEnemy::AI_Logic(float DeltaTime)
 		m_Transform.Location += Dir.Normalised() * m_MoveSpeed;
 	}
 	
-	if (Dir.Length() < 400) //Temp fire distance value 
-	{
-		m_FiringTimer->ResumeTimer();
-	}
-	else {
-		m_FiringTimer->PauseTimer();
-	}
+
 
 	m_Transform.SetRotation(Dir.Normalised().GetRadians());
 	m_Transform.Location += m_SteeringManager->GetDirection();
@@ -82,6 +76,13 @@ void FiringEnemy::Handle_EnemyDeath()
 
 void FiringEnemy::FireWeapon() 
 {
+
+	Math::Vector2 Dir = m_Target->m_Transform.Location - m_Transform.Location;
+	if (Dir.Length() > 400) 
+	{
+		Debug::Log(this, Display, "Started Firing");
+		return;
+	}
 	GameLevel* CurrGameScene = dynamic_cast<GameLevel*>(GameInstance::GetGameInstance()->GetWorld());
 	if (CurrGameScene == nullptr) { return; }
 
@@ -91,7 +92,6 @@ void FiringEnemy::FireWeapon()
 	Bullet->Activate();
 
 	//Get Mouse Direction 
-	Math::Vector2 Dir = m_Target->m_Transform.Location - m_Transform.Location;
 	Math::Vector2::Normalise(Dir);
 	Bullet->OnFired(this, Dir);
 }

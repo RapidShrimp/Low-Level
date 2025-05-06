@@ -1,5 +1,5 @@
 #pragma once
-#include "vector"
+#include <vector>
 #include "functional"
 #include "algorithm"
 
@@ -45,9 +45,9 @@ namespace SinStr {
 		}
 		void RemoveListener(const Binding<T...> listener) 
 		{ 
-			std::erase_if(listener, [listener](Binding<T...> b) 
-				{
-					return listener.hash_code() == b.hash_code(); }); 
+			std::erase_if(listeners, [listener](Binding<T...> b) {
+				return listener.hash_code() == b.hash_code(); 
+			}); 
 		}
 		void Empty() { listeners.clear(); }
 
