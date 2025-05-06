@@ -68,6 +68,8 @@ void InputEventHandler::RemoveMappings()
 
 void InputEventHandler::PollInputEvents()
 {
+
+	if (m_BlockInput) { return; }
 	if (MouseEvents != nullptr) {
 		MouseEvents->PollEvent();
 	}

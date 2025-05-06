@@ -61,7 +61,7 @@ void PlayerCharacter::Init(Object* OwningObject)
 	if (SinibombRear) { SinibombRear->OnInputUpdate += std::bind(&PlayerCharacter::FireSinibombRear, this, std::placeholders::_1); }
 	if (MoveInput) { MoveInput->OnAxisInputUpdate += std::bind(&PlayerCharacter::MovePlayer, this, std::placeholders::_1, std::placeholders::_2); }
 	if (PauseKey) { PauseKey->OnInputUpdate += std::bind(&PlayerCharacter::Input_TogglePauseGame, this, std::placeholders::_1); }
-	GameInstance::GetGameInstance()->GetWorld()->SpawnUIElement(new UI_HUD(*this), { 0,0 }, true);
+	GameInstance::GetGameInstance()->GetWorld()->SpawnUILayer(new UI_HUD(*this), { 0,0 }, true);
 }
 
 

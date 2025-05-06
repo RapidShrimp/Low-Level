@@ -5,6 +5,8 @@
 #include "Game/Player/PlayerCharacter.h"
 #include "SFML/Graphics.hpp"
 #include "Engine/Core/Timer.h"
+#include "UI_PauseMenu.h"
+#include "UI_LostLife.h"
 
 enum E_SinistarAction {
 	Building,
@@ -17,6 +19,12 @@ class UI_HUD : public UI_Base {
 public:
 	UI_HUD(PlayerCharacter& Player);
 protected:
+
+
+	UI_PauseMenu* m_PauseMenu;
+	UI_LostLife* m_LifeScreen;
+
+
 	int m_Sinibombs = 0;
 	int m_Score = 0;
 	E_SinistarAction m_CurrentAction;
@@ -24,10 +32,6 @@ protected:
 	UI_Text* m_ScoreRenderer;
 	UI_Text* m_ActionRenderer;
 	UI_Text* m_BombCountRenderer;
-
-	Timer* m_BlinkTimer;
-	UI_Text* m_PausePrompt;
-	UI_Text* m_PauseText;
 
 	sf::RectangleShape UI_Backing;
 	//Minimap Tracker
@@ -42,11 +46,9 @@ public:
 	virtual void Render(sf::RenderWindow& Renderer) override;
 	//virtual void OnDestroy() override;
 
-	void ShowPauseMenu();
-	void HidePauseMenu();
+
 private:
 	void Handle_OnUpdateSinibombs(int NewBombCount);
 	void Handle_OnUpdateScore(int NewScore);
 	void Handle_GamePaused(bool NewPaused);
-	void Handle_BlinkTimerTrigger();
 };

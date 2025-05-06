@@ -32,7 +32,7 @@ void GameScene::RegisterSpawnedObject(GameObject* RegisterObject, bool Activate)
 	else { RegisterObject->Deactivate(); }
 }
 
-UI_Base* GameScene::SpawnUIElement(UI_Base* Spawnable, SinStr::Transform UI_Transform, bool StartEnabled)
+UI_Base* GameScene::SpawnUILayer(UI_Base* Spawnable, SinStr::Transform UI_Transform, bool StartEnabled)
 {
 
 	if (std::find(UI_Elements.begin(), UI_Elements.end(), Spawnable) != UI_Elements.end())
@@ -51,10 +51,10 @@ UI_Base* GameScene::SpawnUIElement(UI_Base* Spawnable, SinStr::Transform UI_Tran
 	return Spawnable;
 }
 
-UI_Base* GameScene::SpawnUIElement(UI_Base* Spawnable, Math::Vector2 UI_Location, bool StartEnabled)
+UI_Base* GameScene::SpawnUILayer(UI_Base* Spawnable, Math::Vector2 UI_Location, bool StartEnabled)
 {
 	Spawnable->m_Transform.Location = UI_Location;
-	return SpawnUIElement(Spawnable,SinStr::Transform(UI_Location),StartEnabled);
+	return SpawnUILayer(Spawnable,SinStr::Transform(UI_Location),StartEnabled);
 }
 
 GameObject* GameScene::SpawnObject(GameObject* Spawnable, SinStr::Transform SpawnTransform, bool StartActive, std::string DisplayName)
@@ -82,9 +82,10 @@ void GameScene::RenderScene(sf::RenderWindow& Renderer)
 
 void GameScene::RenderUI(sf::RenderWindow& Renderer)
 {
-	for (int Element = 0; Element < UI_Elements.size(); Element++) 
+	//Swap this for a stack style rendering?
+	for (int Layer = 0; Layer < UI_Elements.size(); Layer++)
 	{
-		UI_Elements[Element]->Render(Renderer);
+		UI_Elements[Layer]->Render(Renderer);
 	}
 }
 

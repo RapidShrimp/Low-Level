@@ -42,7 +42,7 @@ public:
 class InputEventHandler
 {
 private:
-
+	bool m_BlockInput = false;
 	InputEventHandler() {  }; //Prevent Direct Instantiate
 	InputEventHandler(const InputEventHandler&) = delete; //Prevent Copy Constructor
 	InputEventHandler& operator=(const InputEventHandler&) = delete; //Prevent Copy Assign
@@ -55,6 +55,10 @@ public:
 		if (m_InputSystemInstance == nullptr) { m_InputSystemInstance = new InputEventHandler(); }
 		return m_InputSystemInstance;
 	};
+
+
+	static void BlockAllInput() { GetInstance()->m_BlockInput = true; };
+	static void EnableInput() { GetInstance()->m_BlockInput = false; };
 
 	sf::Vector2f GetMousePosition();
 private:

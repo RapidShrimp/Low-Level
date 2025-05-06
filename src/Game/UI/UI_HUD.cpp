@@ -29,19 +29,9 @@ UI_HUD::UI_HUD(PlayerCharacter& Player)
 	m_BombCountRenderer = new UI_Text("Sinibombs: 00", "Assets/Fonts/sinistar.ttf", 24);
 	m_BombCountRenderer->m_Transform.Location = { 10, 55 };
 
+	m_PauseMenu = new UI_PauseMenu();
+	m_LifeScreen = new UI_LostLife();
 
-	/*Pause Init*/
-	m_BlinkTimer = new Timer(0.5f, true, 0, true);
-
-	m_PauseText = new UI_Text("GAME PAUSED", "Assets/Fonts/sinistar.ttf", 12);
-	m_PauseText->m_Transform.Location = { WINDOW_WIDTH / 2,(WINDOW_HEIGHT / 2) - 140 };
-	m_PauseText->SetAlignment(E_TextAlignment::Center);
-	m_PauseText->Deactivate();
-
-	m_PausePrompt = new UI_Text("PRESS 'Esc' TO CONTINUE", "Assets/Fonts/sinistar.ttf", 12);
-	m_PausePrompt->m_Transform.Location = { WINDOW_WIDTH / 2,(WINDOW_HEIGHT / 2) - 156 };
-	m_PausePrompt->SetAlignment(E_TextAlignment::Center);
-	m_PausePrompt->Deactivate();
 
 
 }
@@ -60,25 +50,29 @@ void UI_HUD::Init(Object* OwningObject)
 	AddElement(m_ScoreRenderer);
 	AddElement(m_BombCountRenderer);
 	AddElement(m_ActionRenderer);
-	AddElement(m_PauseText,false);
-	AddElement(m_PausePrompt, false);
-
-	m_BlinkTimer->OnTimerCompleted += std::bind(&UI_HUD::Handle_BlinkTimerTrigger, this);
-	m_BlinkTimer->StartTimer();
-
 	Handle_OnUpdateScore(0);
 	Handle_OnUpdateSinibombs(0);
+
+	//Spawn Pause Menu
+	//GameInstance::GetGameInstance()->GetWorld()->SpawnUILayer(m_PauseMenu, { 0,0 }, false);
+	m_PauseMenu->Init(this);
+	m_PauseMenu->Deactivate();
+
+	m_LifeScreen->Init(this);
+	m_LifeScreen->Deactivate();
 }
 
 void UI_HUD::Render(sf::RenderWindow& Renderer)
 {
+	m_PauseMenu->Render(Renderer);
+	m_LifeScreen->Render(Renderer);
 	Renderer.draw(UI_Backing);
-	
 	UI_Base::Render(Renderer);
 	
 
 
-	//Minimap Draw Functionality
+	/*Minimap Draw Functionality*/
+	//Outline
 	sf::RectangleShape MinimapOutline({ 140,140 });
 	MinimapOutline.setPosition({ (WINDOW_WIDTH/2)-70,0 });
 	MinimapOutline.setFillColor(sf::Color::Black);
@@ -91,10 +85,7 @@ void UI_HUD::Render(sf::RenderWindow& Renderer)
 	Math::Vector2 MinimapLocation = GameInstance::GetGameInstance()->GetPlayer()->m_Transform.Location;
 	m_Minimap.setCenter(MinimapLocation.ToSF());
 
-
-
-
-
+	//Border
 	sf::RectangleShape MinimapBorder({ WINDOW_WIDTH,WINDOW_HEIGHT-140});
 	MinimapBorder.setOrigin({ WINDOW_WIDTH / 2,WINDOW_HEIGHT / 2 });
 	MinimapBorder.setFillColor(sf::Color::Transparent);
@@ -124,8 +115,8 @@ void UI_HUD::Render(sf::RenderWindow& Renderer)
 			DrawColour = sf::Color(144,144,160);
 			break;
 		case E_SINISTAR:
-			Dot.setRadius(120);
-			Dot.setOrigin({ 60,60 });
+			Dot.setRadius(100);
+			Dot.setOrigin({ 50,50 });
 			DrawColour = sf::Color::Red;
 			break;
 		case E_Enemy:
@@ -136,23 +127,12 @@ void UI_HUD::Render(sf::RenderWindow& Renderer)
 		}
 		Dot.setFillColor(DrawColour);
 		Renderer.draw(Dot);
+
 	}
+	Renderer.setView(Renderer.getDefaultView());
 }
 
-void UI_HUD::ShowPauseMenu()
-{
-	m_BlinkTimer->ResumeTimer();
-	m_PauseText->Activate();
-	m_PausePrompt->Activate();
-}
 
-void UI_HUD::HidePauseMenu()
-{
-	m_BlinkTimer->PauseTimer();
-	m_PauseText->Deactivate();
-	m_PausePrompt->Deactivate();
-
-}
 
 void UI_HUD::Handle_OnUpdateSinibombs(int NewBombCount)
 {
@@ -171,18 +151,10 @@ void UI_HUD::Handle_OnUpdateScore(int NewScore)
 void UI_HUD::Handle_GamePaused(bool NewPaused)
 {
 	if (NewPaused) {
-		ShowPauseMenu();
+		m_PauseMenu->Activate();
 	}
 	else {
-		HidePauseMenu();
+		m_PauseMenu->Deactivate();
 	}
 }
 
-void UI_HUD::Handle_BlinkTimerTrigger()
-{
-
-	sf::Color CurrColour = m_PausePrompt->GetColour();
-	sf::Color NextColour = CurrColour == sf::Color::Blue ? sf::Color::Yellow : sf::Color::Blue;
-	m_PausePrompt->SetColour(NextColour);
-	m_PauseText->SetColour(NextColour);
-}

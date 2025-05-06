@@ -42,8 +42,8 @@ protected:
 
 	bool m_GamePaused = false; 
 public:	
-	UI_Base* SpawnUIElement(UI_Base* Spawnable, SinStr::Transform UI_Transform, bool StartEnabled);
-	UI_Base* SpawnUIElement(UI_Base* Spawnable, Math::Vector2 UI_Location, bool StartEnabled);
+	UI_Base* SpawnUILayer(UI_Base* Spawnable, SinStr::Transform UI_Transform, bool StartEnabled);
+	UI_Base* SpawnUILayer(UI_Base* Spawnable, Math::Vector2 UI_Location, bool StartEnabled);
 
 	GameObject* SpawnObject(GameObject* Spawnable, SinStr::Transform SpawnTransform, bool StartActive = true, std::string DisplayName = "Unassigned");
 	GameObject* SpawnObject(GameObject* Spawnable, Math::Vector2 SpawnLocation, bool StartActive = true, std::string DisplayName = "Unassigned");
