@@ -90,6 +90,7 @@ void GameScene::RenderUI(sf::RenderWindow& Renderer)
 
 void GameScene::FixedUpdate(float DeltaTime)
 {
+	if (m_GamePaused) { return; }
 	for (int Objects = 0; Objects < SceneObjects.size(); Objects++)
 	{
 		SceneObjects[Objects]->FixedUpdate(DeltaTime);
@@ -98,6 +99,7 @@ void GameScene::FixedUpdate(float DeltaTime)
 
 void GameScene::Update()
 {
+	if (m_GamePaused) { return; }
 	for (int Objects = 0; Objects < SceneObjects.size(); Objects++)
 	{
 		SceneObjects[Objects]->Update();

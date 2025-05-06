@@ -35,6 +35,7 @@ public:
 	MouseInput() {};
 	SinStr::Event<Math::Vector2> OnMouseInputUpdate;
 	sf::Vector2f MousePos = {0,0};
+	bool TriggerWhenPaused = false;
 	void PollEvent();
 };
 
@@ -63,9 +64,9 @@ private:
 
 
 public:
-	BindableInput* CreateKeyInput(ActionMapping(Map));
+	BindableInput* CreateKeyInput(ActionMapping(Map),bool TriggerPaused = false);
 	BindableInput* CheckForExistingEvent(sf::Keyboard::Key CheckKey);
-	AxisInput* CreateAxisInput(AxisActionMapping(Map));
+	AxisInput* CreateAxisInput(AxisActionMapping(Map), bool TriggerPaused = false);
 	MouseInput* CreateMouseInput();
 
 	void RemoveMappings();

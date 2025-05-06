@@ -16,11 +16,13 @@ UI_Text::UI_Text(std::string DisplayText, std::string FontFilepath, int TextScal
 
 	m_Text->setString(DisplayText);
 
-	m_Text->setCharacterSize(24);
+	m_Text->setCharacterSize(TextScale);
 
 	m_Text->setFillColor(sf::Color::Blue);
-
+	
 	m_Text->setStyle(sf::Text::Bold);
+	m_Text->setLineSpacing(10);
+	
 	//Debug::Log(this, Warning, "Font Found!");
 
 }

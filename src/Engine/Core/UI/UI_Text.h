@@ -19,6 +19,7 @@ public:
 	
 	void UpdateText(std::string NewString, sf::Text::Style InStyle = sf::Text::Regular);
 	void SetColour(sf::Color NewColour);
+	sf::Color GetColour() { return m_Text->getFillColor(); }
 	void SetAlignment(E_TextAlignment AlignText);
 	virtual void OnSetFocus() override;
 	virtual void OnRemoveFocus() override;

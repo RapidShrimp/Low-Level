@@ -52,10 +52,10 @@ void UI_Base::Render(sf::RenderWindow& Renderer)
 	}
 }
 
-void UI_Base::AddElement(UI_Element* Element)
+void UI_Base::AddElement(UI_Element* Element, bool StartActive)
 {
 	Element->Init(this);
-	Element->Activate();
+	if (StartActive) { Element->Activate(); }
 	m_Elements.push_back(Element);
 }
 

@@ -17,6 +17,8 @@ public:
 	GameScene();
 	~GameScene();
 
+	SinStr::Event<bool> OnPausedChanged;
+
 	void RenderScene(sf::RenderWindow& Renderer);
 	void RenderUI(sf::RenderWindow& Renderer);
 
@@ -27,12 +29,18 @@ public:
 	virtual void UnloadScene();
 	virtual PlayerCharacter* GetPlayerCharacter() { return nullptr; } //Override this in Child Scene
 
+	//Pauses All core Game loop Elements && Independant Timers will not tick
+	//*Note* UI Will still update when the game is paused
+	void SetGamePaused(bool isPaused) {  m_GamePaused = isPaused; OnPausedChanged(m_GamePaused);}
+	bool IsGamePaused() { return m_GamePaused; }
 protected:
 
 	std::string m_SceneName = "Unassigned";
 	std::vector<GameObject*> SceneObjects;
 	std::vector<UI_Base*> UI_Elements;
 
+
+	bool m_GamePaused = false; 
 public:	
 	UI_Base* SpawnUIElement(UI_Base* Spawnable, SinStr::Transform UI_Transform, bool StartEnabled);
 	UI_Base* SpawnUIElement(UI_Base* Spawnable, Math::Vector2 UI_Location, bool StartEnabled);

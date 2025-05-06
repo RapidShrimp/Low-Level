@@ -10,11 +10,11 @@ sf::Vector2f InputEventHandler::GetMousePosition()
 	return MouseEvents->MousePos;
 }
 
-BindableInput* InputEventHandler::CreateKeyInput(ActionMapping(Map))
+BindableInput* InputEventHandler::CreateKeyInput(ActionMapping(Map), bool TriggerPaused)
 {
 	BindableInput* NewInput = CheckForExistingEvent(Map.KeyEvent);
 	if (NewInput != nullptr) { return NewInput; }
-
+	Map.TriggerWhenPaused = TriggerPaused;
 	NewInput = new BindableInput(Map);
 	KeyEvents.push_back(NewInput);
 	return NewInput;
@@ -32,8 +32,9 @@ BindableInput* InputEventHandler::CheckForExistingEvent(sf::Keyboard::Key CheckK
 	return nullptr;
 }
 
-AxisInput* InputEventHandler::CreateAxisInput(AxisActionMapping(Map))
+AxisInput* InputEventHandler::CreateAxisInput(AxisActionMapping(Map), bool TriggerPaused)
 {
+	Map.TriggerWhenPaused = TriggerPaused;
 	AxisInput* NewInput = new AxisInput(Map);
 	AxisEvents.push_back(NewInput);
 	return NewInput;
@@ -82,6 +83,7 @@ void InputEventHandler::PollInputEvents()
 
 void BindableInput::PollEvent()
 {
+	if (GameInstance::GetGameInstance()->GetWorld()->IsGamePaused() && !Action.TriggerWhenPaused) { return; }
 	/*Contextual Inputs*/
 	if (Action.IsTriggered != sf::Keyboard::isKeyPressed(Action.KeyEvent)) 
 	{
@@ -103,6 +105,8 @@ void BindableInput::PollEvent()
 
 void AxisInput::PollEvent()
 {
+	if (GameInstance::GetGameInstance()->GetWorld()->IsGamePaused() && !Actions.TriggerWhenPaused) { return; }
+
 	CallbackContext Data;
 	Math::Vector2 Direction = Math::Vector2({ 0,0 });
 	Direction.y -= sf::Keyboard::isKeyPressed(Actions.KeyUp);

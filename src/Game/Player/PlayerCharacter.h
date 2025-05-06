@@ -24,6 +24,8 @@ public:
 
 	SinStr::Event<int>OnSinibombUpdated;//New Bombs Held
 	SinStr::Event<int>OnScoreUpdated; //New Score
+	SinStr::Event<int>OnPlayerLostLife; //When the player loses a life
+	SinStr::Event<>OnPlayerDied; //When the player has ran out of lives
 
 	PlayerCharacter();
 	~PlayerCharacter();
@@ -50,5 +52,8 @@ public:
 	//virtual void OnDestroy() override;
 
 private:
+	void Input_TogglePauseGame(CallbackContext Context);
+	void Handle_PlayerDead();
+	void Handle_PlayerDamaged(float InDamage);
 
 };

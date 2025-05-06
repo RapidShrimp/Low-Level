@@ -11,18 +11,19 @@ public:
 
 protected:
 	bool isActive;
+	bool m_TickPaused;
 	bool m_Looping;
 	float m_MaxTime;
 	float m_CurrentTime;
 	float m_Deviation;
-
 public:
 
 	//Starts and binds to the game instance loop
 	//(Excludes Pause Functionality)
 	//Duration in Seconds
-	Timer(float Duration, bool Looping ,float RandomDeviation = 0.0f)
+	Timer(float Duration, bool Looping ,float RandomDeviation = 0.0f,bool TickPaused = false)
 	{
+		m_TickPaused = TickPaused;
 		m_Looping = Looping;
 		m_MaxTime = Duration * 500.0f; 
 		m_CurrentTime = 0;
@@ -53,6 +54,7 @@ public:
 private:
 	void Handle_OnFixedUpdate(float TimeStep)
 	{
+		if (GameInstance::GetGameInstance()->GetWorld()->IsGamePaused() && !m_TickPaused) { return; } //Dont Tick timer if paused
 		if (!isActive) { return; }
 
 		OnTimerUpdated();
