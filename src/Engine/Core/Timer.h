@@ -14,17 +14,19 @@ protected:
 	bool m_Looping;
 	float m_MaxTime;
 	float m_CurrentTime;
+	float m_Deviation;
 
 public:
 
 	//Starts and binds to the game instance loop
 	//(Excludes Pause Functionality)
 	//Duration in Seconds
-	Timer(float Duration, bool Looping)
+	Timer(float Duration, bool Looping ,float RandomDeviation = 0.0f)
 	{
 		m_Looping = Looping;
 		m_MaxTime = Duration * 500.0f; 
 		m_CurrentTime = 0;
+		m_Deviation = RandomDeviation;
 		isActive = false;
 		Debug::Log(nullptr, DebugNone, "Timer-Created");
 
@@ -64,6 +66,7 @@ private:
 		{
 			Debug::Log(nullptr, DebugNone, "Timer-Looped");
 			ResetTimer();
+			m_CurrentTime += Math::Random::Range(-m_Deviation, m_Deviation);
 		}
 		else
 		{

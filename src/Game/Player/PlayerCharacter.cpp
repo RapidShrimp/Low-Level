@@ -194,7 +194,5 @@ void PlayerCharacter::FixedUpdate(float DeltaTime)
 		m_RigidBody->AddVelocity(Math::Vector2::GetDirectionFromRadians(m_Transform.Rotation)*m_MoveSpeed);
 	}
 
-
-	
 	m_Transform.SetRotation(Dir.Normalised().GetRadians());
 }
