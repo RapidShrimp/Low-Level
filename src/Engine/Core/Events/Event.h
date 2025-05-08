@@ -44,6 +44,7 @@ namespace SinStr {
 			//	listeners.push_back(listener);
 			//}
 		}
+
 		void RemoveListener(const Binding<T...> listener) 
 		{ 
 			std::erase_if(listeners, [listener](Binding<T...> b) {

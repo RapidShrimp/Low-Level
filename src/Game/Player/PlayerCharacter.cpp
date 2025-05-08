@@ -12,7 +12,7 @@
 
 PlayerCharacter::PlayerCharacter()
 {
-	m_Health = new HealthComponent(10);
+ 	m_Health = new HealthComponent(10);
 	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 106,14 }, { 2,42 }, 8, 1);
 	m_SpriteRenderer->SetSpriteScale(3, 3);
 
@@ -41,7 +41,7 @@ void PlayerCharacter::Init(Object* OwningObject)
 	m_Health->OnDeath += std::bind(&PlayerCharacter::Handle_PlayerDead, this);
 
 
-	m_SpriteRenderer->GetLocalTransform().SetRotation(1.5708);
+	m_SpriteRenderer->GetLocalTransform().SetRotation(1.5708f);
 	m_Collider->OnCollisionEvent += std::bind(&PlayerCharacter::OnCollisionEventCallback, this, std::placeholders::_1, std::placeholders::_2);
 
 	AxisActionMapping MoveKeys = AxisActionMapping(sf::Keyboard::Key::W, sf::Keyboard::Key::Unknown, sf::Keyboard::Key::Unknown, sf::Keyboard::Key::Unknown);
@@ -222,4 +222,5 @@ void PlayerCharacter::Handle_PlayerDead()
 
 void PlayerCharacter::Handle_PlayerDamaged(float InDamage)
 {
+	Debug::Log(this, Warning, "Player Took Damage");
 }

@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "Libs/Maths.h"
 #include "Engine/Core/Events/Event.h"
+#include "Engine/Core/Interface/TeamGenerics.h"
 
 class Component;
 class Collider;
@@ -18,8 +19,27 @@ enum E_MinimapType {
 	E_SINISTAR
 };
 
-class GameObject : public Object
+class GameObject : public Object, public ITeamGenerics
 {
+
+public:
+	//Team Generics
+	short int TeamID = 0;
+	virtual E_TeamResponse GetResponseToOther(short int MyTeamID, short int OtherTeamID) override
+	{
+		if (MyTeamID == 0 || OtherTeamID == 0) {
+			return Neutral;
+		}
+		else if (MyTeamID == OtherTeamID) {
+			return Friendly;
+		}
+		else {
+			return Hostile;
+		}
+	}
+	virtual int GetTeam() override { return TeamID; }
+
+
 public:
 	/*
 	OnTakeDamage

@@ -6,7 +6,7 @@ using namespace std;
 namespace Math {
 	//Vector Maths
 
-	static class Random 
+	class Random 
 	{
 	public:
 		static int Range(int Min, int Max);

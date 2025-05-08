@@ -23,7 +23,7 @@ public:
 
 	static void Log(Object* CallingObject, E_LogType LogType, std::string LogMessage);
 
-
+	const static bool LogAll = true;
 };
 
 

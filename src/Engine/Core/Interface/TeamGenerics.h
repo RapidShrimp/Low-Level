@@ -23,5 +23,5 @@ public:
 			return Hostile;
 		}
 	}
-	virtual void GetTeam() { return TeamID; }
+	virtual int GetTeam() { return TeamID; }
 };

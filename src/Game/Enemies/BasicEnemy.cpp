@@ -43,6 +43,7 @@ void Enemy::Update()
 
 void Enemy::FixedUpdate(float DeltaTime)
 {
+	if (!isActive) { return; }
    	GameObject::FixedUpdate(DeltaTime);
 	AI_Logic(DeltaTime);
 }

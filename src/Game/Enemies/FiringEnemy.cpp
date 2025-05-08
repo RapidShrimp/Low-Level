@@ -76,7 +76,7 @@ void FiringEnemy::Handle_EnemyDeath()
 
 void FiringEnemy::FireWeapon() 
 {
-
+	if (!isActive) { return; }
 	Math::Vector2 Dir = m_Target->m_Transform.Location - m_Transform.Location;
 	if (Dir.Length() > 400) 
 	{

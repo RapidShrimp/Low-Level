@@ -75,6 +75,7 @@ void GameScene::RenderScene(sf::RenderWindow& Renderer)
 {
 	for (int Objects = 0; Objects < SceneObjects.size(); Objects++) 
 	{
+		if (!SceneObjects[Objects]->GetIsActive()) { continue; }
 		SceneObjects[Objects]->Render(Renderer);
 	}
 
@@ -94,6 +95,7 @@ void GameScene::FixedUpdate(float DeltaTime)
 	if (m_GamePaused) { return; }
 	for (int Objects = 0; Objects < SceneObjects.size(); Objects++)
 	{
+		if (!SceneObjects[Objects]->GetIsActive()) { continue; }
 		SceneObjects[Objects]->FixedUpdate(DeltaTime);
 	}
 }
@@ -103,6 +105,7 @@ void GameScene::Update()
 	if (m_GamePaused) { return; }
 	for (int Objects = 0; Objects < SceneObjects.size(); Objects++)
 	{
+		if (!SceneObjects[Objects]->GetIsActive()) { continue; }
 		SceneObjects[Objects]->Update();
 	}
 }

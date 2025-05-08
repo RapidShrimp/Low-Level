@@ -19,7 +19,7 @@ void GameFucntionLib::SpawnParticleSystem(Math::Vector2(Location), VFX_Particle*
 
 void Debug::Log(Object* CallingObject, E_LogType LogType, std::string LogMessage) 
 {
-	if (!GameInstance::GetGameInstance()->ShouldLogDisplay() && LogType == Display) { return; }
+	if (!GameInstance::GetGameInstance()->ShouldLogDisplay() && LogType == Display && !LogAll) { return; }
 	std::string ObjectName = "";
 	if (CallingObject != nullptr) 
 	{

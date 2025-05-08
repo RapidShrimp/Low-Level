@@ -17,6 +17,10 @@ void AI_Manager::Init(Object* OwningObject)
 	//Collectors
 	for (CollectorEnemy* Enemy : m_Collectors->GetAllObjects()) {
 		Enemy->m_Transform.Location = { Math::Random::Range(-600.0f,600.0f),Math::Random::Range(-600.0f,600.0f) };
+		HealthComponent* EnemyHealth = Enemy->FindComponentOfType<HealthComponent>();
+		if (EnemyHealth == nullptr) { continue; }
+		EnemyHealth->OnDeath += std::bind(&AI_Manager::Handle_CollectorDead, this);
+
 		SteeringManager* Steering = Enemy->GetSteering();
 		if (Steering == nullptr) { continue; }
 
@@ -69,7 +73,6 @@ void AI_Manager::BeginPlay()
 void AI_Manager::FixedUpdate(float deltaTime)
 {
 
-
 }
 
 void AI_Manager::Handle_CrystalAppeared(GameObject* InCrystal)
@@ -91,5 +94,22 @@ void AI_Manager::TargetPlayer(Enemy* EnemyToTarget)
 
 void AI_Manager::Handle_ShooterDeath()
 {
- 	m_Shooters->GetFreeObject()->Activate();
+	Timer* ShooterRespawnTimer = new Timer(4.0f, 0.0f);
+	ShooterRespawnTimer->OnTimerCompleted += std::bind(&AI_Manager::SpawnShooter, this);
+}
+
+void AI_Manager::Handle_CollectorDead()
+{
+	Timer* RespawnTimer = new Timer(15.0f, 0.0f);
+	RespawnTimer->OnTimerCompleted += std::bind(&AI_Manager::SpawnCollector, this);
+}
+
+void AI_Manager::SpawnShooter()
+{
+	m_Shooters->GetFreeObject()->Activate();
+}
+
+void AI_Manager::SpawnCollector()
+{
+	m_Collectors->GetFreeObject()->Activate();
 }

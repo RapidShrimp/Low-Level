@@ -10,8 +10,8 @@ protected:
 	sf::Sprite* m_Sprite = nullptr;
 
 	//Sprite sheet specifics
-	unsigned int m_Row = 0;
-	unsigned int m_Column = 0;
+	int m_Row = 0;
+	int m_Column = 0;
 
 	Math::Vector2 m_CellSize = { 0,0 };
 	Math::Vector2 m_SpriteSheetStart = { 0,0 };

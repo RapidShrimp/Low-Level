@@ -38,11 +38,12 @@ inline T* ObjectPooler<T>::GetFreeObject()
 		}
 	}
 	
-	Debug::Log(this,Warning,"No Free Object Creating and Adding to the Stack");
 	T* CreatedObject;
 	CreatedObject = new T;
-	if (CreatedObject == nullptr) { return nullptr; }
-	GameInstance::GetGameInstance()->GetWorld()->SpawnObject(CreatedObject, { 0,0 }, true, "PooledObject_TypeName");
+	std::string ClassName = typeid(T).name();
+	Debug::Log(this,Warning,"No Free Object Creating and Adding " + ClassName + " to the Stack");
+  	if (CreatedObject == nullptr) { return nullptr; }
+	GameInstance::GetGameInstance()->GetWorld()->SpawnObject(CreatedObject, { 0,0 }, true, "PO_" + ClassName);
 
 	return CreatedObject;
 }
@@ -73,7 +74,9 @@ inline ObjectPooler<T>::ObjectPooler(int PoolCount, bool StartEnabled)
 			Debug::Log(this, Error, "No Type Default Constructor, Skipping");
 			return;
 		}
-		GameInstance::GetGameInstance()->GetWorld()->SpawnObject(CreatedObject, { 0,0 }, StartEnabled, "PooledObject" + std::to_string(i));
+
+		std::string ClassName = typeid(T).name();
+		GameInstance::GetGameInstance()->GetWorld()->SpawnObject(CreatedObject, { 0,0 }, StartEnabled, "PO_" +ClassName +"_" + std::to_string(i));
 		AddObjectToPooler(CreatedObject);
 	}
 	GameInstance::GetGameInstance()->GetWorld()->SpawnObject(this, { 0,0 }, true, "Object Pooler");
