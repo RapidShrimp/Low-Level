@@ -24,7 +24,7 @@ namespace SinStr {
 			
 			//TO- Look at this
 			Binding<T...>& Invoke(T... args) {
-				if (listener){ listener(static_cast<T&&>(args)...); } return (*this); }	// EDIT - Added conditional to avoid empty listener 
+				 listener(static_cast<T&&>(args)...);  return (*this); }	// EDIT - Added conditional to avoid empty listener 
 			void operator()(T... args) { listener(static_cast<T&&>(args)...); }
 		};
 
