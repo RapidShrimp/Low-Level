@@ -8,11 +8,11 @@
 
 UI_HUD::UI_HUD(PlayerCharacter& Player)
 {
-	Player.OnSinibombUpdated += std::bind(&UI_HUD::Handle_OnUpdateSinibombs, this, std::placeholders::_1);
-	Player.OnScoreUpdated += std::bind(&UI_HUD::Handle_OnUpdateScore, this, std::placeholders::_1);
+	Player.OnSinibombUpdated.AddListener(this,std::bind(&UI_HUD::Handle_OnUpdateSinibombs, this, std::placeholders::_1));
+	Player.OnScoreUpdated.AddListener(this,std::bind(&UI_HUD::Handle_OnUpdateScore, this, std::placeholders::_1));
 
 	
-	GameInstance::GetGameInstance()->GetWorld()->OnPausedChanged += std::bind(&UI_HUD::Handle_GamePaused, this, std::placeholders::_1);
+	GameInstance::GetGameInstance()->GetWorld()->OnPausedChanged.AddListener(this,std::bind(&UI_HUD::Handle_GamePaused, this, std::placeholders::_1));
 
 	m_ScoreRenderer = new UI_Text("00000", "Assets/Fonts/sinistar.ttf",24);
 	m_ScoreRenderer->m_Transform.Location = { 10,10 };

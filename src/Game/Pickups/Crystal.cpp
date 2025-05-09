@@ -45,7 +45,7 @@ void Crystal::Init(Object* OwningObject)
 	RegisterComponent(m_RigidBody, false, "RigidBody");
 	RegisterComponent(m_Collider, false, "Collider");
 
-	m_Collider->OnCollisionEvent += std::bind(&Crystal::OnCollisionEvent, this, std::placeholders::_1, std::placeholders::_2);
+	m_Collider->OnCollisionEvent.AddListener(this, std::bind(& Crystal::OnCollisionEvent, this, std::placeholders::_1, std::placeholders::_2));
 	Debug::Log(this, DebugNone, "Bound Event");
 
 

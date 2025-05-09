@@ -18,7 +18,7 @@ UI_LostLife::UI_LostLife()
 
 void UI_LostLife::Init(Object* OwningObject)
 {
-	m_ScreenTimer->OnTimerCompleted += std::bind(&UI_LostLife::Handle_HideLostLifeMenu, this);
+	m_ScreenTimer->OnTimerCompleted.AddListener(this,std::bind(&UI_LostLife::Handle_HideLostLifeMenu, this));
 	AddElement(m_LifePrompt);
 	AddElement(m_SinistarStateText);
 }

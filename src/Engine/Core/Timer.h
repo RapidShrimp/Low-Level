@@ -3,7 +3,7 @@
 #include "Engine/Core/Events/Event.h"
 #include "Engine/Core/GameInstance.h"
 
-class Timer {
+class Timer : public Object {
 
 public:
 	SinStr::Event<> OnTimerUpdated;
@@ -23,7 +23,7 @@ public:
 	//Duration in Seconds
 
 	//Independant Timer, Self Managing, Fires only once and then deletes itself
-	Timer(float Duration, float RandomDeviation) 
+ 	Timer(float Duration, float RandomDeviation) 
 	{
 		isActive = true;
 		m_TickPaused = false;
@@ -31,7 +31,7 @@ public:
 		m_MaxTime = Duration * 500;
 		m_CurrentTime = 0;
 		m_Deviation = RandomDeviation;
-		GameInstance::GetGameInstance()->OnFixedUpdate += std::bind(&Timer::Handle_IndependantOnFixedUpdate, this, std::placeholders::_1);
+		GameInstance::GetGameInstance()->OnFixedUpdate.AddListener(this,std::bind(&Timer::Handle_IndependantOnFixedUpdate, this, std::placeholders::_1));
 
 	}
 
@@ -51,7 +51,7 @@ public:
 	void ResumeTimer() { isActive = true; }
 	void StartTimer() 
 	{ 
-		GameInstance::GetGameInstance()->OnFixedUpdate += std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1);
+		GameInstance::GetGameInstance()->OnFixedUpdate.AddListener(this,std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1));
 		isActive = true; 
 	}
 
@@ -62,24 +62,25 @@ public:
 
 	void DestroyIndependantTimer() {
 		PauseTimer();
-		GameInstance::GetGameInstance()->OnFixedUpdate -= std::bind(&Timer::Handle_IndependantOnFixedUpdate, this, std::placeholders::_1);
+ 		GameInstance* temp = GameInstance::GetGameInstance();
+		GameInstance::GetGameInstance()->OnFixedUpdate.RemoveListener(this,std::bind(&Timer::Handle_IndependantOnFixedUpdate, this, std::placeholders::_1));
 		OnTimerUpdated.Empty();
 		OnTimerCompleted.Empty();
 		Debug::Log(nullptr, Display, "Independant Timer Destroyed");
 
-		delete this;
 	};
 	//This will clear all bindings and destroy the timer
 	//If not removed by the creator of the timer a memory leak occurs
 	void DestroyTimer()
 	{
 		PauseTimer();
-		GameInstance::GetGameInstance()->OnFixedUpdate -= std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1);
+		GameInstance::GetGameInstance()->OnFixedUpdate.RemoveListener(this,std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1));
 		OnTimerUpdated.Empty();
 		OnTimerCompleted.Empty();
 		Debug::Log(nullptr, Display, "Timer Destroyed");
 
-		delete this;
+		
+
 	};
 
 private:
@@ -119,7 +120,7 @@ private:
 
 		OnTimerCompleted.Invoke();
 		DestroyIndependantTimer();
-
+		GameInstance::GetGameInstance()->QueueFree(this);
 	}
 };
 

@@ -27,7 +27,7 @@ void Enemy::Init(Object* OwningObject)
 
 
 
-	m_Health->OnDeath += std::bind(&Enemy::Handle_EnemyDeath, this);
+	m_Health->OnDeath.AddListener(this,std::bind(&Enemy::Handle_EnemyDeath, this));
 }
 
 void Enemy::BeginPlay()

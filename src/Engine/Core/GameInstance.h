@@ -43,6 +43,7 @@ public:
 	sf::View& GetCamera() { return m_Camera; }
 	const sf::RenderWindow& GetWindow() { return m_GameWindow; }
 	const PlayerCharacter* GetPlayer();
+	void QueueFree(Object* InObject) { m_ToDelete.push_back(InObject); }
 protected:
 	sf::RenderWindow m_GameWindow;
 	sf::View m_Camera;
@@ -62,5 +63,9 @@ public:
 private:
 	bool m_Debug = false;
 	bool m_LogDisplay = true;
+
+
+	void ClearWaitingObjects();
+	std::vector<Object*> m_ToDelete;
 };
 

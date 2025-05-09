@@ -37,12 +37,12 @@ void PlayerCharacter::Init(Object* OwningObject)
 	RegisterComponent(m_Collider, Math::Vector2(-10, -10), true, "Circle Collider");
 	RegisterComponent(m_RigidBody, true, "Rigid Body");
 
-	m_Health->OnDamageTaken += std::bind(&PlayerCharacter::Handle_PlayerDamaged, this, std::placeholders::_1);
-	m_Health->OnDeath += std::bind(&PlayerCharacter::Handle_PlayerDead, this);
+	m_Health->OnDamageTaken.AddListener(this,std::bind(&PlayerCharacter::Handle_PlayerDamaged, this, std::placeholders::_1));
+	m_Health->OnDeath.AddListener(this,std::bind(&PlayerCharacter::Handle_PlayerDead, this));
 
 
 	m_SpriteRenderer->GetLocalTransform().SetRotation(1.5708f);
-	m_Collider->OnCollisionEvent += std::bind(&PlayerCharacter::OnCollisionEventCallback, this, std::placeholders::_1, std::placeholders::_2);
+	m_Collider->OnCollisionEvent.AddListener(this,std::bind(&PlayerCharacter::OnCollisionEventCallback, this, std::placeholders::_1, std::placeholders::_2));
 
 	AxisActionMapping MoveKeys = AxisActionMapping(sf::Keyboard::Key::W, sf::Keyboard::Key::Unknown, sf::Keyboard::Key::Unknown, sf::Keyboard::Key::Unknown);
 	AxisInput* MoveInput = InputEventHandler::GetInstance()->CreateAxisInput(MoveKeys);
@@ -56,11 +56,11 @@ void PlayerCharacter::Init(Object* OwningObject)
 
 
 	MouseInput* MouseInputs = InputEventHandler::GetInstance()->CreateMouseInput();
-	if (FireKey) { FireKey->OnInputUpdate += std::bind(&PlayerCharacter::FireWeapon, this, std::placeholders::_1); }
-	if (Sinibomb) { Sinibomb->OnInputUpdate += std::bind(&PlayerCharacter::FireSinibombForward, this, std::placeholders::_1); }
-	if (SinibombRear) { SinibombRear->OnInputUpdate += std::bind(&PlayerCharacter::FireSinibombRear, this, std::placeholders::_1); }
-	if (MoveInput) { MoveInput->OnAxisInputUpdate += std::bind(&PlayerCharacter::MovePlayer, this, std::placeholders::_1, std::placeholders::_2); }
-	if (PauseKey) { PauseKey->OnInputUpdate += std::bind(&PlayerCharacter::Input_TogglePauseGame, this, std::placeholders::_1); }
+	if (FireKey) { FireKey->OnInputUpdate.AddListener(this,std::bind(&PlayerCharacter::FireWeapon, this, std::placeholders::_1)); }
+	if (Sinibomb) { Sinibomb->OnInputUpdate.AddListener(this,std::bind(&PlayerCharacter::FireSinibombForward, this, std::placeholders::_1)); }
+	if (SinibombRear) { SinibombRear->OnInputUpdate.AddListener(this,std::bind(&PlayerCharacter::FireSinibombRear, this, std::placeholders::_1)); }
+	if (MoveInput) { MoveInput->OnAxisInputUpdate.AddListener(this,std::bind(&PlayerCharacter::MovePlayer, this, std::placeholders::_1, std::placeholders::_2)); }
+	if (PauseKey) { PauseKey->OnInputUpdate.AddListener(this,std::bind(&PlayerCharacter::Input_TogglePauseGame, this, std::placeholders::_1)); }
 	GameInstance::GetGameInstance()->GetWorld()->SpawnUILayer(new UI_HUD(*this), { 0,0 }, true);
 }
 

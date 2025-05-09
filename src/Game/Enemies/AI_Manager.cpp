@@ -19,7 +19,7 @@ void AI_Manager::Init(Object* OwningObject)
 		Enemy->m_Transform.Location = { Math::Random::Range(-600.0f,600.0f),Math::Random::Range(-600.0f,600.0f) };
 		HealthComponent* EnemyHealth = Enemy->FindComponentOfType<HealthComponent>();
 		if (EnemyHealth == nullptr) { continue; }
-		EnemyHealth->OnDeath += std::bind(&AI_Manager::Handle_CollectorDead, this);
+		EnemyHealth->OnDeath.AddListener(this,std::bind(& AI_Manager::Handle_CollectorDead, this));
 
 		SteeringManager* Steering = Enemy->GetSteering();
 		if (Steering == nullptr) { continue; }
@@ -37,7 +37,7 @@ void AI_Manager::Init(Object* OwningObject)
 	for (FiringEnemy* Shooter : m_Shooters->GetAllObjects()) 
 	{
 		Shooter->m_Transform.Location = { Math::Random::Range(-600.0f,600.0f),Math::Random::Range(-600.0f,600.0f) };
-		Shooter->OnEnemyDeath += std::bind(&AI_Manager::Handle_ShooterDeath, this);
+		Shooter->OnEnemyDeath.AddListener(this,std::bind(&AI_Manager::Handle_ShooterDeath, this));
 
 		//Assign Separation Targets
 
@@ -52,7 +52,7 @@ void AI_Manager::Init(Object* OwningObject)
 	//Crystal Bindings
 	AsteroidManager* Manager = GameInstance::GetGameInstance()->GetWorld()->FindRegisteredObjectOfType<AsteroidManager>();
 	for (Crystal* Cryst : Manager->GetPooledCrystals()->GetAllObjects()) {
-		Cryst->OnCrystalAvaliable += std::bind(&AI_Manager::Handle_CrystalAppeared, this, std::placeholders::_1);
+		Cryst->OnCrystalAvaliable.AddListener(this,std::bind(&AI_Manager::Handle_CrystalAppeared, this, std::placeholders::_1));
 	}
 
 
@@ -95,13 +95,13 @@ void AI_Manager::TargetPlayer(Enemy* EnemyToTarget)
 void AI_Manager::Handle_ShooterDeath()
 {
 	Timer* ShooterRespawnTimer = new Timer(4.0f, 0.0f);
-	ShooterRespawnTimer->OnTimerCompleted += std::bind(&AI_Manager::SpawnShooter, this);
+	ShooterRespawnTimer->OnTimerCompleted.AddListener(this,std::bind(&AI_Manager::SpawnShooter, this));
 }
 
 void AI_Manager::Handle_CollectorDead()
 {
 	Timer* RespawnTimer = new Timer(15.0f, 0.0f);
-	RespawnTimer->OnTimerCompleted += std::bind(&AI_Manager::SpawnCollector, this);
+	RespawnTimer->OnTimerCompleted.AddListener(this,std::bind(&AI_Manager::SpawnCollector, this));
 }
 
 void AI_Manager::SpawnShooter()

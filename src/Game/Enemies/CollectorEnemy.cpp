@@ -105,7 +105,7 @@ void CollectorEnemy::TargetCrystal(Crystal* InCrystal)
 	}
 
 	m_Target = InCrystal;
- 	InCrystal->OnCrystalCollided += std::bind(&CollectorEnemy::Handle_CrystalLost, this, std::placeholders::_1);
+	InCrystal->OnCrystalCollided.AddListener(this, std::bind(&CollectorEnemy::Handle_CrystalLost, this, std::placeholders::_1));
 }
 
 void CollectorEnemy::SetNewTarget(GameObject* NewTarget)
