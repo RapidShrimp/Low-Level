@@ -11,15 +11,14 @@ namespace SinStr {
 		protected:
 			void* contextObj;
 			std::function<void(T...)> listener;
-
 		public:
 			Binding() = default;
-			Binding(std::function<void(T...)> func, void* _contextObj)
+			Binding(std::function<void(T...)> func, void* _contextObj) 
 			{
 				contextObj = _contextObj;
 				listener = std::move(func);
 			}
-			bool operator==(const Binding<T...>& rhs) { return contextObj == rhs.contextObj; }
+			bool operator==(const Binding<T...>& rhs) { return contextObj == rhs.contextObj && listener.target_type().hash_code() == rhs.listener.target_type().hash_code(); }
 			//bool operator!=(const Binding<T...>& rhs) { return !(this == rhs); }
 			constexpr size_t hash_code() const noexcept { return listener.target_type().hash_code(); }
 			Binding<T...>& Invoke(T... args) { listener(static_cast<T&&>(args)...); return (*this); }
@@ -34,7 +33,15 @@ namespace SinStr {
 
 		public:
 
-			Event<T...>& Invoke(T... args) { for (Binding<T...> l : listeners) l.Invoke(static_cast<T&&>(args)...); return (*this); }
+			Event<T...>& Invoke(T... args)
+			{
+				for (int i = 0; i < listeners.size(); i += 1)
+				{
+					listeners[i].Invoke(static_cast<T&&>(args)...);
+				}
+				
+				return (*this);
+			}
 
 			void AddListener(void* contextObj, const std::function<void(T...)> inFunc)
 			{

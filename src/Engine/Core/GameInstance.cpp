@@ -79,8 +79,8 @@ void GameInstance::Update()
 
 		while (timeSinceLastPhysics >= physicsTimeStep)
 		{
-			OnFixedUpdate.Invoke(physicsTimeStep);
 			FixedUpdate(physicsTimeStep);
+			OnFixedUpdate.Invoke(physicsTimeStep);
 			timeSinceLastPhysics -= physicsTimeStep;
 
 		}
@@ -90,6 +90,7 @@ void GameInstance::Update()
 		Render();
 		InputEventHandler::GetInstance()->PollInputEvents();
 		
+		ClearWaitingObjects();
 	}
 }
 
@@ -124,4 +125,13 @@ void GameInstance::CloseGame()
 {
 	m_CurrentScene->UnloadScene();
 	m_GameWindow.close();
+}
+
+void GameInstance::ClearWaitingObjects()
+{
+	for (Object* Obj : m_ToDelete) {
+		delete Obj;
+	}
+
+	m_ToDelete.clear();
 }

@@ -3,7 +3,7 @@
 #include "Engine/Core/Events/Event.h"
 #include "Engine/Core/GameInstance.h"
 
-class Timer {
+class Timer : public Object {
 
 public:
 	SinStr::Event<> OnTimerUpdated;
@@ -67,7 +67,8 @@ public:
 		OnTimerCompleted.Empty();
 		Debug::Log(nullptr, Display, "Independant Timer Destroyed");
 
-		delete this;
+		GameInstance::GetGameInstance()->QueueFree(this);
+
 	};
 	//This will clear all bindings and destroy the timer
 	//If not removed by the creator of the timer a memory leak occurs
@@ -79,7 +80,8 @@ public:
 		OnTimerCompleted.Empty();
 		Debug::Log(nullptr, Display, "Timer Destroyed");
 
-		delete this;
+		GameInstance::GetGameInstance()->QueueFree(this);
+
 	};
 
 private:
@@ -119,7 +121,7 @@ private:
 
 		OnTimerCompleted.Invoke();
 		DestroyIndependantTimer();
-
+		
 	}
 };
 
