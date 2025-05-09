@@ -23,7 +23,7 @@ public:
 	//Duration in Seconds
 
 	//Independant Timer, Self Managing, Fires only once and then deletes itself
-	Timer(float Duration, float RandomDeviation) 
+ 	Timer(float Duration, float RandomDeviation) 
 	{
 		isActive = true;
 		m_TickPaused = false;
@@ -62,12 +62,11 @@ public:
 
 	void DestroyIndependantTimer() {
 		PauseTimer();
+ 		GameInstance* temp = GameInstance::GetGameInstance();
 		GameInstance::GetGameInstance()->OnFixedUpdate.RemoveListener(this,std::bind(&Timer::Handle_IndependantOnFixedUpdate, this, std::placeholders::_1));
 		OnTimerUpdated.Empty();
 		OnTimerCompleted.Empty();
 		Debug::Log(nullptr, Display, "Independant Timer Destroyed");
-
-		GameInstance::GetGameInstance()->QueueFree(this);
 
 	};
 	//This will clear all bindings and destroy the timer
@@ -80,7 +79,7 @@ public:
 		OnTimerCompleted.Empty();
 		Debug::Log(nullptr, Display, "Timer Destroyed");
 
-		GameInstance::GetGameInstance()->QueueFree(this);
+		
 
 	};
 
@@ -121,7 +120,7 @@ private:
 
 		OnTimerCompleted.Invoke();
 		DestroyIndependantTimer();
-		
+		GameInstance::GetGameInstance()->QueueFree(this);
 	}
 };
 
