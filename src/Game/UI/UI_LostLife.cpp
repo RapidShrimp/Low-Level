@@ -26,16 +26,24 @@ void UI_LostLife::Init(Object* OwningObject)
 void UI_LostLife::OnActivate()
 {
 	m_ScreenTimer->StartTimer();
+	GameInstance::GetGameInstance()->GetWorld()->SetGamePaused(true);
+
 }
 
 void UI_LostLife::OnDeactivate()
 {
 	m_ScreenTimer->PauseTimer();
+	GameInstance::GetGameInstance()->GetWorld()->SetGamePaused(false);
+
 }
 
 void UI_LostLife::Render(sf::RenderWindow& Renderer)
 {
 	if (!isActive) { return; }
+
+	sf::RectangleShape Background({ WINDOW_WIDTH, WINDOW_HEIGHT });
+	Background.setFillColor(sf::Color::Black);
+	Renderer.draw(Background);
 	UI_Base::Render(Renderer);
 }
 

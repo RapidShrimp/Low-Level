@@ -39,15 +39,15 @@ namespace SinStr {
 			//TO- Look at this
 			Event<T...>& Invoke(T... args)
 			{
-				/*for (int i = 0; i < listeners.size(); i += 1)
+				for (int i = 0; i < listeners.size(); i += 1)
 				{
 					listeners[i].Invoke(static_cast<T&&>(args)...);
-				}*/
-
-				for (Binding<T...>& l : listeners)
-				{
-					l.Invoke(static_cast<T&&>(args)...);
 				}
+
+				//for (Binding<T...>& l : listeners)
+				//{
+				//	l.Invoke(static_cast<T&&>(args)...);
+				//}
 				
 				return (*this);
 			}

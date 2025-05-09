@@ -137,6 +137,5 @@ void MouseInput::PollEvent()
 	sf::Vector2f CamLocation = GameInstance::GetGameInstance()->GetCamera().getCenter();
 	CamLocation = { CamLocation.x - WINDOW_WIDTH / 2, CamLocation.y - WINDOW_HEIGHT / 2 };
 	MousePos = sf::Vector2f({ (float)WorldMousePos.x,(float)WorldMousePos.y }) + CamLocation;
-	//MousePos = GameInstance::GetGameInstance()->GetCamera().getCenter( ;// .mapCoordsToPixel({ static_cast<float>(MousePos.x), static_cast<float>(MousePos.y) });
 	OnMouseInputUpdate(Math::Vector2( MousePos.x,MousePos.y ));
 }

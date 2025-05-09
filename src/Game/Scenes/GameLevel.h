@@ -31,4 +31,7 @@ public:
 	virtual PlayerCharacter* GetPlayerCharacter() override { return m_Player; }
 	virtual Boss* GetSinistarBoss() { return m_Boss; }
 
+
+private:
+	void Handle_PrepareLevel(float NewLives);
 };

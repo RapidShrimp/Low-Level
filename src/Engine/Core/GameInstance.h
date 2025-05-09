@@ -35,7 +35,6 @@ public:
 	};
 
 	GameScene* GetWorld() { return m_CurrentScene; }
-	void LoadScene(GameScene* NewScene);
 	bool ShouldDrawDebug() { return m_Debug; }
 	bool ShouldLogDisplay() { return m_LogDisplay; }
 
@@ -43,13 +42,16 @@ public:
 	sf::View& GetCamera() { return m_Camera; }
 	const sf::RenderWindow& GetWindow() { return m_GameWindow; }
 	const PlayerCharacter* GetPlayer();
+	
+	void QueueGameScene(GameScene* Next) { m_NextScene = Next; }
 	void QueueFree(Object* InObject) { m_ToDelete.push_back(InObject); }
 protected:
+	void LoadScene();
 	sf::RenderWindow m_GameWindow;
 	sf::View m_Camera;
 	sf::View m_HUD;
 	GameScene* m_CurrentScene;
-	GameScene* m_NextScene;
+	GameScene* m_NextScene = nullptr;
 
 public:
 	bool m_GameExit = false;

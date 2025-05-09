@@ -53,7 +53,7 @@ void UI_MainMenu::Handle_Select(CallbackContext Context)
 	{
 	case 0:
 		LoadLevel = new GameLevel();
-		GameInstance::GetGameInstance()->LoadScene(LoadLevel);
+		GameInstance::GetGameInstance()->QueueGameScene(LoadLevel);
 		break;
 	case 1: 
 		GameInstance::GetGameInstance()->CloseGame();

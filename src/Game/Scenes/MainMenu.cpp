@@ -16,6 +16,8 @@ void MainMenu::OnLoadScene()
 	GameScene::OnLoadScene();
 
 
+	AudioManger::PlayMusic("sinistarHomeMusic.mp3", true);
+	
 	//The UI Logo
 	GameObject* MainMenu = new GameObject();
 	SpawnObject(MainMenu,Math::Vector2(720/2,18*4.5));
@@ -28,6 +30,5 @@ void MainMenu::OnLoadScene()
 	//Spawn UI
 	UI_Base* MainMenuUI = new UI_MainMenu();
 	SpawnObject(MainMenuUI, { 0,0 });
-	AudioManger::PlayMusic("sinistarHomeMusic.mp3", true);
 
 }

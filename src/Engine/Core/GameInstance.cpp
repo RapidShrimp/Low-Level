@@ -14,12 +14,17 @@ GameInstance::~GameInstance()
 {
 }
 
-void GameInstance::LoadScene(GameScene* NewScene)
+void GameInstance::LoadScene()
 {
+	if (m_NextScene == nullptr) { return; }
+	InputEventHandler::BlockAllInput();
 	m_CurrentScene->UnloadScene();
-	m_CurrentScene = NewScene;
+	m_CurrentScene = m_NextScene;
 	m_CurrentScene->OnLoadScene();
 	m_CurrentScene->OnSceneLoaded();
+	m_NextScene = nullptr;
+	InputEventHandler::EnableInput();
+
 }
 
 const PlayerCharacter* GameInstance::GetPlayer()
@@ -91,6 +96,7 @@ void GameInstance::Update()
 		InputEventHandler::GetInstance()->PollInputEvents();
 		
 		ClearWaitingObjects();
+		LoadScene();
 	}
 }
 
@@ -108,6 +114,9 @@ void GameInstance::Render()
 	if (m_CurrentScene->GetPlayerCharacter() != nullptr) {
 		m_Camera.setCenter((m_CurrentScene->GetPlayerCharacter()->m_Transform.Location).ToSF() - sf::Vector2f(0,70));
 		m_GameWindow.setView(m_Camera);
+	}
+	else {
+		m_Camera.setCenter({ WINDOW_WIDTH/2,WINDOW_HEIGHT/2 });
 	}
 
 	//UI

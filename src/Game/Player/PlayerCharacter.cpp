@@ -8,11 +8,12 @@
 #include "Game/UI/UI_HUD.h"
 #include "PlayerCharacter.h"
 #include "Engine/Core/AudioManager.h"
+#include "Game/Scenes/GameOver.h"
 
 
 PlayerCharacter::PlayerCharacter()
 {
- 	m_Health = new HealthComponent(10);
+ 	m_Health = new HealthComponent(40);
 	m_SpriteRenderer = new SpriteRenderer("Assets/SinistarSpriteSheet.png", { 106,14 }, { 2,42 }, 8, 1);
 	m_SpriteRenderer->SetSpriteScale(3, 3);
 
@@ -218,9 +219,11 @@ void PlayerCharacter::FixedUpdate(float DeltaTime)
 void PlayerCharacter::Handle_PlayerDead()
 {
 	OnPlayerDied.Invoke();
+	GameInstance::GetGameInstance()->QueueGameScene(new GameOver(Score));
 }
 
 void PlayerCharacter::Handle_PlayerDamaged(float InDamage)
 {
+	OnPlayerLostLife.Invoke(m_Health->GetCurrentHealth()/10);
 	Debug::Log(this, Warning, "Player Took Damage");
 }

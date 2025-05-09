@@ -20,6 +20,7 @@ void GameLevel::OnLoadScene()
 {
 	GameScene::OnLoadScene();
 	m_Player = new PlayerCharacter();
+	m_Player->OnPlayerLostLife.AddListener(this, std::bind(&GameLevel::Handle_PrepareLevel, this, std::placeholders::_1));
 	m_Boss = new Boss();
 	m_AsteroidManager = new AsteroidManager();
 	m_BulletPooler = new ObjectPooler<Projectile>(15, false);
@@ -34,4 +35,8 @@ void GameLevel::OnLoadScene()
 	//TODO - m_EnemyPooler = new ObjectPooler<Enemy>(3, false);
 
  	AudioManger::PlayMusic("sinistar_BuildingTheme.mp3",true);
+}
+
+void GameLevel::Handle_PrepareLevel(float NewLives)
+{
 }

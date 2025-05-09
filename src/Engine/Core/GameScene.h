@@ -39,6 +39,7 @@ protected:
 	std::vector<GameObject*> SceneObjects;
 	std::vector<UI_Base*> UI_Elements;
 
+	//std::vector<Timer*> m_ActiveTimers;
 
 	bool m_GamePaused = false; 
 public:	

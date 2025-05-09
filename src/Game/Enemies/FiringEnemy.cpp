@@ -74,6 +74,13 @@ void FiringEnemy::Handle_EnemyDeath()
 	Enemy::Handle_EnemyDeath();
 }
 
+void FiringEnemy::OnDestroy()
+{
+	GameObject::OnDestroy();
+	delete m_FiringTimer;
+	m_FiringTimer = nullptr;
+}
+
 void FiringEnemy::FireWeapon() 
 {
 	if (!isActive) { return; }

@@ -22,7 +22,6 @@ Boss::Boss()
 	
 	m_MovePause = new Timer(3.4f, false);
 	
-	m_Pieces = 8;
 }
 
 void Boss::Init(Object* OwningObject)
@@ -40,7 +39,6 @@ void Boss::BeginPlay()
 	m_SpriteRenderer->SetSprite(0, 0);
 	//m_SpriteRenderer->StartAnimation();
 
-	GiveCrystal(new Crystal());
 }
 
 void Boss::Update()
@@ -56,6 +54,10 @@ void Boss::FixedUpdate(float DeltaTime)
 void Boss::OnDestroy()
 {
 	Enemy::OnDestroy();
+	delete m_AttackTimer;
+	delete m_MovePause;
+	m_AttackTimer = nullptr;
+	m_MovePause = nullptr;
 }
 
 void Boss::Render(sf::RenderWindow& Renderer)

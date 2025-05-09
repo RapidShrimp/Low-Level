@@ -13,5 +13,6 @@ public:
 	virtual void OnActivate() override;
 	virtual void AI_Logic(float DeltaTime) override;
 	virtual void Handle_EnemyDeath() override;
+	virtual void OnDestroy() override;
 	void FireWeapon();
 };

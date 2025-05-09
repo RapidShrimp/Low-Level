@@ -51,4 +51,5 @@ private:
 	void Handle_OnUpdateSinibombs(int NewBombCount);
 	void Handle_OnUpdateScore(int NewScore);
 	void Handle_GamePaused(bool NewPaused);
+	void Handle_LifeLost(float NewHealth);
 };
