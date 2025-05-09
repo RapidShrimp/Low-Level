@@ -8,8 +8,6 @@ AI_Manager::AI_Manager()
 {
 	m_Collectors = new ObjectPooler<CollectorEnemy>(5, true);
 	m_Shooters = new ObjectPooler<FiringEnemy>(3, true);
-
-
 }
 
 void AI_Manager::Init(Object* OwningObject)

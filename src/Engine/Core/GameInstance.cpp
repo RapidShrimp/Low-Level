@@ -19,6 +19,7 @@ void GameInstance::LoadScene()
 	if (m_NextScene == nullptr) { return; }
 	InputEventHandler::BlockAllInput();
 	m_CurrentScene->UnloadScene();
+	delete m_CurrentScene;
 	m_CurrentScene = m_NextScene;
 	m_CurrentScene->OnLoadScene();
 	m_CurrentScene->OnSceneLoaded();

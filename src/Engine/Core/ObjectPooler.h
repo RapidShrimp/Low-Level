@@ -16,7 +16,7 @@ public:
 	
 	template<typename U>
 	vector<U*> GetObjectsAs();
-
+	void DestroyPooler();
 protected:
 	void AddObjectToPooler(T* InObject);
 	void RemovePooledObject(T* InObject);
