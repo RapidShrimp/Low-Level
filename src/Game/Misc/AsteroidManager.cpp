@@ -20,8 +20,8 @@ void AsteroidManager::Init(Object* OwningObject)
 
 		Asteroid* Ast = dynamic_cast<Asteroid*>(Asteroids[i]);
 		if (Ast == nullptr) { return; }
-		Ast->OnSpawnCrystal += std::bind(&AsteroidManager::OnSpawnCrystal, this, std::placeholders::_1);
-		Ast->OnAsteroidDestroyed += std::bind(&AsteroidManager::OnAsteroidDestroyed, this);
+		Ast->OnSpawnCrystal.AddListener(this,std::bind(&AsteroidManager::OnSpawnCrystal, this, std::placeholders::_1));
+		Ast->OnAsteroidDestroyed.AddListener(this,std::bind(&AsteroidManager::OnAsteroidDestroyed, this));
 		InitialPlaceAsteroid(Ast);
 		Rigidbody* rb = Ast->FindComponentOfType<Rigidbody>();
 		if (rb != nullptr) 

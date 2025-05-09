@@ -21,7 +21,7 @@ void Rigidbody::Init(Object* Owner)
 		return;
 	}
 	else {
-		GetOwner()->GetCollider()->OnCollisionEvent += std::bind(&Rigidbody::OnCollisionEventCallback, this, std::placeholders::_1, std::placeholders::_2);
+		GetOwner()->GetCollider()->OnCollisionEvent.AddListener(this,std::bind(&Rigidbody::OnCollisionEventCallback, this, std::placeholders::_1, std::placeholders::_2));
 	}
 }
 

@@ -27,7 +27,7 @@ void FiringEnemy::Init(Object* OwningObject)
 	Enemy::Init(OwningObject);
 	m_SteeringManager->AddBehaviour(new Separation(300),5);
 
-	m_FiringTimer->OnTimerCompleted += std::bind(&FiringEnemy::FireWeapon, this);
+	m_FiringTimer->OnTimerCompleted.AddListener(this,std::bind(&FiringEnemy::FireWeapon, this));
  	m_FiringTimer->StartTimer();
 }
 

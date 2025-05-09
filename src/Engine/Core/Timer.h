@@ -31,7 +31,7 @@ public:
 		m_MaxTime = Duration * 500;
 		m_CurrentTime = 0;
 		m_Deviation = RandomDeviation;
-		GameInstance::GetGameInstance()->OnFixedUpdate += std::bind(&Timer::Handle_IndependantOnFixedUpdate, this, std::placeholders::_1);
+		GameInstance::GetGameInstance()->OnFixedUpdate.AddListener(this,std::bind(&Timer::Handle_IndependantOnFixedUpdate, this, std::placeholders::_1));
 
 	}
 
@@ -51,7 +51,7 @@ public:
 	void ResumeTimer() { isActive = true; }
 	void StartTimer() 
 	{ 
-		GameInstance::GetGameInstance()->OnFixedUpdate += std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1);
+		GameInstance::GetGameInstance()->OnFixedUpdate.AddListener(this,std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1));
 		isActive = true; 
 	}
 
@@ -62,7 +62,7 @@ public:
 
 	void DestroyIndependantTimer() {
 		PauseTimer();
-		GameInstance::GetGameInstance()->OnFixedUpdate -= std::bind(&Timer::Handle_IndependantOnFixedUpdate, this, std::placeholders::_1);
+		GameInstance::GetGameInstance()->OnFixedUpdate.RemoveListener(this,std::bind(&Timer::Handle_IndependantOnFixedUpdate, this, std::placeholders::_1));
 		OnTimerUpdated.Empty();
 		OnTimerCompleted.Empty();
 		Debug::Log(nullptr, Display, "Independant Timer Destroyed");
@@ -74,7 +74,7 @@ public:
 	void DestroyTimer()
 	{
 		PauseTimer();
-		GameInstance::GetGameInstance()->OnFixedUpdate -= std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1);
+		GameInstance::GetGameInstance()->OnFixedUpdate.RemoveListener(this,std::bind(&Timer::Handle_OnFixedUpdate, this, std::placeholders::_1));
 		OnTimerUpdated.Empty();
 		OnTimerCompleted.Empty();
 		Debug::Log(nullptr, Display, "Timer Destroyed");

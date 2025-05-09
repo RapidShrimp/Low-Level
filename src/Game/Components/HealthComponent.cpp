@@ -20,7 +20,7 @@ HealthComponent::HealthComponent(float Health)
 void HealthComponent::BeginPlay()
 {
 	if (GetOwner() == nullptr) { return; }
-	GetOwner()->OnTakeDamage += std::bind(&HealthComponent::Handle_OnHeathChanged, this, std::placeholders::_1, std::placeholders::_2);
+	GetOwner()->OnTakeDamage.AddListener(this,std::bind(&HealthComponent::Handle_OnHeathChanged, this, std::placeholders::_1, std::placeholders::_2));
 }
 
 void HealthComponent::Handle_OnHeathChanged(float Damage, GameObject* Instigator)

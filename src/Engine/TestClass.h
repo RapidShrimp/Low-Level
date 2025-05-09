@@ -19,7 +19,7 @@ public:
 
 	RecieverClass(BroadcasterClass* BroadcasterPtr)
 	{
-		BroadcasterPtr->OnDoSomething += std::bind(&RecieverClass::TestFunc, this, std::placeholders::_1);
+		BroadcasterPtr->OnDoSomething.AddListener(this,std::bind(&RecieverClass::TestFunc, this, std::placeholders::_1));
 		cout << "bound to instance" << endl;
 	}
 

@@ -26,9 +26,9 @@ void UI_MainMenu::Init(Object* OwningObject)
 	BindableInput* DownNavigation = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::S);
 	BindableInput* SelectNav = InputEventHandler::GetInstance()->CreateKeyInput(sf::Keyboard::Key::Enter);
 
-	if (UpNavigation) { UpNavigation->OnInputUpdate += std::bind(&UI_MainMenu::Handle_UpInput, this, std::placeholders::_1); }
-	if (DownNavigation) { DownNavigation->OnInputUpdate += std::bind(&UI_MainMenu::Handle_DownInput, this, std::placeholders::_1); }
-	if (SelectNav) { SelectNav->OnInputUpdate += std::bind(&UI_MainMenu::Handle_Select, this, std::placeholders::_1); }
+	if (UpNavigation) { UpNavigation->OnInputUpdate.AddListener(this,std::bind(&UI_MainMenu::Handle_UpInput, this, std::placeholders::_1)); }
+	if (DownNavigation) { DownNavigation->OnInputUpdate.AddListener(this,std::bind(&UI_MainMenu::Handle_DownInput, this, std::placeholders::_1)); }
+	if (SelectNav) { SelectNav->OnInputUpdate.AddListener(this,std::bind(&UI_MainMenu::Handle_Select, this, std::placeholders::_1)); }
 
 
 }

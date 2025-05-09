@@ -28,10 +28,10 @@ Boss::Boss()
 void Boss::Init(Object* OwningObject)
 {
 	Enemy::Init(OwningObject);
-	m_Health->OnDamageTaken += std::bind(&Boss::Handle_TakeDamage, this, std::placeholders::_1);
-	m_AttackTimer->OnTimerCompleted += std::bind(&Boss::ChargePlayer, this);
-	m_MovePause->OnTimerCompleted += std::bind(&Boss::StopMoving, this);
-	//m_Collider->OnCollisionEvent += std::bind(&Boss::Handle_CollisionEvent, )
+	m_Health->OnDamageTaken.AddListener(this,std::bind(& Boss::Handle_TakeDamage, this, std::placeholders::_1));
+	m_AttackTimer->OnTimerCompleted.AddListener(this,std::bind(&Boss::ChargePlayer, this));
+	m_MovePause->OnTimerCompleted.AddListener(this,std::bind(&Boss::StopMoving, this));
+	//m_Collider->OnCollisionEvent.AddListener(this,std::bind(&Boss::Handle_CollisionEvent, )
 }
 
 void Boss::BeginPlay()
