@@ -160,7 +160,8 @@ void UI_HUD::Handle_GamePaused(bool NewPaused)
 
 void UI_HUD::Handle_LifeLost(float NewHealth)
 {
-	Debug::Log(this, Display, "Lives Remaining: " + std::to_string(NewHealth));
+	Debug::Log(this, Display, "Lives Remaining: " + std::to_string((int)NewHealth));
+	m_LifeScreen->SetText("Lives Remaining: " + std::to_string((int)NewHealth));
 	m_LifeScreen->Activate();
 }
 

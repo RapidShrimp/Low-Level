@@ -37,12 +37,12 @@ void SpriteRenderer::NextAnimationFrame()
 	m_Column++;
 
 	
-	if (m_Column * m_CellSize.x > m_Texture.getSize().x) 
+	if (m_Column * m_CellSize.x >= m_Texture.getSize().x) 
 	{
 		m_Column = 0;
 		m_Row++;
 	}
-	if (m_Row * m_CellSize.y > m_Texture.getSize().y) {
+	if (m_Row * m_CellSize.y >= m_Texture.getSize().y) {
 		m_Row = 0;
 		m_Column = 0;
 	}

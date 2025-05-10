@@ -9,7 +9,7 @@ UI_LostLife::UI_LostLife()
 	m_LifePrompt->m_Transform.Location = { WINDOW_WIDTH / 2,(WINDOW_HEIGHT / 2) };
 	m_LifePrompt->SetAlignment(E_TextAlignment::Center);
 
-	m_SinistarStateText = new UI_Text("Lives Remaining: 0", "Assets/Fonts/sinistar.ttf", 24);
+	m_SinistarStateText = new UI_Text("SINISTAR LIVES!", "Assets/Fonts/sinistar.ttf", 24);
 	m_SinistarStateText->m_Transform.Location = { WINDOW_WIDTH / 2,(WINDOW_HEIGHT / 2)  + 32};
 	m_SinistarStateText->SetColour(sf::Color::Red);
 	m_SinistarStateText->SetAlignment(E_TextAlignment::Center);

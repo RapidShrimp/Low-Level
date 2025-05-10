@@ -15,7 +15,7 @@ public:
 	virtual void OnActivate() override;
 	virtual void OnDeactivate() override;
 	virtual void Render(sf::RenderWindow& Renderer) override;
-
+	void SetText(std::string InText) { m_LifePrompt->UpdateText(InText); };
 private:
 	void Handle_HideLostLifeMenu();
 };
