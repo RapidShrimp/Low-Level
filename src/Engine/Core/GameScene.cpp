@@ -1,6 +1,7 @@
 #pragma once
 #include "GameScene.h"
 #include "Game/Player/PlayerCharacter.h"
+#include "Timer.h"
 #include <iostream>
 
 GameScene::GameScene()
@@ -71,6 +72,13 @@ GameObject* GameScene::SpawnObject(GameObject* Spawnable, Math::Vector2 SpawnLoc
 	return SpawnObject(Spawnable, SinStr::Transform(SpawnLocation), StartActive ,DisplayName);
 }
 
+Timer& GameScene::CreateTimer(float TimerDuration, bool IsLooping, float RandomDeviation, bool TickWhenPasused)
+{
+	Timer* CreatedTimer = new Timer(TimerDuration, IsLooping, true, RandomDeviation, TickWhenPasused);
+	m_Timers.push_back(CreatedTimer);
+	return *CreatedTimer;
+}
+
 void GameScene::RenderScene(sf::RenderWindow& Renderer)
 {
 	for (int Objects = 0; Objects < SceneObjects.size(); Objects++) 
@@ -97,6 +105,9 @@ void GameScene::FixedUpdate(float DeltaTime)
 	{
 		if (!SceneObjects[Objects]->GetIsActive()) { continue; }
 		SceneObjects[Objects]->FixedUpdate(DeltaTime);
+	}
+	for (int Timer = 0; Timer < m_Timers.size(); Timer++) {
+		m_Timers[Timer]->FixedUpdate(DeltaTime);
 	}
 }
 

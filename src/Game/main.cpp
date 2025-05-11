@@ -2,7 +2,6 @@
 #include "main.h"
 #include <iostream>
 #include "Engine/Core/GameInstance.h"
-
 #include "Engine/TestClass.h"
 
 GameInstance* GameInstance::m_GameInstance = nullptr;

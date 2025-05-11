@@ -1,11 +1,13 @@
 #pragma once
-#include "SFML/Graphics.hpp"
+
 #include "GameObject.h"
-#include "string"
-#include "Engine/Core/Events/Event.h"
+#include "SFML/Graphics.hpp"
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "UI/UI_Base.h"
+#include "string"
+#include "Engine/Core/Events/Event.h"
 
+class Timer;
 class Object;
 class Transform;
 class AsteroidManager;
@@ -50,6 +52,13 @@ public:
 	GameObject* SpawnObject(GameObject* Spawnable, Math::Vector2 SpawnLocation, bool StartActive = true, std::string DisplayName = "Unassigned");
 	const std::vector<GameObject*> GetGameObjects() { return SceneObjects; }
 
+public:
+	//Create a timer added to the world
+	Timer& CreateTimer(float TimerDuration, bool IsLooping, float RandomDeviation = 0, bool TickWhenPasused = false);
+protected:
+	std::vector<Timer*> m_Timers;
+
+public:
 	/*
 	Finds the first registered Object of a specific type
 	returns nullptr if no object found
