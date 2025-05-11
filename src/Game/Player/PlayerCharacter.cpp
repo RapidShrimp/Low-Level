@@ -155,6 +155,15 @@ void PlayerCharacter::OnFireSinibomb(Math::Vector2 Dir)
 	OnSinibombUpdated.Invoke(m_SinibombsHeld);
 }
 
+void PlayerCharacter::ResetPlayer()
+{
+	m_Transform.Location = { 0,0 };
+	m_Health->Deactivate();
+	Timer* InvincibilityTimer = new Timer(15);
+	InvincibilityTimer->OnTimerCompleted.AddListener(this, std::bind_front(&PlayerCharacter::OnRespawnComplete,this));
+	GameInstance::GetWorld()->AddSingleUseTimer(InvincibilityTimer);
+}
+
 
 
 void PlayerCharacter::CollectSinibomb()

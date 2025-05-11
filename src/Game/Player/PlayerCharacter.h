@@ -34,8 +34,8 @@ public:
 	void FireSinibombForward(CallbackContext Context);
 	void FireSinibombRear(CallbackContext Context);
 	void OnFireSinibomb(Math::Vector2 Dir);
-
-
+	void ResetPlayer();
+	void OnRespawnComplete() { m_Health->Activate(); }
 	void CollectSinibomb(); 
 	void AddScore(int AddedScore);
 	void RemoveScore(int RemovedScore);

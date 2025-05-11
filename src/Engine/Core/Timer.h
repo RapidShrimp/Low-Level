@@ -24,7 +24,6 @@ public:
 	//Automatically Adds itself to the World
 	Timer(float Duration) 
 	{
-		m_MaxTime = Duration * 500;
 		m_TickPaused = false;
 		m_Looping = false;
 		m_MaxTime = Duration * 500.0f;

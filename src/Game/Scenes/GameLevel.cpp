@@ -50,6 +50,6 @@ void GameLevel::UnloadScene()
 
 void GameLevel::Handle_PrepareLevel(float NewLives)
 {
-	GameInstance::GetWorld()->GetPlayerCharacter()->m_Transform.Location = { 0,0 };
+	GameInstance::GetWorld()->GetPlayerCharacter()->ResetPlayer();
 	m_AgentManager->ResetAgents();
 }
