@@ -16,7 +16,7 @@ public:
 	
 	template<typename U>
 	vector<U*> GetObjectsAs();
-	void OnDestroy() override  {m_PooledObjects.empty();}
+
 protected:
 	void AddObjectToPooler(T* InObject);
 	void RemovePooledObject(T* InObject);

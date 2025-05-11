@@ -6,11 +6,6 @@
 
 GameInstance* GameInstance::m_GameInstance = nullptr;
 
-
-class TestClass {
-	int A = 1;
-};
-
 int main()
 {
 	InitialiseEngine();

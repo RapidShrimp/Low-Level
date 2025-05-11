@@ -50,6 +50,9 @@ void Enemy::FixedUpdate(float DeltaTime)
 
 void Enemy::OnDestroy()
 {
+
+	m_Health->OnDeath.RemoveListener(this, std::bind(&Enemy::Handle_EnemyDeath, this));
+
 	GameObject::OnDestroy();
 	m_Health = nullptr;
 	m_SpriteRenderer = nullptr;

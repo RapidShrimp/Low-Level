@@ -71,7 +71,12 @@ namespace SinStr {
 
 				std::erase_if(listeners, [listener](Binding<T...> b) {return listener.hash_code() == b.hash_code() && listener == b; });
 			}
-			void Empty() { listeners.clear(); }
+			void Empty() 
+			{ 
+				
+				listeners.clear(); 
+			
+			}
 
 			Event<T...>& operator()(T... args) { Invoke(args...); return (*this); }
 		};

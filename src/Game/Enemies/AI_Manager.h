@@ -18,8 +18,8 @@ public:
 	//virtual void Update() override;
 	virtual void FixedUpdate(float deltaTime) override;
 	//virtual void Render(sf::RenderWindow& Renderer) override;
+	virtual void Unbind() override;
 	virtual void OnDestroy() override;
-
 protected:
 	void Handle_CrystalAppeared(GameObject* Crystal);
 	void TargetPlayer(Enemy* EnemyToTarget);

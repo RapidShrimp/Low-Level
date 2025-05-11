@@ -39,6 +39,7 @@ void GameLevel::OnLoadScene()
 
 void GameLevel::UnloadScene()
 {
+
 	GameScene::UnloadScene();
 	m_Player = nullptr;
 	m_Boss = nullptr;

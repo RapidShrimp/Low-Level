@@ -52,6 +52,14 @@ void Projectile::FixedUpdate(float deltaTime)
 	}
 }
 
+void Projectile::OnDestroy()
+{
+	m_SpriteRender = nullptr;
+	m_Collider = nullptr;
+	m_RigidBody = nullptr;
+	GameObject::OnDestroy();
+}
+
 void Projectile::OnCollisionHit(Collider* OtherCollider, E_CollisionEvent ColliderEvent)
 {
 	if (ColliderEvent != TriggerEnter) { return; }

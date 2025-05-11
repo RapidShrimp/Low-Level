@@ -53,6 +53,10 @@ void Boss::FixedUpdate(float DeltaTime)
 
 void Boss::OnDestroy()
 {
+	m_Health->OnDamageTaken.RemoveListener(this, std::bind(&Boss::Handle_TakeDamage, this, std::placeholders::_1));
+	m_AttackTimer->OnTimerCompleted.RemoveListener(this, std::bind(&Boss::ChargePlayer, this));
+	m_MovePause->OnTimerCompleted.RemoveListener(this, std::bind(&Boss::StopMoving, this));
+
 	Enemy::OnDestroy();
 	OnPeicesUpdated.Empty();
 	m_AttackTimer = nullptr;

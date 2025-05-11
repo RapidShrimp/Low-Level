@@ -161,7 +161,17 @@ void GameScene::UnloadScene()
 	cout << "Unloading Scene: " + m_SceneName << endl;
 
 	//OnPausedChanged.Empty();
+	
+	//Unbind
+	for (int i = 0; i < SceneObjects.size(); i++)
+	{
+		SceneObjects[i]->Unbind();
+	}
+	for (int i = 0; i < UI_Elements.size(); i++) {
+		UI_Elements[i]->Unbind();
+	}
 
+	//Queue For Deletion
 	for (int i = 0; i < m_Timers.size(); i++) {
 		m_Timers[i]->DestroyTimer();
 	}
@@ -169,7 +179,7 @@ void GameScene::UnloadScene()
 	for (int i = 0; i < SceneObjects.size(); i++) 
 	{
 		SceneObjects[i]->OnDestroy();
-		delete SceneObjects[i];
+		GameInstance::GetGameInstance()->QueueFree(SceneObjects[i]);
 	}
 	SceneObjects.empty();
 	for (int i = 0; i < UI_Elements.size(); i++) {

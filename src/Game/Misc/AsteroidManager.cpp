@@ -47,6 +47,18 @@ void AsteroidManager::FixedUpdate(float deltaTime)
 
 void AsteroidManager::OnDestroy()
 {
+
+	vector<Asteroid*> Asteroids = m_PooledAsteroids->GetAllObjects();
+
+	for (int i = 0; i < Asteroids.size(); i++) {
+
+		Asteroid* Ast = dynamic_cast<Asteroid*>(Asteroids[i]);
+		if (Ast == nullptr) { return; }
+		Ast->OnSpawnCrystal.RemoveListener(this, std::bind(&AsteroidManager::OnSpawnCrystal, this, std::placeholders::_1));
+		Ast->OnAsteroidDestroyed.RemoveListener(this, std::bind(&AsteroidManager::OnAsteroidDestroyed, this));
+
+	}
+
 	GameObject::OnDestroy();
 	m_PooledAsteroids = nullptr;
 	m_PooledCrystals = nullptr;

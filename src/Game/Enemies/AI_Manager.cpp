@@ -6,13 +6,15 @@
 
 AI_Manager::AI_Manager()
 {
-	m_Collectors = new ObjectPooler<CollectorEnemy>(5, true);
-	m_Shooters = new ObjectPooler<FiringEnemy>(3, true);
+
 }
 
 void AI_Manager::Init(Object* OwningObject)
 {
 	//Collectors
+	m_Collectors = new ObjectPooler<CollectorEnemy>(5, true);
+	m_Shooters = new ObjectPooler<FiringEnemy>(3, true);
+
 	for (CollectorEnemy* Enemy : m_Collectors->GetAllObjects()) {
 		Enemy->m_Transform.Location = { Math::Random::Range(-600.0f,600.0f),Math::Random::Range(-600.0f,600.0f) };
 		HealthComponent* EnemyHealth = Enemy->FindComponentOfType<HealthComponent>();
@@ -114,8 +116,32 @@ void AI_Manager::SpawnCollector()
 	m_Collectors->GetFreeObject()->Activate();
 }
 
+void AI_Manager::Unbind()
+{
+	AsteroidManager* Manager = GameInstance::GetGameInstance()->GetWorld()->FindRegisteredObjectOfType<AsteroidManager>();
+	for (Crystal* Cryst : Manager->GetPooledCrystals()->GetAllObjects()) {
+		Cryst->OnCrystalAvaliable.RemoveListener(this, std::bind(&AI_Manager::Handle_CrystalAppeared, this, std::placeholders::_1));
+	}
+
+	//Shooter Drone Death Bindings
+	for (FiringEnemy* Shooter : m_Shooters->GetAllObjects())
+	{
+		Shooter->OnEnemyDeath.RemoveListener(this, std::bind(&AI_Manager::Handle_ShooterDeath, this));
+	}
+
+	//Collectors
+	for (CollectorEnemy* Enemy : m_Collectors->GetAllObjects()) {
+		HealthComponent* EnemyHealth = Enemy->FindComponentOfType<HealthComponent>();
+		if (EnemyHealth == nullptr) { continue; }
+		EnemyHealth->OnDeath.RemoveListener(this, std::bind(&AI_Manager::Handle_CollectorDead, this));
+
+	}
+}
+
 void AI_Manager::OnDestroy()
 {
+
+
 	GameObject::OnDestroy();
 	m_Collectors = nullptr;
 	m_Shooters = nullptr;

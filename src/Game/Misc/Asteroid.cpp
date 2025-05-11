@@ -53,6 +53,9 @@ void Asteroid::FixedUpdate(float DeltaTime)
 
 void Asteroid::OnDestroy()
 {
+	m_Health->OnDamageTaken.RemoveListener(this, std::bind(&Asteroid::Handle_OnAsteroidHit, this, std::placeholders::_1));
+	m_Health->OnDeath.RemoveListener(this, std::bind(&Asteroid::Handle_OnAsteroidDestroyed, this, 0));
+
 	GameObject::OnDestroy();
 	m_Health = nullptr;
 	m_SpriteRenderer = nullptr;

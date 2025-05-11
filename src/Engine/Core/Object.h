@@ -25,6 +25,11 @@ public:
 	virtual void Update();
 	virtual void FixedUpdate(float deltaTime);
 	virtual void Render(sf::RenderWindow& Renderer);
+	
+	//Unibnd gets called just before destroy
+	virtual void Unbind();
+
+
 	virtual void OnDestroy();
 
 

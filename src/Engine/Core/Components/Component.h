@@ -18,8 +18,9 @@ public:
 	virtual void Update() override;
 	virtual void Render(sf::RenderWindow& Renderer) override;
 	virtual void FixedUpdate(float deltaTime) override;
+	
 	virtual void OnDestroy() override;
-
+	
 	virtual GameObject* GetOwner() { return dynamic_cast<GameObject*>(m_Owner); }
 	void SetLocalTransform(SinStr::Transform NewTransform) { m_LocalTransform = NewTransform; };
 	SinStr::Transform& GetLocalTransform() { return m_LocalTransform; };
