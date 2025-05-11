@@ -24,6 +24,7 @@ void AsteroidManager::Init(Object* OwningObject)
 		Ast->OnAsteroidDestroyed.AddListener(this,std::bind(&AsteroidManager::OnAsteroidDestroyed, this));
 		InitialPlaceAsteroid(Ast);
 		Rigidbody* rb = Ast->FindComponentOfType<Rigidbody>();
+		rb->m_LinearDamp = 0;
 		if (rb != nullptr) 
 		{ 
 			rb->SetVelocity({ Math::Random::Range(-0.5f,0.5f), Math::Random::Range(-0.5f, 0.5f) }); 

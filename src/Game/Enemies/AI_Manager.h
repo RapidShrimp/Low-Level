@@ -20,6 +20,10 @@ public:
 	//virtual void Render(sf::RenderWindow& Renderer) override;
 	virtual void Unbind() override;
 	virtual void OnDestroy() override;
+
+	void ResetAgents();
+
+
 protected:
 	void Handle_CrystalAppeared(GameObject* Crystal);
 	void TargetPlayer(Enemy* EnemyToTarget);
@@ -28,7 +32,6 @@ protected:
 	
 	void SpawnShooter();
 	void SpawnCollector();
-	
 	ObjectPooler<CollectorEnemy>* m_Collectors = nullptr;
 	ObjectPooler<FiringEnemy>* m_Shooters = nullptr;
 

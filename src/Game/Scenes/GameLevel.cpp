@@ -29,10 +29,9 @@ void GameLevel::OnLoadScene()
 	SpawnObject(m_Player, Math::Vector2(400,400),true,"Player");
 	SpawnObject(m_AsteroidManager,Math::Vector2::Zero(),true,"Asteroid Manager");
 
-	SpawnObject(new AI_Manager(), Math::Vector2(50,50), true, "Enemy Manager");
+	m_AgentManager = new AI_Manager();
+	SpawnObject(m_AgentManager, Math::Vector2(50,50), true, "Enemy Manager");
 	SpawnObject(m_Boss, Math::Vector2(500, 500), true, "Sinistar Boss");
-
-	//TODO - m_EnemyPooler = new ObjectPooler<Enemy>(3, false);
 
  	AudioManger::PlayMusic("sinistar_BuildingTheme.mp3",true);
 }
@@ -46,8 +45,11 @@ void GameLevel::UnloadScene()
 	m_AsteroidManager = nullptr;
 	m_BulletPooler = nullptr;
 	m_BombPooler = nullptr;
+	m_AgentManager = nullptr;
 }
 
 void GameLevel::Handle_PrepareLevel(float NewLives)
 {
+	GameInstance::GetWorld()->GetPlayerCharacter()->m_Transform.Location = { 0,0 };
+	m_AgentManager->ResetAgents();
 }

@@ -14,9 +14,19 @@ void AI_Manager::Init(Object* OwningObject)
 	//Collectors
 	m_Collectors = new ObjectPooler<CollectorEnemy>(5, true);
 	m_Shooters = new ObjectPooler<FiringEnemy>(3, true);
+	Math::Vector2 playerLoc = GameInstance::GetWorld()->GetPlayerCharacter()->m_Transform.Location;
+
+
+	float minX = playerLoc.x - WINDOW_WIDTH;
+	float maxX = playerLoc.x + WINDOW_WIDTH;
+
+	float minY = playerLoc.y - WINDOW_HEIGHT;
+	float maxY = playerLoc.y + WINDOW_HEIGHT;
+
 
 	for (CollectorEnemy* Enemy : m_Collectors->GetAllObjects()) {
-		Enemy->m_Transform.Location = { Math::Random::Range(-600.0f,600.0f),Math::Random::Range(-600.0f,600.0f) };
+		Enemy->m_Transform.Location = { Math::Random::Range(minX,maxX),Math::Random::Range(minY,maxY) };
+
 		HealthComponent* EnemyHealth = Enemy->FindComponentOfType<HealthComponent>();
 		if (EnemyHealth == nullptr) { continue; }
 		EnemyHealth->OnDeath.AddListener(this,std::bind(& AI_Manager::Handle_CollectorDead, this));
@@ -24,10 +34,7 @@ void AI_Manager::Init(Object* OwningObject)
 		SteeringManager* Steering = Enemy->GetSteering();
 		if (Steering == nullptr) { continue; }
 
-		//Assign Separation Targets
-
-		
-
+		//Assign Separation Target
 		Separation* SeparationBehaviour = Steering->GetBehaviour<Separation>();
 		std::vector<CollectorEnemy*> Enemies = m_Collectors->GetAllObjects();
 		SeparationBehaviour->SetTargets(m_Collectors->GetObjectsAs<GameObject>());
@@ -36,7 +43,8 @@ void AI_Manager::Init(Object* OwningObject)
 	//Shooter Drone Death Bindings
 	for (FiringEnemy* Shooter : m_Shooters->GetAllObjects()) 
 	{
-		Shooter->m_Transform.Location = { Math::Random::Range(-600.0f,600.0f),Math::Random::Range(-600.0f,600.0f) };
+		Shooter->m_Transform.Location = { Math::Random::Range(minX,maxX),Math::Random::Range(minY,maxY) };
+
 		Shooter->OnEnemyDeath.AddListener(this,std::bind(&AI_Manager::Handle_ShooterDeath, this));
 
 		//Assign Separation Targets
@@ -108,12 +116,51 @@ void AI_Manager::Handle_CollectorDead()
 
 void AI_Manager::SpawnShooter()
 {
-	m_Shooters->GetFreeObject()->Activate();
+	Math::Vector2 playerLoc = GameInstance::GetWorld()->GetPlayerCharacter()->m_Transform.Location;
+
+	float minX = playerLoc.x - WINDOW_WIDTH;
+	float maxX = playerLoc.x + WINDOW_WIDTH;
+
+	float minY = playerLoc.y - WINDOW_HEIGHT;
+	float maxY = playerLoc.y + WINDOW_HEIGHT;
+
+	FiringEnemy* NewEnemy = m_Shooters->GetFreeObject();
+	NewEnemy->m_Transform.Location = { Math::Random::Range(minX,maxX),Math::Random::Range(minY,maxY) };
+	NewEnemy->Activate();
 }
 
 void AI_Manager::SpawnCollector()
 {
-	m_Collectors->GetFreeObject()->Activate();
+	Math::Vector2 playerLoc = GameInstance::GetWorld()->GetPlayerCharacter()->m_Transform.Location;
+
+	float minX = playerLoc.x - WINDOW_WIDTH;
+	float maxX = playerLoc.x + WINDOW_WIDTH;
+
+	float minY = playerLoc.y - WINDOW_HEIGHT;
+	float maxY = playerLoc.y + WINDOW_HEIGHT;
+
+	CollectorEnemy* NewEnemy = m_Collectors->GetFreeObject();
+	NewEnemy->m_Transform.Location = { Math::Random::Range(minX,maxX),Math::Random::Range(minY,maxY) };
+	NewEnemy->Activate();
+}
+
+void AI_Manager::ResetAgents()
+{
+	Math::Vector2 playerLoc = GameInstance::GetWorld()->GetPlayerCharacter()->m_Transform.Location;
+
+	float minX = playerLoc.x - WINDOW_WIDTH;
+	float maxX = playerLoc.x + WINDOW_WIDTH;
+
+	float minY = playerLoc.y - WINDOW_HEIGHT;
+	float maxY = playerLoc.y + WINDOW_HEIGHT;
+
+	for (CollectorEnemy* Enemy : m_Collectors->GetAllObjects()) {
+
+		Enemy->m_Transform.Location = { Math::Random::Range(minX,maxX),Math::Random::Range(minY,maxY) };
+	}
+	for (FiringEnemy* Enemy : m_Shooters->GetAllObjects()) {
+		Enemy->m_Transform.Location = { Math::Random::Range(minX,maxX),Math::Random::Range(minY,maxY) };
+	}
 }
 
 void AI_Manager::Unbind()
@@ -140,8 +187,6 @@ void AI_Manager::Unbind()
 
 void AI_Manager::OnDestroy()
 {
-
-
 	GameObject::OnDestroy();
 	m_Collectors = nullptr;
 	m_Shooters = nullptr;

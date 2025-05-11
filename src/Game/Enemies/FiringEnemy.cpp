@@ -39,7 +39,6 @@ void FiringEnemy::BeginPlay()
 void FiringEnemy::OnActivate()
 {
 	GameObject::OnActivate();
-	m_Transform.Location = { 0,0};
 }
 
 void FiringEnemy::AI_Logic(float DeltaTime)

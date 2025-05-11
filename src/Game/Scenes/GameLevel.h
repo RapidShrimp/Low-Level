@@ -11,6 +11,7 @@ class Projectile;
 class Sinibomb;
 class AsteroidManager;
 class Boss;
+class AI_Manager;
 
 class GameLevel : public GameScene 
 {
@@ -26,7 +27,7 @@ public:
 	ObjectPooler<Projectile>* m_BulletPooler = nullptr;
 	ObjectPooler<Sinibomb>* m_BombPooler = nullptr;
 	AsteroidManager* m_AsteroidManager = nullptr;
-	
+	AI_Manager* m_AgentManager = nullptr;
 	virtual PlayerCharacter* GetPlayerCharacter() override { return m_Player; }
 	virtual Boss* GetSinistarBoss() { return m_Boss; }
 
