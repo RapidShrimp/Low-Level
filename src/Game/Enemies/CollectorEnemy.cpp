@@ -116,6 +116,12 @@ void CollectorEnemy::SetNewTarget(GameObject* NewTarget)
 
 }
 
+void CollectorEnemy::OnDestroy()
+{
+	Enemy::OnDestroy();
+	m_HeldCrystal = nullptr;
+}
+
 void CollectorEnemy::Handle_CrystalLost(GameObject* Collided)
 {
 	m_RigidBody->Activate();

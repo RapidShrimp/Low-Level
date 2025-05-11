@@ -14,7 +14,7 @@ namespace Math {
 
 	};
 
-	class Vector2
+	struct Vector2
 	{
 
 	public:

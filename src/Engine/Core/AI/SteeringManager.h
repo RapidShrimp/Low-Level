@@ -20,7 +20,7 @@ public:
 	//virtual void Update() override;
 	virtual void Render(sf::RenderWindow& Renderer) override;
 	void FixedUpdate(float deltaTime) override;
-	//virtual void OnDestroy() override;*/
+	virtual void OnDestroy() override;
 
 	Math::Vector2 GetDirection() { return m_Direction; };
 

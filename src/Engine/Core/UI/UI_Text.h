@@ -23,7 +23,7 @@ public:
 	void SetAlignment(E_TextAlignment AlignText);
 	virtual void OnSetFocus() override;
 	virtual void OnRemoveFocus() override;
-
+	virtual void OnDestroy() override;
 protected:
 	std::string RenderText;
 	sf::Font* m_Font;

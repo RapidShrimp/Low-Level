@@ -22,10 +22,9 @@ public:
 
 	GameLevel();
 	void OnLoadScene() override;
-
+	void UnloadScene() override;
 	ObjectPooler<Projectile>* m_BulletPooler = nullptr;
 	ObjectPooler<Sinibomb>* m_BombPooler = nullptr;
-
 	AsteroidManager* m_AsteroidManager = nullptr;
 	
 	virtual PlayerCharacter* GetPlayerCharacter() override { return m_Player; }

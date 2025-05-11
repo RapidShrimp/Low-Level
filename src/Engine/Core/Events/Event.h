@@ -13,6 +13,7 @@ namespace SinStr {
 			std::function<void(T...)> listener;
 		public:
 			Binding() = default;
+			~Binding() { contextObj = nullptr; };
 			Binding(std::function<void(T...)> func, void* _contextObj) 
 			{
 				contextObj = _contextObj;
@@ -26,6 +27,7 @@ namespace SinStr {
 			Binding<T...>& Invoke(T... args) {
 				if (listener){ listener(static_cast<T&&>(args)...); } return (*this); }	// EDIT - Added conditional to avoid empty listener 
 			void operator()(T... args) { listener(static_cast<T&&>(args)...); }
+
 		};
 
 		template<typename... T>

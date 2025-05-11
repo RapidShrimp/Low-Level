@@ -48,6 +48,17 @@ void Enemy::FixedUpdate(float DeltaTime)
 	AI_Logic(DeltaTime);
 }
 
+void Enemy::OnDestroy()
+{
+	GameObject::OnDestroy();
+	m_Health = nullptr;
+	m_SpriteRenderer = nullptr;
+	m_RigidBody = nullptr;
+	m_Collider = nullptr;
+	m_SteeringManager = nullptr;
+	OnEnemyDeath.Empty();
+}
+
 void Enemy::SetNewTarget(GameObject* NewTarget)
 {
 	if (NewTarget == nullptr) { return; }

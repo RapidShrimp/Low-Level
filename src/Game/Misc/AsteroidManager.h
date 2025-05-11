@@ -22,7 +22,7 @@ public:
 	//virtual void Update() override;
 	virtual void FixedUpdate(float deltaTime) override;
 	//virtual void Render(sf::RenderWindow& Renderer) override;
-	//virtual void OnDestroy() override;
+	virtual void OnDestroy() override;
 	ObjectPooler<Crystal>* GetPooledCrystals() { return m_PooledCrystals; }
 	PlayerCharacter* playerRef;
 protected:

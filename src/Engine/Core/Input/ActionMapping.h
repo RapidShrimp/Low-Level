@@ -1,6 +1,6 @@
 #pragma once
 
-class ActionMapping 
+struct ActionMapping 
 {
 public:
 	ActionMapping(sf::Keyboard::Key InKey = sf::Keyboard::Key::Unknown,bool TriggerPaused = false) {
@@ -12,7 +12,7 @@ public:
 	bool TriggerWhenPaused = false;
 };
 
-class AxisActionMapping 
+struct AxisActionMapping 
 {
 public:
 

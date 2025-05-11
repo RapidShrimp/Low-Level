@@ -37,6 +37,16 @@ void GameLevel::OnLoadScene()
  	AudioManger::PlayMusic("sinistar_BuildingTheme.mp3",true);
 }
 
+void GameLevel::UnloadScene()
+{
+	GameScene::UnloadScene();
+	m_Player = nullptr;
+	m_Boss = nullptr;
+	m_AsteroidManager = nullptr;
+	m_BulletPooler = nullptr;
+	m_BombPooler = nullptr;
+}
+
 void GameLevel::Handle_PrepareLevel(float NewLives)
 {
 }

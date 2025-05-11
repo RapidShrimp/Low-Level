@@ -73,6 +73,7 @@ void AI_Manager::FixedUpdate(float deltaTime)
 
 }
 
+
 void AI_Manager::Handle_CrystalAppeared(GameObject* InCrystal)
 {
 	Debug::Log(this, Confirm, "Crystal Appeared");
@@ -111,4 +112,11 @@ void AI_Manager::SpawnShooter()
 void AI_Manager::SpawnCollector()
 {
 	m_Collectors->GetFreeObject()->Activate();
+}
+
+void AI_Manager::OnDestroy()
+{
+	GameObject::OnDestroy();
+	m_Collectors = nullptr;
+	m_Shooters = nullptr;
 }

@@ -159,12 +159,24 @@ void GameScene::OnSceneLoaded()
 void GameScene::UnloadScene()
 {
 	cout << "Unloading Scene: " + m_SceneName << endl;
-	
+
+	//OnPausedChanged.Empty();
+
+	for (int i = 0; i < m_Timers.size(); i++) {
+		m_Timers[i]->DestroyTimer();
+	}
+	m_Timers.empty();
 	for (int i = 0; i < SceneObjects.size(); i++) 
 	{
 		SceneObjects[i]->OnDestroy();
 		delete SceneObjects[i];
 	}
+	SceneObjects.empty();
+	for (int i = 0; i < UI_Elements.size(); i++) {
+		UI_Elements[i]->OnDestroy();
+		delete UI_Elements[i];
+	}
+	UI_Elements.empty();
 
 
 }

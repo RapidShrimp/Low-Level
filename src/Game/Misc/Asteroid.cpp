@@ -51,6 +51,18 @@ void Asteroid::FixedUpdate(float DeltaTime)
 {
 }
 
+void Asteroid::OnDestroy()
+{
+	GameObject::OnDestroy();
+	m_Health = nullptr;
+	m_SpriteRenderer = nullptr;
+	m_Collider = nullptr;
+	m_RigidBody = nullptr;
+
+	OnSpawnCrystal.Empty();
+	OnAsteroidDestroyed.Empty();
+}
+
 void Asteroid::Handle_OnAsteroidHit(float InDamage)
 {
 	Debug::Log(this, DebugNone, "Hit");

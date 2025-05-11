@@ -136,6 +136,7 @@ void Collider::Render(sf::RenderWindow& Renderer)
 
 }
 
+
 bool Collider::CircleCollision(Collider* OtherCircle)
 {
 	if (OtherCircle == nullptr) { return false; }
@@ -175,3 +176,10 @@ bool Collider::BoxCircleCollision(Collider* OtherCollider)
 	return  (ACircle->GetOwner()->m_Transform.Location - ClosestPoint).Length() <= ACircle->m_Radius;
 }
 
+
+void Collider::OnDestroy()
+{
+	Component::OnDestroy();
+	OnCollisionEvent.Empty();
+	Overlapping.empty();
+}

@@ -45,6 +45,14 @@ void AsteroidManager::FixedUpdate(float deltaTime)
 	//}
 }
 
+void AsteroidManager::OnDestroy()
+{
+	GameObject::OnDestroy();
+	m_PooledAsteroids = nullptr;
+	m_PooledCrystals = nullptr;
+	playerRef = nullptr;
+}
+
 void AsteroidManager::InitialPlaceAsteroid(GameObject* Asteroid)
 {
 	do

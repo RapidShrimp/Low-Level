@@ -40,6 +40,8 @@ public:
 	void SetRadius(float Size) { m_Radius = Size; }
 	const float GetRadius() { return m_Radius * GetOwner()->m_Transform.Scale.x; }
 	const Math::Vector2 GetBoxBounds() { return m_BoxBounds; }
+
+	virtual void OnDestroy() override;
 protected:
 	
 	E_ColliderType m_CollisionType = Circle;

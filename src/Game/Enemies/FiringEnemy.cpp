@@ -77,7 +77,6 @@ void FiringEnemy::Handle_EnemyDeath()
 void FiringEnemy::OnDestroy()
 {
 	GameObject::OnDestroy();
-	delete m_FiringTimer;
 	m_FiringTimer = nullptr;
 }
 

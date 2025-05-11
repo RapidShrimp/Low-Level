@@ -17,7 +17,7 @@ public:
 	float GetHealthPercent() { return m_CurrentHealth / m_MaxHealth; }
 	float GetCurrentHealth() { return m_CurrentHealth; }
 	float GetMaxHealth() { return m_MaxHealth; }
-
+	virtual void OnDestroy() override;
 	void Handle_OnHeathChanged(float Damage, GameObject* Instigator);
 protected:
 	float m_CurrentHealth;

@@ -59,6 +59,15 @@ void SteeringManager::FixedUpdate(float deltaTime)
 	m_Direction = CalculateDirection();
 }
 
+void SteeringManager::OnDestroy()
+{
+	for (int i = 0; i < m_SteeringBehaviours.size(); i++) {
+		m_SteeringBehaviours[i]->OnDestroy();
+		delete m_SteeringBehaviours[i];
+	}
+	m_SteeringBehaviours.empty();
+}
+
 Math::Vector2 SteeringManager::CalculateDirection()
 {
 	if (m_SteeringBehaviours.size() == 0) { return Math::Vector2().Zero(); }

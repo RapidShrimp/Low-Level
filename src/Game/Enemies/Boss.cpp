@@ -17,10 +17,10 @@ Boss::Boss()
 	m_SpriteRenderer->SetSpriteScale(2, 2);
 	m_Collider = new Collider(false, 32.0f);
 
-	m_AttackTimer = new Timer(5, true);
+	m_AttackTimer = GameInstance::GetWorld()->CreateTimer(5, true,false,0,false);
+	m_MovePause = GameInstance::GetWorld()->CreateTimer(3.4f, true, false, 0, false);
 
 	
-	m_MovePause = new Timer(3.4f, false);
 	
 }
 
@@ -54,8 +54,7 @@ void Boss::FixedUpdate(float DeltaTime)
 void Boss::OnDestroy()
 {
 	Enemy::OnDestroy();
-	delete m_AttackTimer;
-	delete m_MovePause;
+	OnPeicesUpdated.Empty();
 	m_AttackTimer = nullptr;
 	m_MovePause = nullptr;
 }

@@ -66,6 +66,8 @@ void UI_Base::OnDestroy()
 		m_Elements[i]->OnDestroy();
 		delete m_Elements[i];
 	}
+	m_Elements.empty();
+	m_NavigationPath.empty();
 
 	InputEventHandler::GetInstance()->RemoveMappings();
 }

@@ -6,6 +6,11 @@
 
 GameInstance* GameInstance::m_GameInstance = nullptr;
 
+
+class TestClass {
+	int A = 1;
+};
+
 int main()
 {
 	InitialiseEngine();
@@ -15,14 +20,6 @@ int main()
 
 void InitialiseEngine() 
 {
-	//Class created for event demo
-	//BroadcasterClass* Broadcaster = new BroadcasterClass();
-	//RecieverClass* Reciever1 = new RecieverClass(Broadcaster);
-	//RecieverClass* Reciever2 = new RecieverClass(Broadcaster);
-	//RecieverClass* Reciever3 = new RecieverClass(Broadcaster);
-	//Broadcaster->BroadcastEvent();
-	//system("pause");
-
 	cout << "Initialise Sinistar" << endl;
 	GameInstance::GetGameInstance()->Init();
 	GameInstance::GetGameInstance()->Update();
@@ -32,3 +29,4 @@ void Shutdown()
 {
 	cout << "Sinistar Shut Down..." << endl;
 }
+

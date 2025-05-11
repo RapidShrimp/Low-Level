@@ -23,6 +23,14 @@ void HealthComponent::BeginPlay()
 	GetOwner()->OnTakeDamage.AddListener(this,std::bind(&HealthComponent::Handle_OnHeathChanged, this, std::placeholders::_1, std::placeholders::_2));
 }
 
+void HealthComponent::OnDestroy()
+{
+	Component::OnDestroy();
+	OnHealthRecieve.Empty();
+	OnDamageTaken.Empty();
+	OnDeath.Empty();
+}
+
 void HealthComponent::Handle_OnHeathChanged(float Damage, GameObject* Instigator)
 {
 	if (!isActive) { return; }

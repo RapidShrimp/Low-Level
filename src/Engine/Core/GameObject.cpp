@@ -124,9 +124,13 @@ void GameObject::Render(sf::RenderWindow& Renderer)
 
 void GameObject::OnDestroy()
 {
+	OnTakeDamage.Empty();
+	m_Colliders.empty();
+	m_Components.empty();
 	//Loop through components and call destroy
 	for (int i = 0; i < m_Components.size(); i++) {
 		m_Components[i]->OnDestroy();
+		delete m_Components[i];
 	}
 	m_Components.clear();
 }

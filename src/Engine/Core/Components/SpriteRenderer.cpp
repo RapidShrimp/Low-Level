@@ -133,11 +133,6 @@ void SpriteRenderer::Render(sf::RenderWindow& Renderer)
 
 }
 
-void SpriteRenderer::OnDestroy()
-{
-
-}
-
 void SpriteRenderer::UpdateSpriteBounds()
 {
 	std::string positon = std::to_string(m_Sprite->getTextureRect().position.x) + std::to_string(m_Sprite->getTextureRect().position.y);
@@ -151,4 +146,12 @@ void SpriteRenderer::UpdateSpriteBounds()
 	
 }
 
+
+void SpriteRenderer::OnDestroy()
+{
+	Component::OnDestroy();
+	delete m_Sprite;
+	m_Sprite = nullptr;
+	m_Texture.~Texture();
+}
 

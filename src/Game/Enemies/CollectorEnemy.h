@@ -22,6 +22,7 @@ public:
 	void CollectCrystal(Crystal* InCrystal);
 	void TargetCrystal(Crystal* InCrystal);
 	virtual void SetNewTarget(GameObject* NewTarget) override;
+	virtual void OnDestroy() override;
 
 protected:
 	void Handle_CrystalLost(GameObject* Collided);

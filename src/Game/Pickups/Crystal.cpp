@@ -73,3 +73,13 @@ void Crystal::FixedUpdate(float deltaTime)
 	m_Transform.Location += m_RigidBody->m_Velocity * deltaTime;
 	m_Transform.Rotation += m_RigidBody->m_AngluarVelocity * deltaTime;
 }
+
+void Crystal::OnDestroy()
+{
+	GameObject::OnDestroy();
+	OnCrystalAvaliable.Empty();
+	OnCrystalCollided.Empty();
+	m_SpriteRenderer = nullptr;
+	m_RigidBody = nullptr;
+	m_Collider = nullptr;
+}

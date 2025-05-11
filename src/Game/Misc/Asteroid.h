@@ -30,7 +30,7 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Update() override;
 	virtual void FixedUpdate(float DeltaTime) override;
-	//virtual void OnDestroy() override;
+	virtual void OnDestroy() override;
 
 
 private:

@@ -84,3 +84,12 @@ void UI_Text::OnRemoveFocus()
 {
 	SetColour(sf::Color::Blue);
 }
+
+void UI_Text::OnDestroy()
+{
+	delete m_Text;
+	m_Text = nullptr;
+
+	delete m_Font;
+	m_Font = nullptr;
+}

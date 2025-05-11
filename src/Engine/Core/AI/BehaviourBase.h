@@ -8,7 +8,7 @@ class BehaviourBase : public Object {
 
 public:
 	BehaviourBase() {};
-
+	~BehaviourBase() { m_OwningAgent = nullptr; }
 	virtual void Init(GameObject* Owner)
 	{
 		m_OwningAgent = static_cast<GameObject*>(Owner);
@@ -35,6 +35,11 @@ public:
 	{
 		m_SeekTarget = Target;
 	};
+	~Seek() 
+	{ 
+		BehaviourBase::~BehaviourBase();
+		m_SeekTarget = nullptr; 
+	}
 
 	void SetTarget(GameObject* Target) { m_SeekTarget = Target; }
 
@@ -63,6 +68,11 @@ public:
 	{
 		m_FleeRadius = Radius;
 		m_FleeTarget = Target;		
+	}
+	~Flee() 
+	{
+		BehaviourBase::~BehaviourBase();
+		m_FleeTarget = nullptr;
 	}
 
 	float m_FleeRadius = 50;
@@ -101,6 +111,10 @@ class Pursuit : public Seek
 public:
 	Pursuit(GameObject* Target) {
 		m_SeekTarget = Target;
+	}
+	~Pursuit() 
+	{
+		Seek::~Seek();
 	}
 
 	virtual Math::Vector2 CalculateBehaviour() override
@@ -142,6 +156,12 @@ public:
 	{
 		m_SeparateDistance = SeparateDistance;
 		m_Targets = Targets;
+	}
+
+	~Separation() 
+	{
+		BehaviourBase::~BehaviourBase();
+		m_Targets.empty();
 	}
 
 	std::vector<GameObject*> m_Targets;
