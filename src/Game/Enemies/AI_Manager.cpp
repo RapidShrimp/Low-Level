@@ -92,8 +92,9 @@ void AI_Manager::TargetPlayer(Enemy* EnemyToTarget)
 
 void AI_Manager::Handle_ShooterDeath()
 {
-	Timer* ShooterRespawnTimer = new Timer(4.0f, 0.0f);
-	ShooterRespawnTimer->OnTimerCompleted.AddListener(this,std::bind(&AI_Manager::SpawnShooter, this));
+	Timer* ShooterRespawn = new Timer(15.0f);
+	ShooterRespawn->OnTimerCompleted.AddListener(this, std::bind(&AI_Manager::SpawnShooter, this));
+	GameInstance::GetWorld()->AddSingleUseTimer(ShooterRespawn);
 }
 
 void AI_Manager::Handle_CollectorDead()

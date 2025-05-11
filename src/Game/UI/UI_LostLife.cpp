@@ -3,7 +3,7 @@
 
 UI_LostLife::UI_LostLife()
 {
-	m_ScreenTimer = new Timer(8.0f, false, 0, true);
+ 	m_ScreenTimer = GameInstance::GetWorld()->CreateTimer(5.0f, false,false, 0, true);
 
 	m_LifePrompt = new UI_Text("GAME PAUSED", "Assets/Fonts/sinistar.ttf", 24);
 	m_LifePrompt->m_Transform.Location = { WINDOW_WIDTH / 2,(WINDOW_HEIGHT / 2) };

@@ -54,7 +54,10 @@ public:
 
 public:
 	//Create a timer added to the world
-	Timer& CreateTimer(float TimerDuration, bool IsLooping, float RandomDeviation = 0, bool TickWhenPasused = false);
+	Timer* CreateTimer(float TimerDuration, bool IsLooping,bool AutoStart, float RandomDeviation = 0, bool TickWhenPasused = false);
+	void AddSingleUseTimer(Timer* InTimer);
+	void RemoveTimer(Timer* TimerRef);
+
 protected:
 	std::vector<Timer*> m_Timers;
 

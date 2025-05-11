@@ -5,7 +5,7 @@
 UI_PauseMenu::UI_PauseMenu()
 {
 	/*Pause Init*/
-	m_BlinkTimer = new Timer(0.5f, true, 0, true);
+	m_BlinkTimer = GameInstance::GetWorld()->CreateTimer(0.5f, true,true, 0, true);
 
 	m_PauseText = new UI_Text("GAME PAUSED", "Assets/Fonts/sinistar.ttf", 24);
 	m_PauseText->m_Transform.Location = { WINDOW_WIDTH / 2,(WINDOW_HEIGHT / 2) };

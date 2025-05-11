@@ -72,11 +72,25 @@ GameObject* GameScene::SpawnObject(GameObject* Spawnable, Math::Vector2 SpawnLoc
 	return SpawnObject(Spawnable, SinStr::Transform(SpawnLocation), StartActive ,DisplayName);
 }
 
-Timer& GameScene::CreateTimer(float TimerDuration, bool IsLooping, float RandomDeviation, bool TickWhenPasused)
+Timer* GameScene::CreateTimer(float TimerDuration, bool IsLooping, bool AutoStart, float RandomDeviation, bool TickWhenPasused)
 {
-	Timer* CreatedTimer = new Timer(TimerDuration, IsLooping, true, RandomDeviation, TickWhenPasused);
+	Timer* CreatedTimer = new Timer(TimerDuration, IsLooping, AutoStart, RandomDeviation, TickWhenPasused);
+	CreatedTimer->OnRemoveTimer.AddListener(this, std::bind(&GameScene::RemoveTimer, this, std::placeholders::_1));
 	m_Timers.push_back(CreatedTimer);
-	return *CreatedTimer;
+	
+	return CreatedTimer;
+}
+
+void GameScene::AddSingleUseTimer(Timer* InTimer)
+{
+	InTimer->OnRemoveTimer.AddListener(this, std::bind(&GameScene::RemoveTimer, this, std::placeholders::_1));
+	m_Timers.push_back(InTimer);
+}
+
+void GameScene::RemoveTimer(Timer* TimerRef)
+{
+	m_Timers.erase(std::remove(m_Timers.begin(), m_Timers.end(), TimerRef), m_Timers.end());
+	GameInstance::GetGameInstance()->QueueFree(TimerRef);
 }
 
 void GameScene::RenderScene(sf::RenderWindow& Renderer)
@@ -100,15 +114,17 @@ void GameScene::RenderUI(sf::RenderWindow& Renderer)
 
 void GameScene::FixedUpdate(float DeltaTime)
 {
+	for (int Timer = 0; Timer < m_Timers.size(); Timer++) 
+	{
+		m_Timers[Timer]->FixedUpdate(DeltaTime);
+	}
 	if (m_GamePaused) { return; }
 	for (int Objects = 0; Objects < SceneObjects.size(); Objects++)
 	{
 		if (!SceneObjects[Objects]->GetIsActive()) { continue; }
 		SceneObjects[Objects]->FixedUpdate(DeltaTime);
 	}
-	for (int Timer = 0; Timer < m_Timers.size(); Timer++) {
-		m_Timers[Timer]->FixedUpdate(DeltaTime);
-	}
+
 }
 
 void GameScene::Update()

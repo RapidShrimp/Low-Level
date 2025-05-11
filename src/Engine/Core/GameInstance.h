@@ -22,22 +22,20 @@ private:
 
 public:
 
-	//Called Just before primary Update loop, should only be used for timers or other subsystems
-	SinStr::Event<> OnUpdate;
-	//Called Just before primary Update loop, should only be used for timers or other subsystems
-	//float - PhysicsTimeStep
-	SinStr::Event<float> OnFixedUpdate; 
-
 	static inline GameInstance* GetGameInstance() /*Create / Get;*/
 	{
 		if (m_GameInstance == nullptr) { m_GameInstance = new GameInstance(); }
 		return m_GameInstance;
 	};
 
-	GameScene* GetWorld() { return m_CurrentScene; }
+	static GameScene* GetWorld() 
+	{ 
+		return GameInstance::GetGameInstance()->GetScene();
+	}
 	bool ShouldDrawDebug() { return m_Debug; }
 	bool ShouldLogDisplay() { return m_LogDisplay; }
 
+	GameScene* GetScene() { return m_CurrentScene; }
 	sf::View& GetUI() { return m_HUD; }
 	sf::View& GetCamera() { return m_Camera; }
 	const sf::RenderWindow& GetWindow() { return m_GameWindow; }
@@ -63,6 +61,7 @@ public:
 	void CloseGame();
 
 private:
+
 	bool m_Debug = false;
 	bool m_LogDisplay = true;
 

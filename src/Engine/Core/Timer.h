@@ -8,7 +8,7 @@ class Timer : public Object {
 public:
 	SinStr::Event<> OnTimerUpdated;
 	SinStr::Event<> OnTimerCompleted;
-	SinStr::Event<> OnRemoveTimer;
+	SinStr::Event<Timer*> OnRemoveTimer;
 
 protected:
 	bool isActive;
@@ -17,9 +17,25 @@ protected:
 	float m_MaxTime;
 	float m_CurrentTime;
 	float m_Deviation;
+	bool m_SingleUse;
 public:
 	
-	//Self Managed Timer
+	//For single firing functionality;
+	//Automatically Adds itself to the World
+	Timer(float Duration) 
+	{
+		m_MaxTime = Duration * 500;
+		m_TickPaused = false;
+		m_Looping = false;
+		m_MaxTime = Duration * 500.0f;
+		m_CurrentTime = 0;
+		m_Deviation = 0;
+		isActive = false;
+		GameInstance::GetWorld()->AddSingleUseTimer(this);
+		StartTimer();
+	}
+
+	//Self Managed Timer - For calling multiple times
 	Timer(float Duration, bool Looping, bool AutoStart = true, float RandomDeviation = 0.0f, bool TickPaused = false)
 	{
 		m_TickPaused = TickPaused;
@@ -28,6 +44,7 @@ public:
 		m_CurrentTime = 0;
 		m_Deviation = RandomDeviation;
 		isActive = false;
+		m_SingleUse = false;
 		Debug::Log(nullptr, Display, "Timer-Created");
 
 		if (AutoStart) {
@@ -53,11 +70,14 @@ public:
 			Debug::Log(nullptr, DebugNone, "Timer Looped");
 			ResetTimer();
 		}
-		else
+		else if(m_SingleUse)
 		{
-			m_CurrentTime = 0;
+			DestroyTimer();
+		}
+		else 
+		{
 			PauseTimer();
-			OnRemoveTimer.Invoke();
+			ResetTimer();
 		}
 	};
 
@@ -80,6 +100,8 @@ public:
 		PauseTimer();
 		OnTimerUpdated.Empty();
 		OnTimerCompleted.Empty();
+		OnRemoveTimer.Invoke(this);
+		OnRemoveTimer.Empty();
 	};
 
 };

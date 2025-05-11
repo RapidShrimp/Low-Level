@@ -18,7 +18,7 @@ FiringEnemy::FiringEnemy()
 	m_MoveSpeed = 0.5f;
 	m_KeepDistance = 200;
 
-	m_FiringTimer = new Timer(5.5f, true, 3.0f);
+	m_FiringTimer = GameInstance::GetWorld()->CreateTimer(5.5f, true,false, 3.0f,false);
 
 }
 
